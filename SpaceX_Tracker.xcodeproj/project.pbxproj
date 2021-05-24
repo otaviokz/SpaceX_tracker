@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		307C9FBB265BCBDC00CB111A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBA265BCBDC00CB111A /* AppDelegate.swift */; };
 		307C9FBD265BCBDC00CB111A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */; };
-		307C9FBF265BCBDC00CB111A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBE265BCBDC00CB111A /* ViewController.swift */; };
+		307C9FBF265BCBDC00CB111A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBE265BCBDC00CB111A /* MainViewController.swift */; };
 		307C9FC2265BCBDC00CB111A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 307C9FC0265BCBDC00CB111A /* Main.storyboard */; };
 		307C9FC4265BCBDD00CB111A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 307C9FC3265BCBDD00CB111A /* Assets.xcassets */; };
 		307C9FC7265BCBDD00CB111A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 307C9FC5265BCBDD00CB111A /* LaunchScreen.storyboard */; };
 		307C9FD2265BCBDD00CB111A /* SpaceX_TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FD1265BCBDD00CB111A /* SpaceX_TrackerTests.swift */; };
-		307C9FDD265BCBDD00CB111A /* SpaceX_TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FDC265BCBDD00CB111A /* SpaceX_TrackerUITests.swift */; };
+		307C9FDD265BCBDD00CB111A /* MainViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FDC265BCBDD00CB111A /* MainViewControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +38,7 @@
 		307C9FB7265BCBDC00CB111A /* SpaceX_Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX_Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		307C9FBA265BCBDC00CB111A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		307C9FBE265BCBDC00CB111A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		307C9FBE265BCBDC00CB111A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		307C9FC1265BCBDC00CB111A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		307C9FC3265BCBDD00CB111A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		307C9FC6265BCBDD00CB111A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		307C9FD1265BCBDD00CB111A /* SpaceX_TrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceX_TrackerTests.swift; sourceTree = "<group>"; };
 		307C9FD3265BCBDD00CB111A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		307C9FD8265BCBDD00CB111A /* SpaceX_TrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceX_TrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		307C9FDC265BCBDD00CB111A /* SpaceX_TrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceX_TrackerUITests.swift; sourceTree = "<group>"; };
+		307C9FDC265BCBDD00CB111A /* MainViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerTests.swift; sourceTree = "<group>"; };
 		307C9FDE265BCBDD00CB111A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,13 +99,9 @@
 		307C9FB9265BCBDC00CB111A /* SpaceX_Tracker */ = {
 			isa = PBXGroup;
 			children = (
-				307C9FBA265BCBDC00CB111A /* AppDelegate.swift */,
-				307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */,
-				307C9FBE265BCBDC00CB111A /* ViewController.swift */,
-				307C9FC0265BCBDC00CB111A /* Main.storyboard */,
-				307C9FC3265BCBDD00CB111A /* Assets.xcassets */,
-				307C9FC5265BCBDD00CB111A /* LaunchScreen.storyboard */,
-				307C9FC8265BCBDD00CB111A /* Info.plist */,
+				307C9FEC265BCDF300CB111A /* Delegate */,
+				307C9FEB265BCDE400CB111A /* ViewController */,
+				307C9FEA265BCD9100CB111A /* Support Files */,
 			);
 			path = SpaceX_Tracker;
 			sourceTree = "<group>";
@@ -122,10 +118,38 @@
 		307C9FDB265BCBDD00CB111A /* SpaceX_TrackerUITests */ = {
 			isa = PBXGroup;
 			children = (
-				307C9FDC265BCBDD00CB111A /* SpaceX_TrackerUITests.swift */,
+				307C9FDC265BCBDD00CB111A /* MainViewControllerTests.swift */,
 				307C9FDE265BCBDD00CB111A /* Info.plist */,
 			);
 			path = SpaceX_TrackerUITests;
+			sourceTree = "<group>";
+		};
+		307C9FEA265BCD9100CB111A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				307C9FC0265BCBDC00CB111A /* Main.storyboard */,
+				307C9FC3265BCBDD00CB111A /* Assets.xcassets */,
+				307C9FC5265BCBDD00CB111A /* LaunchScreen.storyboard */,
+				307C9FC8265BCBDD00CB111A /* Info.plist */,
+			);
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		307C9FEB265BCDE400CB111A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				307C9FBE265BCBDC00CB111A /* MainViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		307C9FEC265BCDF300CB111A /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				307C9FBA265BCBDC00CB111A /* AppDelegate.swift */,
+				307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */,
+			);
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,7 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				307C9FBF265BCBDC00CB111A /* ViewController.swift in Sources */,
+				307C9FBF265BCBDC00CB111A /* MainViewController.swift in Sources */,
 				307C9FBB265BCBDC00CB111A /* AppDelegate.swift in Sources */,
 				307C9FBD265BCBDC00CB111A /* SceneDelegate.swift in Sources */,
 			);
@@ -276,7 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				307C9FDD265BCBDD00CB111A /* SpaceX_TrackerUITests.swift in Sources */,
+				307C9FDD265BCBDD00CB111A /* MainViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +461,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = SpaceX_Tracker/Info.plist;
+				INFOPLIST_FILE = "SpaceX_Tracker/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -455,7 +479,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = SpaceX_Tracker/Info.plist;
+				INFOPLIST_FILE = "SpaceX_Tracker/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
