@@ -13,7 +13,13 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
+    init() {
+        super.init(nibName: nil, bundle: Bundle.main)
+        view.backgroundColor = .white
+    }
 
-
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
