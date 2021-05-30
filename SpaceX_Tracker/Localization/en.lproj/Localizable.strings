@@ -1,0 +1,17 @@
+/* 
+  Strings.strings
+  SpaceX_Tracker
+
+  Created by Otávio Zabaleta on 30/05/2021.
+  
+*/
+
+"main_companySectionTitle" = "COMPANY";
+"main_launchesSectionTitle" = "LAUNCHES";
+"main_companyDescription" = "[$0] was founded by [$1] in [$2]. It has now [$3] employees, [$4] launch sites, and is valued at USD [$5].";
+"main_label_mission" = "Mission:";
+"main_label_date" = "Date/Time:";
+"main_label_rocket" = "Rocket:";
+"main_label_days_since" = "Days since now:";
+"main_label_days_from" = "Days from now:";
+"main_dateTimeFormat" = "dd/MM/yy 'at' HH:mm";
