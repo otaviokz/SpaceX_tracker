@@ -7,7 +7,13 @@
 
 import Foundation
 
-struct ListSection {
+protocol ListSectionTyoe {
+    var title: String { get }
+    var items: [ListItem] { get }
+}
+
+
+struct ListSection: ListSectionTyoe {
     let title: String
     let items: [ListItem]
 }

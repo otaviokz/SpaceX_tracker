@@ -18,6 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let winScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: winScene)
+        RuntimeService.optimiseForTestsIfTesting(window: window)
         let viewController = MainViewController(
             viewModel: .init(
                 company: try! JsonLoader.sampleCompany(),
@@ -25,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             )
         )
         window?.rootViewController = UINavigationController(rootViewController: viewController)
+        
         window?.makeKeyAndVisible()
     }
 

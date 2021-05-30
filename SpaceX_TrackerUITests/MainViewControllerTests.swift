@@ -7,19 +7,53 @@
 
 import XCTest
 
-class MainViewControllerTests: XCTestCase {
-
+class MainViewControllerTests: BaseUITestCase {
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        try super.setUpWithError()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testBasics() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        XCTAssertTrue(app.navigationBars.staticTexts["SpaceX"].exists)
+        
+        // Assert Company info is populated correctly
+        XCTAssertTrue(app.staticTexts["COMPANY"].exists)
+        let text = "SpaceX was founded by Elon Musk in 2002. It has now 9500 employees, 3 launch sites, and is valued at USD 74000000000."
+        let companyCell = app.tables.cells.element(matching: .cell, identifier: "CompanyCell_0_0")
+        XCTAssertTrue(companyCell.exists)
+        XCTAssertTrue(companyCell.staticTexts[text].exists)
+        
+        // Assert Company Section has only one cell
+        XCTAssertFalse(app.tables.cells.element(matching: .cell, identifier: "CompanyCell_0_1").exists)
+        
+        
+        // Assert Launches info is populated correctly
+        let launchCell0 = app.tables.cells.element(matching: .cell, identifier: "LaunchCell_1_0")
+        XCTAssertTrue(launchCell0.exists)
+        XCTAssertTrue(launchCell0.staticTexts["Mission:"].exists)
+        XCTAssertTrue(launchCell0.staticTexts["FalconSat"].exists)
+        XCTAssertTrue(launchCell0.staticTexts["Date/Time:"].exists)
+        XCTAssertTrue(launchCell0.staticTexts["24/03/06 at 22:30"].exists)
+        XCTAssertTrue(launchCell0.staticTexts["Rocket:"].exists)
+        XCTAssertTrue(launchCell0.staticTexts["Falcon 1 / rocket"].exists)
+        XCTAssertTrue(launchCell0.staticTexts["Days since now:"].exists)
+        
+        let launchCell1 = app.tables.cells.element(matching: .cell, identifier: "LaunchCell_1_1")
+        XCTAssertTrue(launchCell1.exists)
+        XCTAssertTrue(launchCell1.staticTexts["Days from now:"].exists)
+        
+        let launchCell2 = app.tables.cells.element(matching: .cell, identifier: "LaunchCell_1_2")
+        XCTAssertTrue(launchCell2.exists)
+        XCTAssertTrue(launchCell2.staticTexts["Days since now:"].exists)
+        
+        let launchCell3 = app.tables.cells.element(matching: .cell, identifier: "LaunchCell_1_3")
+        XCTAssertTrue(launchCell3.exists)
+        XCTAssertTrue(launchCell3.staticTexts["Days from now:"].exists)
+        
+        XCTAssertFalse(app.tables.cells.element(matching: .cell, identifier: "LaunchCell_1_4").exists)
     }
 
 //    func testExample() throws {

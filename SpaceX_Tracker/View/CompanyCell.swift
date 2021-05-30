@@ -18,11 +18,6 @@ class CompanyCell: UITableViewCell, ListItemCell {
         setUI()
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        textLabel?.text = nil
-    }
-    
     @discardableResult
     func configure(for item: Company) -> Self {
         textLabel?.text = item.localizedDescription
@@ -33,16 +28,15 @@ class CompanyCell: UITableViewCell, ListItemCell {
         textLabel?.numberOfLines = 0
         textLabel?.textAlignment = .left
         
-        guard let label = textLabel else {
-            return
-        }
         
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Self.horizontalPadding),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Self.horizontalPadding),
-            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Self.verticalPadding),
-            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Self.verticalPadding)
-        ])
+        if let label = textLabel {
+            NSLayoutConstraint.activate([
+                label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Self.horizontalPadding),
+                label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Self.horizontalPadding),
+                label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Self.verticalPadding),
+                label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Self.verticalPadding)
+            ])
+        }
     }
     
     @available(*, unavailable)
