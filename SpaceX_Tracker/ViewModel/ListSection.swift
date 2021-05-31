@@ -7,13 +7,7 @@
 
 import Foundation
 
-protocol ListSectionType {
-    var title: String { get }
-    var items: [ListItem] { get }
-}
-
-
-struct ListSection: ListSectionType {
+struct ListSection {
     let title: String
     let items: [ListItem]
 }

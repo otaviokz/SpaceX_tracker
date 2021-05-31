@@ -47,13 +47,13 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let item = sections[indexPath.section].items[indexPath.row]
             
-            if let company = item as? Company, let cell: CompanyCell = tableView.cell(with: item, for: indexPath) {
+            if let company = item as? Company, let cell: CompanyCell = tableView.cell(for: indexPath) {
                 return cell
                     .configure(for: company)
                     .accessibilityIdentifier("CompanyCell_\(indexPath.section)_\(indexPath.row)")
             }
             
-            if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(with: item, for: indexPath) {
+            if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(for: indexPath) {
                 return cell
                     .configure(for: launch, imageLoader: imageLoader)
                     .accessibilityIdentifier("LaunchCell_\(indexPath.section)_\(indexPath.row)")

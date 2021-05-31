@@ -153,7 +153,7 @@ class LaunchCell: UITableViewCell, ListItemCell {
 
 extension Launch: ListItem {}
 
-extension UILabel {
+private extension UILabel {
     @discardableResult
     func asTitle() -> Self {
         textColor = .gray

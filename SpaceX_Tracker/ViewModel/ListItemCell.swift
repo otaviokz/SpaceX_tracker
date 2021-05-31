@@ -1,13 +1,13 @@
 //
-//  ListItem.swift
+//  ListItemCell.swift
 //  SpaceX_Tracker
 //
-//  Created by Otávio Zabaleta on 30/05/2021.
+//  Created by Otávio Zabaleta on 31/05/2021.
 //
 
 import UIKit
 
-protocol ListItem { }
+protocol ListItem {}
 
 protocol ListItemCell: UITableViewCell {
     associatedtype ItemType
