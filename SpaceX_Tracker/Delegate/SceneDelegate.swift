@@ -22,7 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let viewController = MainViewController(
             viewModel: .init(
                 company: try! JsonLoader.sampleCompany(),
-                launches: try! JsonLoader.sampleLaunches()
+                launches: try! JsonLoader.sampleLaunches(),
+                imageLoader: RuntimeService.imageLoader
             )
         )
         window?.rootViewController = UINavigationController(rootViewController: viewController)

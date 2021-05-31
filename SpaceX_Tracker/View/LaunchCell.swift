@@ -28,6 +28,7 @@ class LaunchCell: UITableViewCell, ListItemCell {
     let daysLabel = UILabel().asTitle()
     let daysValueLabel = UILabel().asValue()
     let successImageView = UIImageView().asConstrainable()
+    var imageURL: URL?
     
     lazy var labelsStack: UIStackView = {
         let labelsStack = UIStackView(arrangedSubviews: [missionLabel, dateLabel, rocketLabel, daysLabel]).asConstrainable()
@@ -72,6 +73,11 @@ class LaunchCell: UITableViewCell, ListItemCell {
     
     @discardableResult
     func configure(for item: Launch) -> Self {
+        configure(for: item, imageLoader: ImageLoader.shared)
+    }
+    
+    @discardableResult
+    func configure(for item: Launch, imageLoader: ImageLoaderType) -> Self {
         missionValueLabel.text = item.missionName
         dateValueLabel.text = Self.dateTimeFormatter.string(from: item.localDate)
         rocketValueLabel.text = "\(item.rocket.name) / \(item.rocket.type)"
@@ -91,6 +97,17 @@ class LaunchCell: UITableViewCell, ListItemCell {
         if let success = item.success {
             let imageName = success ? "success" : "failure"
             successImageView.image = UIImage(named: imageName)
+        }
+        
+        imageURL = item.links.patch.small
+        if let itemUrl = imageURL {
+            imageLoader.image(for: itemUrl) { [unowned self] in
+                guard let url = self.imageURL, url == $0.data?.1, let image = $0.data?.0 else { return }
+                DispatchQueue.main.async {
+                    self.badgeimageView.image = image
+                    self.badgeimageView.accessibilityIdentifier = url.absoluteString
+                }
+            }
         }
         
         return self

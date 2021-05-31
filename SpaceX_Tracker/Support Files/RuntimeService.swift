@@ -31,4 +31,8 @@ struct RuntimeService {
             .forEach { $0.perform(selector, with: nil) }
         #endif
     }
+    
+    static var imageLoader: ImageLoaderType {
+        isRunningTests ? MockImageLoader.shared : ImageLoader.shared
+    }
 }

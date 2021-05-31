@@ -11,10 +11,12 @@ extension MainViewController {
     class ViewModel: NSObject, ListViewModelType {
         let company: Company?
         let launches: [Launch]?
+        let imageLoader: ImageLoaderType
         
-        init(company: Company?, launches: [Launch]?) {
+        init(company: Company?, launches: [Launch]?, imageLoader: ImageLoaderType = ImageLoader.shared) {
             self.company = company
             self.launches = launches
+            self.imageLoader = imageLoader
         }
         
         var sections: [ListSection] {
@@ -53,7 +55,7 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
             
             if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(with: item, for: indexPath) {
                 return cell
-                    .configure(for: launch).accessibilityIdentifier("")
+                    .configure(for: launch, imageLoader: imageLoader)
                     .accessibilityIdentifier("LaunchCell_\(indexPath.section)_\(indexPath.row)")
             }
             
