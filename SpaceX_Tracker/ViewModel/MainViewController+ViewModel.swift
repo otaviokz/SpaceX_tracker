@@ -22,7 +22,7 @@ extension MainViewController {
         var sections: [ListSection] {
             var sectionsArray: [ListSection] = []
             if let company = company {
-                let section: ListSection = ListSection(title: localize(.main_companySectionTitle), items: [company as ListItem])
+                let section: ListSection = ListSection(title: localize(.main_companySectionTitle), items: [company])
                 sectionsArray.append(section)
             }
             
@@ -63,16 +63,8 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
         }
         
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            UILabel.darkLabel(text: sections[section].title)
+            UIView()
+                .background(.black)
+                .add(UILabel(sections[section].title).textColor(.white).background(.clear), padding: 4)
         }
-}
-
-private extension UILabel {
-    static func darkLabel(text: String) -> UILabel {
-        let label = UILabel()
-        label.backgroundColor = .black
-        label.textColor = .white
-        label.text = text
-        return label
-    }
 }

@@ -18,8 +18,7 @@ class MainViewController: UITableViewController {
     
     public init(viewModel: ViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .white
+        super.init(style: .grouped)
         setUI()
     }
 

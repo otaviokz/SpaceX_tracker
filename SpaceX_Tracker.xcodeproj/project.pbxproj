@@ -29,7 +29,11 @@
 		3062A19D266463F300D13B1E /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A19C266463F300D13B1E /* APIResponse.swift */; };
 		3062A1A02664643700D13B1E /* URLRequest+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A19F2664643700D13B1E /* URLRequest+Utils.swift */; };
 		3062A1A42664679000D13B1E /* MockImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A1A22664678200D13B1E /* MockImageLoader.swift */; };
-		3072072226646F81005A7F5D /* ListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072072126646F81005A7F5D /* ListItemCell.swift */; };
+		3072072226646F81005A7F5D /* ListItemCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072072126646F81005A7F5D /* ListItemCellType.swift */; };
+		3072072526681430005A7F5D /* Coordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072072426681430005A7F5D /* Coordinating.swift */; };
+		3072072726681459005A7F5D /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072072626681459005A7F5D /* MainCoordinator.swift */; };
+		30720729266817C3005A7F5D /* UIView+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30720728266817C3005A7F5D /* UIView+Styling.swift */; };
+		3072072B266817FE005A7F5D /* UILabel+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072072A266817FE005A7F5D /* UILabel+Styling.swift */; };
 		307C9FBB265BCBDC00CB111A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBA265BCBDC00CB111A /* AppDelegate.swift */; };
 		307C9FBD265BCBDC00CB111A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */; };
 		307C9FBF265BCBDC00CB111A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBE265BCBDC00CB111A /* MainViewController.swift */; };
@@ -97,7 +101,11 @@
 		3062A19C266463F300D13B1E /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		3062A19F2664643700D13B1E /* URLRequest+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Utils.swift"; sourceTree = "<group>"; };
 		3062A1A22664678200D13B1E /* MockImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageLoader.swift; sourceTree = "<group>"; };
-		3072072126646F81005A7F5D /* ListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemCell.swift; sourceTree = "<group>"; };
+		3072072126646F81005A7F5D /* ListItemCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemCellType.swift; sourceTree = "<group>"; };
+		3072072426681430005A7F5D /* Coordinating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinating.swift; sourceTree = "<group>"; };
+		3072072626681459005A7F5D /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		30720728266817C3005A7F5D /* UIView+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Styling.swift"; sourceTree = "<group>"; };
+		3072072A266817FE005A7F5D /* UILabel+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Styling.swift"; sourceTree = "<group>"; };
 		307C9FB7265BCBDC00CB111A /* SpaceX_Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX_Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		307C9FBA265BCBDC00CB111A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -178,7 +186,7 @@
 				3062A17B26644A7900D13B1E /* Protocol */,
 				3062A17926644A2A00D13B1E /* MainViewController+ViewModel.swift */,
 				3062A17F26644AED00D13B1E /* ListSection.swift */,
-				3072072126646F81005A7F5D /* ListItemCell.swift */,
+				3072072126646F81005A7F5D /* ListItemCellType.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -207,6 +215,8 @@
 				3062A18926644D2100D13B1E /* UIView+Constrainable.swift */,
 				3062A18B26644D6100D13B1E /* UILabel+Localization.swift */,
 				3062A18D26644E1F00D13B1E /* UITableView+Dequeue.swift */,
+				30720728266817C3005A7F5D /* UIView+Styling.swift */,
+				3072072A266817FE005A7F5D /* UILabel+Styling.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -239,6 +249,15 @@
 			path = Mock;
 			sourceTree = "<group>";
 		};
+		307207232668141B005A7F5D /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				3072072426681430005A7F5D /* Coordinating.swift */,
+				3072072626681459005A7F5D /* MainCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		307C9FAE265BCBDC00CB111A = {
 			isa = PBXGroup;
 			children = (
@@ -262,6 +281,7 @@
 		307C9FB9265BCBDC00CB111A /* SpaceX_Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				307207232668141B005A7F5D /* Coordinator */,
 				3062A195266462C400D13B1E /* API */,
 				307C9FEC265BCDF300CB111A /* Delegate */,
 				3062A1662664466900D13B1E /* Localization */,
@@ -518,13 +538,15 @@
 				3062A18526644CBA00D13B1E /* CompanyCell.swift in Sources */,
 				3062A173266448DA00D13B1E /* JSONLoader+App.swift in Sources */,
 				3062A1682664468D00D13B1E /* Localize.swift in Sources */,
-				3072072226646F81005A7F5D /* ListItemCell.swift in Sources */,
+				3072072226646F81005A7F5D /* ListItemCellType.swift in Sources */,
 				307C9FBF265BCBDC00CB111A /* MainViewController.swift in Sources */,
 				3062A18026644AED00D13B1E /* ListSection.swift in Sources */,
 				307C9FF4265BCED900CB111A /* Links.swift in Sources */,
 				307C9FF6265BCEEC00CB111A /* Patch.swift in Sources */,
+				3072072726681459005A7F5D /* MainCoordinator.swift in Sources */,
 				307C9FBB265BCBDC00CB111A /* AppDelegate.swift in Sources */,
 				307C9FBD265BCBDC00CB111A /* SceneDelegate.swift in Sources */,
+				30720729266817C3005A7F5D /* UIView+Styling.swift in Sources */,
 				3062A18A26644D2100D13B1E /* UIView+Constrainable.swift in Sources */,
 				3062A17D26644A9100D13B1E /* ListViewModelType.swift in Sources */,
 				3062A1972664638B00D13B1E /* DataResponse.swift in Sources */,
@@ -533,6 +555,8 @@
 				3062A18C26644D6100D13B1E /* UILabel+Localization.swift in Sources */,
 				307C9FF1265BCEB400CB111A /* Launch.swift in Sources */,
 				307C9FEF265BCE9E00CB111A /* Company.swift in Sources */,
+				3072072B266817FE005A7F5D /* UILabel+Styling.swift in Sources */,
+				3072072526681430005A7F5D /* Coordinating.swift in Sources */,
 				3062A18726644CE900D13B1E /* LaunchCell.swift in Sources */,
 				3062A18E26644E1F00D13B1E /* UITableView+Dequeue.swift in Sources */,
 				3062A19D266463F300D13B1E /* APIResponse.swift in Sources */,

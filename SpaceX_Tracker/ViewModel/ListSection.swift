@@ -9,5 +9,5 @@ import Foundation
 
 struct ListSection {
     let title: String
-    let items: [ListItem]
+    let items: [ListItemType]
 }
