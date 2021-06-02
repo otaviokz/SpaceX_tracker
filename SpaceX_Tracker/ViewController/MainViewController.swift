@@ -16,10 +16,15 @@ class MainViewController: UITableViewController {
     
     let viewModel: ViewModel
     
-    public init(viewModel: ViewModel) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
         super.init(style: .grouped)
         setUI()
+    }
+    
+    func onNewData() {
+        tableView.reloadData()
+        title = viewModel.company?.name
     }
 
     @available(*, unavailable)

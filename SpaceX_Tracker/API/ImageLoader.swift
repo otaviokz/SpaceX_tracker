@@ -27,10 +27,10 @@ class ImageLoader: ImageLoaderType {
             completion(.success((image, url)))
             return
         } else {
-            downloadQueue.addOperation { [weak self] in
-                HTTPClient.shared.getData(url: url, cachePolicy: .returnCacheDataElseLoad) {
+            downloadQueue.addOperation { [unowned self] in
+                APIAssembler.httpClient.getData(url: url, cachePolicy: .returnCacheDataElseLoad) {
                     if let data = $0.data, let image = UIImage(data: data) {
-                        self?.cache[url] = image
+                        self.cache[url] = image
                         completion(.success((image, url)))
                     } else {
                         completion(.failure($0.error ?? APIError.notAbleToDecodeData))

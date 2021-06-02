@@ -9,15 +9,16 @@ import UIKit
 
 class MainCoordinator: Coordinating {
     let navigationController: UINavigationController
+    let mainViewModel: MainViewController.ViewModel
     
-    init(imageLoader: ImageLoaderType) {
-        let mainViewController = MainViewController(
-            viewModel: .init(
-                company: try! JsonLoader.sampleCompany(),
-                launches: try! JsonLoader.sampleLaunches(),
-                imageLoader: imageLoader
-            )
-        )
+    init(imageLoader: ImageLoaderType, apiClient: SpaceXAPIClientType) {
+        mainViewModel = .init(imageLoader: imageLoader, apiClient: apiClient)
+        let mainViewController = MainViewController(viewModel: mainViewModel)
+        mainViewModel.onNewData = mainViewController.onNewData
         self.navigationController = UINavigationController(rootViewController: mainViewController)
+    }
+    
+    func start() {
+        mainViewModel.fetchData()
     }
 }

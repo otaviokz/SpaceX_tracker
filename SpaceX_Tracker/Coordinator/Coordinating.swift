@@ -9,4 +9,5 @@ import UIKit
 
 protocol Coordinating {
     var navigationController: UINavigationController { get }
+    func start()
 }

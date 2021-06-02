@@ -9,11 +9,10 @@ import XCTest
 @testable import SpaceX_Tracker
 
 class SpaceXAPIClientTests: XCTestCase {
-    var mockHTTPClient: MockHTTPClient!
+    var mockHTTPClient = MockHTTPClient.shared
     var apiClient: SpaceXAPIClient!
     
     override func setUpWithError() throws {
-        mockHTTPClient = MockHTTPClient()
         apiClient = SpaceXAPIClient(httpClient: mockHTTPClient)
     }
     

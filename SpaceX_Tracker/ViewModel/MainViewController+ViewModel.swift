@@ -9,14 +9,15 @@ import UIKit
 
 extension MainViewController {
     class ViewModel: NSObject, ListViewModelType {
-        let company: Company?
-        let launches: [Launch]?
+        private(set) var company: Company?
+        private(set) var launches: [Launch]?
+        var onNewData: (() -> Void)?
         let imageLoader: ImageLoaderType
+        let apiClient: SpaceXAPIClientType
         
-        init(company: Company?, launches: [Launch]?, imageLoader: ImageLoaderType = ImageLoader.shared) {
-            self.company = company
-            self.launches = launches
+        init(imageLoader: ImageLoaderType, apiClient: SpaceXAPIClientType) {
             self.imageLoader = imageLoader
+            self.apiClient = apiClient
         }
         
         var sections: [ListSection] {
@@ -30,6 +31,26 @@ extension MainViewController {
                 sectionsArray.append(ListSection(title: localize(.main_launchesSectionTitle), items: launches))
             }
             return sectionsArray
+        }
+        
+        func fetchData() {
+            apiClient.company { [unowned self] response in
+                DispatchQueue.main.async {
+                    if let company = response.apiData {
+                        self.company = company
+                        self.onNewData?()
+                    }
+                }
+            }
+            
+            apiClient.launches { [unowned self] response in
+                DispatchQueue.main.async {
+                    if let launches: [Launch] = response.apiData?.documents, launches.count > 0 {
+                        self.launches = launches
+                        self.onNewData?()
+                    }
+                }
+            }
         }
     }
 }
