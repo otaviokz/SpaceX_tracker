@@ -10,6 +10,7 @@ import Foundation
 
 extension JsonLoader {
     static func sampleLaunches() throws -> [Launch] { try loadJson("TestLaunches_PopulatedRockets_v4") }
+    static func sampleLaunchesLong() throws -> [Launch] { try loadJson("TestLaunches_PopulatedRockets_v4_long") }
     static func sampleRockets() throws -> [Rocket] { try loadJson("TestRockets_v4") }
     static func sampleLinks() throws -> [Links] { try loadJson("TestLinks_v4") }
     static func samplePatches() throws -> [Patch] { try loadJson("TestPatches_v4") }
