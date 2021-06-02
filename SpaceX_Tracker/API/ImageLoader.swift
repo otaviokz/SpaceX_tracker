@@ -33,7 +33,7 @@ class ImageLoader: ImageLoaderType {
                         self?.cache[url] = image
                         completion(.success((image, url)))
                     } else {
-                        completion(.error($0.error ?? APIError.notAbleToDecodeData))
+                        completion(.failure($0.error ?? APIError.notAbleToDecodeData))
                     }
                 }
             }

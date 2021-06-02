@@ -31,7 +31,7 @@ struct HTTPClient: HTTPClientType {
             if let data = $0 {
                 completion(.success(data))
             } else {
-                completion(.error($2 ?? APIError.notAbleToDecodeData))
+                completion(.failure($2 ?? APIError.notAbleToDecodeData))
             }
         }.resume()
     }
@@ -59,6 +59,5 @@ private extension Dictionary where Key == String {
     func jsData() throws -> Data {
         try JSONSerialization.data(withJSONObject: self)
     }
-    
 }
 

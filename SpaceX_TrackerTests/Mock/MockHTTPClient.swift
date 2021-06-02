@@ -27,7 +27,7 @@ class MockHTTPClient: HTTPClientType {
         if let data = UIImage(named: "badge_placeholder")?.pngData() {
             completion(.success(data))
         } else {
-            completion(.error(APIError.notHttpResponse))
+            completion(.failure(APIError.notHttpResponse))
         }
     }
     
