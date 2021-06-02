@@ -35,4 +35,8 @@ struct RuntimeService {
     static var imageLoader: ImageLoaderType {
         isRunningTests ? MockImageLoader.shared : ImageLoader.shared
     }
+    
+    static var httpClient: HTTPClientType {
+        isRunningTests ? MockHTTPClient() : HTTPClient.shared
+    }
 }
