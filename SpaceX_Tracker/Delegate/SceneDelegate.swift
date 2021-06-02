@@ -19,9 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let winScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: winScene)
         RuntimeService.optimiseForTestsIfTesting(window: window)
-        let mainCoordinator: Coordinating = MainCoordinator(imageLoader: RuntimeService.imageLoader)
+        let mainCoordinator: Coordinating = MainCoordinator(imageLoader: ImageLoader.shared, apiClient: APIAssembler.apiClient)
         window?.rootViewController = mainCoordinator.navigationController        
         window?.makeKeyAndVisible()
+        mainCoordinator.start()
     }
 
 //    func sceneDidDisconnect(_ scene: UIScene) {

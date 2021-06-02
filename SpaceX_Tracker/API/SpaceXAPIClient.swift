@@ -20,18 +20,24 @@ struct SpaceXAPIClient: SpaceXAPIClientType {
     private var baseURL: URL = URL(string: "https://api.spacexdata.com/v4")!
     private var launchesURL: URL { baseURL.appendingPathComponent("launches/query") }
     private var companyURL: URL { baseURL.appendingPathComponent("company") }
+    private var queue: OperationQueue = OperationQueue()
     
     init(baseURL: URL = URL(string: "https://api.spacexdata.com/v4")!, httpClient: HTTPClientType) {
         self.baseURL = baseURL
         self.httpClient = httpClient
+        queue.maxConcurrentOperationCount = 1
     }
     
     func launches(_ completion: @escaping LaunchesCompletion) {
-        httpClient.post(url: launchesURL, body: launchQuery(), completion: completion)
+        queue.addOperation {
+            httpClient.post(url: launchesURL, body: launchQuery(), completion: completion)
+        }
     }
     
     func company(_ completion: @escaping CompanyCompletion) {
-        httpClient.get(url: companyURL, completion: completion)
+        queue.addOperation {
+            httpClient.get(url: companyURL, completion: completion)
+        }
     }
 }
 

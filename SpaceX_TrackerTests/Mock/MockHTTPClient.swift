@@ -8,10 +8,13 @@
 import UIKit
 
 class MockHTTPClient: HTTPClientType {
+    static var shared = MockHTTPClient()
     var launchesCompletion: (() -> Void)?
     var launchesData: APIQueryResponse<[Launch]>?
     var companyCompletion: (() -> Void)?
     var companyData: Company?
+    
+    private init() {}
     
     func get<T>(url: URL, completion: @escaping APICompletion<T>) where T : Decodable {
         companyCompletion = {
