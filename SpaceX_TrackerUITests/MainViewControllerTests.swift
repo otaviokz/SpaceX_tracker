@@ -15,7 +15,6 @@ class MainViewControllerTests: BaseUITestCase {
     
     func testBasics() throws {
         let app = XCUIApplication()
-        app.launch()
         
         XCTAssertTrue(app.navigationBars.staticTexts["SpaceX"].exists)
         
