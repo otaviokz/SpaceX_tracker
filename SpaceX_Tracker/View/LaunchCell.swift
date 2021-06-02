@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LaunchCell: UITableViewCell, ListItemCell {
+class LaunchCell: UITableViewCell, ListItemCellType {
     private static let verticalPadding: CGFloat = 8
     private static let horizontalPadding: CGFloat = 4
     private static let imageSide: CGFloat = 32
@@ -18,7 +18,7 @@ class LaunchCell: UITableViewCell, ListItemCell {
         return formatter
     }
     
-    let badgeimageView = UIImageView(image: UIImage(named: "badge_placeholder")).asConstrainable()
+    let badgeimageView = UIImageView(image: UIImage(named: "badge_placeholder")).constrainable
     let missionLabel = UILabel(key: .main_label_mission).asTitle()
     let missionValueLabel = UILabel().asValue()
     let dateLabel = UILabel(key: .main_label_date).asTitle()
@@ -27,11 +27,11 @@ class LaunchCell: UITableViewCell, ListItemCell {
     let rocketValueLabel = UILabel().asValue()
     let daysLabel = UILabel().asTitle()
     let daysValueLabel = UILabel().asValue()
-    let successImageView = UIImageView().asConstrainable()
+    let successImageView = UIImageView().constrainable
     var imageURL: URL?
     
     lazy var labelsStack: UIStackView = {
-        let labelsStack = UIStackView(arrangedSubviews: [missionLabel, dateLabel, rocketLabel, daysLabel]).asConstrainable()
+        let labelsStack = UIStackView(arrangedSubviews: [missionLabel, dateLabel, rocketLabel, daysLabel]).constrainable
         labelsStack.axis = .vertical
         labelsStack.alignment = .leading
         labelsStack.spacing = 4
@@ -39,7 +39,7 @@ class LaunchCell: UITableViewCell, ListItemCell {
     }()
     
     lazy var valuesStack: UIStackView = {
-        let valuesStack = UIStackView(arrangedSubviews: [missionValueLabel, dateValueLabel, rocketValueLabel, daysValueLabel]).asConstrainable()
+        let valuesStack = UIStackView(arrangedSubviews: [missionValueLabel, dateValueLabel, rocketValueLabel, daysValueLabel]).constrainable
         valuesStack.axis = .vertical
         valuesStack.alignment = .leading
         valuesStack.spacing = 4
@@ -47,7 +47,7 @@ class LaunchCell: UITableViewCell, ListItemCell {
     }()
     
     lazy var contentStack: UIStackView = {
-        let contentStack = UIStackView(arrangedSubviews: [badgeimageView, labelsStack, valuesStack, successImageView]).asConstrainable()
+        let contentStack = UIStackView(arrangedSubviews: [badgeimageView, labelsStack, valuesStack, successImageView]).constrainable
         contentStack.axis = .horizontal
         contentStack.alignment = .top
         contentStack.spacing = Self.horizontalPadding
@@ -151,7 +151,7 @@ class LaunchCell: UITableViewCell, ListItemCell {
     required init?(coder: NSCoder) { fatalError("Not implemented!") }
 }
 
-extension Launch: ListItem {}
+extension Launch: ListItemType {}
 
 private extension UILabel {
     @discardableResult
@@ -169,6 +169,6 @@ private extension UILabel {
     @discardableResult
     func resizable() -> Self {
         numberOfLines = 0
-        return self.asConstrainable()
+        return self.constrainable
     }
 }

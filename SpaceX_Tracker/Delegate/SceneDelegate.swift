@@ -19,15 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let winScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: winScene)
         RuntimeService.optimiseForTestsIfTesting(window: window)
-        let viewController = MainViewController(
-            viewModel: .init(
-                company: try! JsonLoader.sampleCompany(),
-                launches: try! JsonLoader.sampleLaunches(),
-                imageLoader: RuntimeService.imageLoader
-            )
-        )
-        window?.rootViewController = UINavigationController(rootViewController: viewController)
-        
+        let mainCoordinator: Coordinating = MainCoordinator(imageLoader: RuntimeService.imageLoader)
+        window?.rootViewController = mainCoordinator.navigationController        
         window?.makeKeyAndVisible()
     }
 

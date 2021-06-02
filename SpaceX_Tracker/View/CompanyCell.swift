@@ -7,14 +7,14 @@
 
 import UIKit
 
-class CompanyCell: UITableViewCell, ListItemCell {
+class CompanyCell: UITableViewCell, ListItemCellType {
     private static let verticalPadding: CGFloat = 4
     private static let horizontalPadding: CGFloat = 4
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        textLabel?.asConstrainable()
+        textLabel?.setConstrainable()
         setUI()
     }
     
@@ -43,7 +43,7 @@ class CompanyCell: UITableViewCell, ListItemCell {
     required init?(coder: NSCoder) { fatalError("Not implemented!") }
 }
 
-extension Company: ListItem {}
+extension Company: ListItemType {}
 
 private extension Company {
     var localizedDescription: String {
