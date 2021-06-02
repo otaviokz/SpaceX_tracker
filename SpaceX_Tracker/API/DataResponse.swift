@@ -13,7 +13,7 @@ struct DataResponse<T> {
 }
 
 extension DataResponse {
-    static func error(_ error: Error) -> DataResponse {
+    static func failure(_ error: Error) -> DataResponse {
         DataResponse(data: nil, error: error)
     }
     
