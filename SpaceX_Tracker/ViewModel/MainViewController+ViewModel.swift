@@ -12,6 +12,7 @@ extension MainViewController {
         private(set) var company: Company?
         private(set) var launches: [Launch]?
         var onNewData: (() -> Void)?
+        var openURL: ((Links) -> Void)?
         let imageLoader: ImageLoaderType
         let apiClient: SpaceXAPIClientType
         
@@ -34,21 +35,17 @@ extension MainViewController {
         }
         
         func fetchData() {
-            apiClient.company { [unowned self] response in
-                DispatchQueue.main.async {
-                    if let company = response.apiData {
-                        self.company = company
-                        self.onNewData?()
-                    }
+            apiClient.company { [unowned self] in
+                if let company = $0.apiData {
+                    self.company = company
+                    self.onNewData?()
                 }
             }
             
-            apiClient.launches { [unowned self] response in
-                DispatchQueue.main.async {
-                    if let launches: [Launch] = response.apiData?.documents, launches.count > 0 {
-                        self.launches = launches
-                        self.onNewData?()
-                    }
+            apiClient.launches { [unowned self] in
+                if let launches = $0.apiData?.documents {
+                    self.launches = launches
+                    self.onNewData?()
                 }
             }
         }
@@ -88,4 +85,10 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
                 .background(.black)
                 .add(UILabel(sections[section].title).textColor(.white).background(.clear), padding: 4)
         }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let launch = sections[indexPath.section].items[indexPath.row] as? Launch, launch.links.hasInfo {
+            openURL?(launch.links)
+        }
+    }
 }

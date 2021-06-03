@@ -12,4 +12,8 @@ struct Links: Codable, Equatable {
     let webcast: URL?
     let article: URL?
     let wikipedia: URL?
+    
+    var hasInfo: Bool {
+        webcast != nil || article != nil || wikipedia != nil
+    }
 }
