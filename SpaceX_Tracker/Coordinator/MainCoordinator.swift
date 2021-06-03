@@ -14,7 +14,6 @@ class MainCoordinator: Coordinating {
     init(imageLoader: ImageLoaderType, apiClient: SpaceXAPIClientType) {
         mainViewModel = .init(imageLoader: imageLoader, apiClient: apiClient)
         let mainViewController = MainViewController(viewModel: mainViewModel)
-        mainViewModel.onNewData = mainViewController.onNewData
         self.navigationController = UINavigationController(rootViewController: mainViewController)
     }
     

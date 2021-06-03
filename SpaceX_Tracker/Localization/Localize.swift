@@ -7,11 +7,11 @@
 
 import Foundation
 
-func localize(_ key: LocalizationKeys) -> String {
+func localize(_ key: LocalizationKey) -> String {
     NSLocalizedString(key.rawValue, comment: "")
 }
 
-func localize(key: FormatedLocalizationKeys, with arguments: [String]) -> String {
+func localize(key: FormatedLocalizationKey, with arguments: [String]) -> String {
     var baseString = NSLocalizedString(key.rawValue, comment: "")
     for index in 0..<arguments.count {
         baseString = baseString.replacingOccurrences(of: "[$\(index)]", with: arguments[index])
@@ -19,7 +19,7 @@ func localize(key: FormatedLocalizationKeys, with arguments: [String]) -> String
     return baseString
 }
 
-enum LocalizationKeys: String {
+enum LocalizationKey: String {
     case main_companySectionTitle
     case main_launchesSectionTitle
     case main_label_mission
@@ -28,8 +28,11 @@ enum LocalizationKeys: String {
     case main_label_days_since
     case main_label_days_from
     case main_dateTimeFormat
+    case main_wiki
+    case main_webcast
+    case main_article
 }
 
-enum FormatedLocalizationKeys: String {
+enum FormatedLocalizationKey: String {
     case main_companyDescription
 }

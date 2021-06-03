@@ -8,10 +8,13 @@
 import XCTest
 
 class BaseUITestCase: XCTestCase {
+    let app = XCUIApplication()
+    
     override func setUpWithError() throws {
-        let app = XCUIApplication()
         app.launchEnvironment.updateValue("YES", forKey: "UITesting")
         app.launchArguments += ProcessInfo().arguments
+        app.launchArguments += ["-AppleLanguages", "(en)"]
+        app.launchArguments += ["-AppleLocale", "en_US"]
         app.launch()
     }
 }

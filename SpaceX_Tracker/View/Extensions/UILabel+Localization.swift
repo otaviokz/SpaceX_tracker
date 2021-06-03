@@ -8,7 +8,7 @@
 import UIKit
 
 extension UILabel {
-    convenience init(key: LocalizationKeys) {
+    convenience init(key: LocalizationKey) {
         self.init()
         text = localize(key)
     }

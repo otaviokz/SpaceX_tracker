@@ -17,3 +17,4 @@ struct APIAssembler {
         RuntimeService.isRunningTests ? MockAPIClient.shared : SpaceXAPIClient(httpClient: httpClient)
     }
 }
+
