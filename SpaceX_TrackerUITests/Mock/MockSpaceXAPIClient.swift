@@ -5,8 +5,6 @@
 //  Created by Otávio Zabaleta on 02/06/2021.
 //
 
-import Foundation
-
 class MockAPIClient: SpaceXAPIClientType {
     static let shared = MockAPIClient()
     
@@ -21,7 +19,6 @@ class MockAPIClient: SpaceXAPIClientType {
     func company(_ completion: @escaping (APIResponse<Company>) -> Void) {
         completion(companyResponse)
     }
-    
     
     func launches(_ completion: @escaping LaunchesCompletion) {
         completion(launchesResponse)

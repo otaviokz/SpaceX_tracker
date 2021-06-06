@@ -47,7 +47,6 @@
 		307C9FBF265BCBDC00CB111A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBE265BCBDC00CB111A /* MainViewController.swift */; };
 		307C9FC4265BCBDD00CB111A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 307C9FC3265BCBDD00CB111A /* Assets.xcassets */; };
 		307C9FC7265BCBDD00CB111A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 307C9FC5265BCBDD00CB111A /* LaunchScreen.storyboard */; };
-		307C9FD2265BCBDD00CB111A /* SpaceX_TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FD1265BCBDD00CB111A /* SpaceX_TrackerTests.swift */; };
 		307C9FDD265BCBDD00CB111A /* MainViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FDC265BCBDD00CB111A /* MainViewControllerTests.swift */; };
 		307C9FEF265BCE9E00CB111A /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FEE265BCE9E00CB111A /* Company.swift */; };
 		307C9FF1265BCEB400CB111A /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FF0265BCEB400CB111A /* Launch.swift */; };
@@ -129,7 +128,6 @@
 		307C9FC3265BCBDD00CB111A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		307C9FC8265BCBDD00CB111A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		307C9FCD265BCBDD00CB111A /* SpaceX_TrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceX_TrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		307C9FD1265BCBDD00CB111A /* SpaceX_TrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceX_TrackerTests.swift; sourceTree = "<group>"; };
 		307C9FD3265BCBDD00CB111A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		307C9FD8265BCBDD00CB111A /* SpaceX_TrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceX_TrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		307C9FDC265BCBDD00CB111A /* MainViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerTests.swift; sourceTree = "<group>"; };
@@ -182,8 +180,8 @@
 		3062A1662664466900D13B1E /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				3062A1672664468D00D13B1E /* Localize.swift */,
 				3062A16D2664475000D13B1E /* Localizable.strings */,
+				3062A1672664468D00D13B1E /* Localize.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -241,14 +239,14 @@
 			isa = PBXGroup;
 			children = (
 				3062A19E2664640F00D13B1E /* Extension */,
-				3062A1962664638B00D13B1E /* DataResponse.swift */,
-				3062A198266463A500D13B1E /* ImageLoader.swift */,
-				3062A19A266463CD00D13B1E /* HTTPClient.swift */,
-				3062A19C266463F300D13B1E /* APIResponse.swift */,
-				3072072C26681CE7005A7F5D /* SpaceXAPIClient.swift */,
 				307207442668411E005A7F5D /* APIAssembler.swift */,
-				3072074A266D3855005A7F5D /* ThreadSafeCache.swift */,
 				30720753266D77CB005A7F5D /* APIQueryResponse.swift */,
+				3062A19C266463F300D13B1E /* APIResponse.swift */,
+				3062A1962664638B00D13B1E /* DataResponse.swift */,
+				3062A19A266463CD00D13B1E /* HTTPClient.swift */,
+				3062A198266463A500D13B1E /* ImageLoader.swift */,
+				3072072C26681CE7005A7F5D /* SpaceXAPIClient.swift */,
+				3072074A266D3855005A7F5D /* ThreadSafeCache.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -347,7 +345,6 @@
 				307CA00B265BD15500CB111A /* Model */,
 				307CA006265BD0BF00CB111A /* Util */,
 				307C9FF9265BD04B00CB111A /* Resources */,
-				307C9FD1265BCBDD00CB111A /* SpaceX_TrackerTests.swift */,
 				307C9FD3265BCBDD00CB111A /* Info.plist */,
 				30720751266D71B3005A7F5D /* XCTestCase+Utils.swift */,
 			);
@@ -623,7 +620,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				307CA008265BD0E100CB111A /* JSONLoader.swift in Sources */,
-				307C9FD2265BCBDD00CB111A /* SpaceX_TrackerTests.swift in Sources */,
 				30720752266D71B3005A7F5D /* XCTestCase+Utils.swift in Sources */,
 				307CA00A265BD12400CB111A /* JSONLoader+TestData.swift in Sources */,
 				30720737266823D4005A7F5D /* SpaceXAPIClientTests.swift in Sources */,

@@ -7,17 +7,19 @@
 
 import XCTest
 
+// MARK: UITableViewCell
+
 extension XCUIApplication {
+    func tableCell(identifier: String) -> XCUIElement {
+        tables.cells.element(matching: .cell, identifier: identifier)
+    }
+    
     func verifyTableCell(identifier: String, staticText: String? = nil, exists: Bool = true) {
-        let cell = tables.cells.element(matching: .cell, identifier: identifier)
+        let cell = tableCell(identifier: identifier)
         if let staticText = staticText {
             XCTAssertEqual(cell.staticTexts[staticText].exists, exists)
         } else {
             XCTAssertEqual(cell.exists, exists)
         }
-    }
-    
-    func tableCell(identifier: String) -> XCUIElement {
-        tables.cells.element(matching: .cell, identifier: identifier)
     }
 }

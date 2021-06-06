@@ -30,13 +30,10 @@ class MainViewControllerTests: BaseUITestCase {
         app.verifyTableCell(identifier: "LaunchCell_1_2", staticText: "Days since now:")
         app.verifyTableCell(identifier: "LaunchCell_1_3", staticText: "Days from now:")
         
-        // Assert LaunchCell is handling ImageLoader's response
-        XCTAssertFalse(app.tables.cells.element(matching: .image, identifier: "https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png").exists)
-        XCTAssertFalse(app.tables.cells.element(matching: .image, identifier: "https://images2.imgbox.com/3d/86/cnu0pan8_o.png").exists)
-        
         // Assert correct nomber os launch cells are populated
-        XCTAssertTrue(app.tables.cells.element(matching: .cell, identifier: "LaunchCell_1_146").exists)
-        XCTAssertFalse(app.tables.cells.element(matching: .cell, identifier: "LaunchCell_1_147").exists)
+        XCTAssertTrue(app.tableCell(identifier: "LaunchCell_1_146").exists)
+        XCTAssertFalse(app.tableCell(identifier: "LaunchCell_1_147").exists)
+        
     }
     
     func testShowLinks() throws {
