@@ -22,7 +22,7 @@ struct HTTPClient: HTTPClientType {
     
     func get<T: Decodable>(url: URL, completion: @escaping APICompletion<T>) {
         URLSession.shared.dataTask(with: .get(url)) {
-            proccess($0, $2, completion)
+            parseJSON($0, $2, completion)
         }.resume()
     }
     
@@ -31,7 +31,7 @@ struct HTTPClient: HTTPClientType {
             if let data = $0 {
                 completion(.success(data))
             } else {
-                completion(.failure($2 ?? APIError.notAbleToDecodeData))
+                completion(.failure($2 ?? APIError.invalidHTTPResponse))
             }
         }.resume()
     }
@@ -39,18 +39,22 @@ struct HTTPClient: HTTPClientType {
     func post<T: Decodable>(url: URL, body: [String: Any], completion: @escaping APICompletion<T>) {
         do {
             URLSession.shared.uploadTask(with: .jsonPost(url), from: try body.jsData()) {
-                proccess($0, $2, completion)
+                parseJSON($0, $2, completion)
             }.resume()
         } catch {
             completion(.failure(error))
         }
     }
     
-    private func proccess<T: Decodable>(_ data: Data?, _ error: Error?, _ completion: @escaping APICompletion<T>) {
-        if let rawData = data, let parsedData = try? JSONDecoder().decode(T.self, from: rawData) {
-            completion(.success(parsedData))
-        } else {
-            completion(.failure(error ?? APIError.notAbleToDecodeData))
+    private func parseJSON<T: Decodable>(_ data: Data?, _ error: Error?, _ completion: @escaping APICompletion<T>) {
+        do {
+            if let data = data {
+                completion(.success(try JSONDecoder().decode(T.self, from: data)))
+            } else {
+                completion(.failure(error ?? APIError.invalidHTTPResponse))
+            }
+        } catch {
+            completion(.failure(error))
         }
     }
 }

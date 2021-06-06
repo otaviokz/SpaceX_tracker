@@ -9,31 +9,60 @@ import XCTest
 @testable import SpaceX_Tracker
 
 class SpaceXAPIClientTests: XCTestCase {
-    var mockHTTPClient = MockHTTPClient.shared
-    var apiClient: SpaceXAPIClient!
+    let apiClient = SpaceXAPIClient(httpClient: MockHTTPClient.shared)
     
     override func setUpWithError() throws {
-        apiClient = SpaceXAPIClient(httpClient: mockHTTPClient)
+        MockHTTPClient.shared.refresh()
     }
     
     func testParseCompany() throws {
-        apiClient.company { response in
-            XCTAssertNil(response.apiError)
-            XCTAssertEqual(response.apiData?.name, "SpaceX")
+        let callback = expectation(description: "apiClient.company callback")
+        var response: APIResponse<Company>?
+        MockHTTPClient.shared.companyData = try JsonLoader.sampleCompany()
+        
+        apiClient.company {
+            response = $0
+            callback.fulfill()
         }
         
-        mockHTTPClient.companyData = try JsonLoader.sampleCompany()
-        mockHTTPClient.companyCompletion?()
+        run(after: 0.1) { MockHTTPClient.shared.companyCompletion?() }
+        wait(for: [callback], timeout: 1)
+        
+        XCTAssertNotNil(response?.apiData)
+        XCTAssertNil(response?.apiError)
+    }
+    
+    func testPropagatesError() throws {
+        let callback = expectation(description: "apiClient.company callback")
+        var response: APIResponse<Company>?
+        
+        apiClient.company {
+            response = $0
+            callback.fulfill()
+        }
+        
+        run(after: 0.1) { MockHTTPClient.shared.companyCompletion?() }
+        wait(for: [callback], timeout: 1)
+        
+        XCTAssertNil(response?.apiData)
+        XCTAssertEqual(response?.apiError as? APIError, .invalidHTTPResponse)
     }
     
     
     func testParseLaunches() throws {
-        apiClient.launches { response in
-            XCTAssertNil(response.apiError)
-            XCTAssertEqual(response.apiData?.documents.count, 143)
+        let callback = expectation(description: "apiClient.launches callback")
+        var response: APIResponse<APIQueryResponse<[Launch]>>?
+        MockHTTPClient.shared.launchesData = APIQueryResponse(documents: try JsonLoader.sampleLaunchesLong())
+        
+        apiClient.launches {
+            response = $0
+            callback.fulfill()
         }
         
-        mockHTTPClient.launchesData = APIQueryResponse(documents: try JsonLoader.sampleLaunchesLong())
-        mockHTTPClient.launchesCompletion?()
+        run(after: 0.1) { MockHTTPClient.shared.launchesCompletion?() }
+        wait(for: [callback], timeout: 1)
+        
+        XCTAssertNil(response?.apiError)
+        XCTAssertEqual(response?.apiData?.documents.count, 143)
     }
 }

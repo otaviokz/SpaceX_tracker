@@ -12,7 +12,7 @@ protocol ImageLoaderType {
 }
 
 class ImageLoader: ImageLoaderType {
-    private var cache: [URL: UIImage] = [:]
+    private var cache = ThreadSafeCache<URL, UIImage>()
     private lazy var downloadQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 4
@@ -30,10 +30,10 @@ class ImageLoader: ImageLoaderType {
             downloadQueue.addOperation { [unowned self] in
                 APIAssembler.httpClient.getData(url: url, cachePolicy: .returnCacheDataElseLoad) {
                     if let data = $0.data, let image = UIImage(data: data) {
-                        self.cache[url] = image
                         completion(.success((image, url)))
+                        cache[url] = image
                     } else {
-                        completion(.failure($0.error ?? APIError.notAbleToDecodeData))
+                        completion(.failure($0.error ?? APIError.invalidHTTPResponse))
                     }
                 }
             }

@@ -15,7 +15,7 @@ class MockAPIClient: SpaceXAPIClientType {
     
     private init() {
         companyResponse = .success(try! JsonLoader.sampleCompany())
-        launchesResponse = APIResponse.success(APIQueryResponse(documents: try! JsonLoader.sampleLaunches()))
+        launchesResponse = .success(APIQueryResponse(documents: try! JsonLoader.sampleLaunches()))
     }
 
     func company(_ completion: @escaping (APIResponse<Company>) -> Void) {

@@ -39,6 +39,9 @@
 		3072073C266837E5005A7F5D /* MockSpaceXAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072073A266837E0005A7F5D /* MockSpaceXAPIClient.swift */; };
 		307207452668411E005A7F5D /* APIAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307207442668411E005A7F5D /* APIAssembler.swift */; };
 		307207492668557D005A7F5D /* XCUIApplication+Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307207482668557D005A7F5D /* XCUIApplication+Shortcuts.swift */; };
+		3072074B266D3855005A7F5D /* ThreadSafeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072074A266D3855005A7F5D /* ThreadSafeCache.swift */; };
+		30720752266D71B3005A7F5D /* XCTestCase+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30720751266D71B3005A7F5D /* XCTestCase+Utils.swift */; };
+		30720754266D77CB005A7F5D /* APIQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30720753266D77CB005A7F5D /* APIQueryResponse.swift */; };
 		307C9FBB265BCBDC00CB111A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBA265BCBDC00CB111A /* AppDelegate.swift */; };
 		307C9FBD265BCBDC00CB111A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */; };
 		307C9FBF265BCBDC00CB111A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBE265BCBDC00CB111A /* MainViewController.swift */; };
@@ -116,6 +119,9 @@
 		3072073A266837E0005A7F5D /* MockSpaceXAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSpaceXAPIClient.swift; sourceTree = "<group>"; };
 		307207442668411E005A7F5D /* APIAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAssembler.swift; sourceTree = "<group>"; };
 		307207482668557D005A7F5D /* XCUIApplication+Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Shortcuts.swift"; sourceTree = "<group>"; };
+		3072074A266D3855005A7F5D /* ThreadSafeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeCache.swift; sourceTree = "<group>"; };
+		30720751266D71B3005A7F5D /* XCTestCase+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Utils.swift"; sourceTree = "<group>"; };
+		30720753266D77CB005A7F5D /* APIQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIQueryResponse.swift; sourceTree = "<group>"; };
 		307C9FB7265BCBDC00CB111A /* SpaceX_Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX_Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		307C9FBA265BCBDC00CB111A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -241,6 +247,8 @@
 				3062A19C266463F300D13B1E /* APIResponse.swift */,
 				3072072C26681CE7005A7F5D /* SpaceXAPIClient.swift */,
 				307207442668411E005A7F5D /* APIAssembler.swift */,
+				3072074A266D3855005A7F5D /* ThreadSafeCache.swift */,
+				30720753266D77CB005A7F5D /* APIQueryResponse.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -341,6 +349,7 @@
 				307C9FF9265BD04B00CB111A /* Resources */,
 				307C9FD1265BCBDD00CB111A /* SpaceX_TrackerTests.swift */,
 				307C9FD3265BCBDD00CB111A /* Info.plist */,
+				30720751266D71B3005A7F5D /* XCTestCase+Utils.swift */,
 			);
 			path = SpaceX_TrackerTests;
 			sourceTree = "<group>";
@@ -576,6 +585,7 @@
 				3062A171266448B100D13B1E /* JSONLoader.swift in Sources */,
 				3062A18526644CBA00D13B1E /* CompanyCell.swift in Sources */,
 				3062A173266448DA00D13B1E /* JSONLoader+App.swift in Sources */,
+				3072074B266D3855005A7F5D /* ThreadSafeCache.swift in Sources */,
 				3062A1682664468D00D13B1E /* Localize.swift in Sources */,
 				3072072226646F81005A7F5D /* ListItemCellType.swift in Sources */,
 				3072072D26681CE7005A7F5D /* SpaceXAPIClient.swift in Sources */,
@@ -593,6 +603,7 @@
 				3062A199266463A500D13B1E /* ImageLoader.swift in Sources */,
 				3062A192266452A100D13B1E /* RuntimeService.swift in Sources */,
 				3062A18C26644D6100D13B1E /* UILabel+Localization.swift in Sources */,
+				30720754266D77CB005A7F5D /* APIQueryResponse.swift in Sources */,
 				307C9FF1265BCEB400CB111A /* Launch.swift in Sources */,
 				3072073C266837E5005A7F5D /* MockSpaceXAPIClient.swift in Sources */,
 				307C9FEF265BCE9E00CB111A /* Company.swift in Sources */,
@@ -613,6 +624,7 @@
 			files = (
 				307CA008265BD0E100CB111A /* JSONLoader.swift in Sources */,
 				307C9FD2265BCBDD00CB111A /* SpaceX_TrackerTests.swift in Sources */,
+				30720752266D71B3005A7F5D /* XCTestCase+Utils.swift in Sources */,
 				307CA00A265BD12400CB111A /* JSONLoader+TestData.swift in Sources */,
 				30720737266823D4005A7F5D /* SpaceXAPIClientTests.swift in Sources */,
 				307CA013265BD24C00CB111A /* LaunchTests.swift in Sources */,
