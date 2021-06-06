@@ -24,12 +24,10 @@ struct Launch: Codable {
     let localDate: Date
     
     enum CodingKeys: String, CodingKey {
+        case success, rocket, links
         case missionName = "name"
-        case success
         case dateUTC = "date_utc"
         case dateIsTBD = "tbd"
-        case rocket
-        case links
     }
     
     public init(from decoder: Decoder) throws {

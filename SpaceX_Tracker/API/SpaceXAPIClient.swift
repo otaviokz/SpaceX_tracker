@@ -16,11 +16,11 @@ protocol SpaceXAPIClientType {
 }
 
 struct SpaceXAPIClient: SpaceXAPIClientType {
-    private var httpClient: HTTPClientType
-    private var baseURL: URL = URL(string: "https://api.spacexdata.com/v4")!
+    private let httpClient: HTTPClientType
+    private let baseURL: URL
     private var launchesURL: URL { baseURL.appendingPathComponent("launches/query") }
     private var companyURL: URL { baseURL.appendingPathComponent("company") }
-    private var queue: OperationQueue = OperationQueue()
+    private let queue = OperationQueue()
     
     init(baseURL: URL = URL(string: "https://api.spacexdata.com/v4")!, httpClient: HTTPClientType) {
         self.baseURL = baseURL
