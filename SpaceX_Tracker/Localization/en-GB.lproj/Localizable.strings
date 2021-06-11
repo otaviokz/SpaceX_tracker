@@ -18,3 +18,7 @@
 "main_wiki" = "Wikipedia";
 "main_webcast" = "Webcast";
 "main_article" = "Article";
+"filter_title" = "Filter by:";
+"filter_years" = "Years";
+"filter_status" = "Status";
+"filter_success" = "Successfull";

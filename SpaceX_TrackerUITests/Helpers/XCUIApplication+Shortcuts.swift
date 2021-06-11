@@ -7,8 +7,6 @@
 
 import XCTest
 
-// MARK: UITableViewCell
-
 extension XCUIApplication {
     func tableCell(identifier: String) -> XCUIElement {
         tables.cells.element(matching: .cell, identifier: identifier)

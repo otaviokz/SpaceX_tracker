@@ -34,7 +34,7 @@ class MockHTTPClient: HTTPClientType {
     }
     
     func getData(url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>) {
-        if let data = UIImage(named: "badge_placeholder")?.pngData() {
+        if let data = Style.Image.badgePlaceholder?.pngData() {
             completion(.success(data))
         } else {
             completion(.failure(APIError.invalidHTTPResponse))

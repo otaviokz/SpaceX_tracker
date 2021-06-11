@@ -8,7 +8,38 @@
 import UIKit
 
 class MainViewController: UITableViewController {
-    let viewModel: ViewModel
+    private let viewModel: ViewModel
+    var showFilter: (() -> Void)!
+    
+    private lazy var filterBarButton: UIBarButtonItem = {
+        let menuBarItem = UIBarButtonItem(customView: filterButton)
+        menuBarItem.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        menuBarItem.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        return menuBarItem
+    }()
+    
+    private lazy var sortBarButton: UIBarButtonItem = {
+        let menuBarItem = UIBarButtonItem(customView: sortButton)
+        menuBarItem.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        menuBarItem.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        return menuBarItem
+    }()
+    
+    private lazy var sortButton: UIButton = {
+        UIButton(type: .custom)
+            .image(Style.Image.sort)
+            .tint(.barbutton)
+            .onTap(viewModel, action: #selector(ViewModel.toggleSort))
+            .identifier("SortButton")
+    }()
+    
+    private lazy var filterButton: UIButton = {
+        UIButton(type: .custom)
+            .image(Style.Image.filter)
+            .tint(.barbutton)
+            .onTap(self, action: #selector(showFilterView))
+            .identifier("FilterButton")
+    }()
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -21,7 +52,7 @@ class MainViewController: UITableViewController {
 }
 
 private extension MainViewController {
-    func setUI() {
+    private func setUI() {
         title = viewModel.company?.name
         tableView.register(CompanyCell.self, forCellReuseIdentifier: CompanyCell.reuseIdentifier)
         tableView.register(LaunchCell.self, forCellReuseIdentifier: LaunchCell.reuseIdentifier)
@@ -40,6 +71,23 @@ private extension MainViewController {
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) {_ in self.dismiss(animated: true) })
             self.present(alert, animated: true)
         }
+        
+        navigationItem.setRightBarButtonItems([filterBarButton, sortBarButton], animated: false)
+    }
+    
+    @objc func showFilterView() {
+        showFilter()
+    }
+}
+
+extension MainViewController: LaunchesFilterDelegate {
+    func didFinish(with options: FilterOptions) {
+        dismiss(animated: true)
+        viewModel.filterOptions = options
+    }
+    
+    func didCancel() {
+        dismiss(animated: true)
     }
 }
 

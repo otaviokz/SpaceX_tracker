@@ -8,13 +8,80 @@
 import UIKit
 
 extension MainViewController {
+    enum SortOrder {
+        case ascending
+        case descending
+    }
+    
+    struct FilterOptions {
+        var availableYears: [Int] = []
+        var checkedYears: [Int] = []
+        var success: Bool = false
+        
+        init(availableYears: [Int] = [], checkedYears: [Int] = [], success: Bool = false) {
+            self.availableYears = availableYears
+            self.checkedYears = checkedYears
+            self.success = success
+        }
+    }
+    
     class ViewModel: NSObject, ListViewModelType {
-        private(set) var company: Company?
-        private(set) var launches: [Launch]?
+        private(set) var filteredLaunches: [Launch] = []
         var onNewData: (() -> Void)?
         var openURL: ((Links) -> Void)?
-        let imageLoader: ImageLoaderType
-        let apiClient: SpaceXAPIClientType
+        private let imageLoader: ImageLoaderType
+        private let apiClient: SpaceXAPIClientType
+        
+        private(set) var company: Company? {
+            didSet {
+                onNewData?()
+            }
+        }
+        
+        var launches: [Launch] = [] {
+            didSet {
+                filterOptions.availableYears = availableYears
+                filterAndSort()
+                onNewData?()
+            }
+        }
+        
+        var filterOptions = FilterOptions() {
+            didSet {
+                filterAndSort()
+                onNewData?()
+            }
+        }
+        
+        private var sortDescending = true {
+            didSet {
+                filterAndSort()
+                onNewData?()
+            }
+        }
+        
+        func filterAndSort() {
+            filteredLaunches = launches
+            
+            if !filterOptions.checkedYears.isEmpty {
+                filteredLaunches = filteredLaunches.filter {
+                    filterOptions.checkedYears.contains(Calendar.current.component(.year, from: $0.localDate))
+                }
+            }
+            
+            if filterOptions.success {
+                filteredLaunches = filteredLaunches.filter { $0.success == true }
+            }
+            
+            filteredLaunches.sort()
+            if sortDescending {
+                filteredLaunches.reverse()
+            }
+        }
+        
+        var availableYears: [Int] {
+            Set(launches.map { $0.launchYear }).sorted()
+        }
         
         init(imageLoader: ImageLoaderType, apiClient: SpaceXAPIClientType) {
             self.imageLoader = imageLoader
@@ -24,36 +91,34 @@ extension MainViewController {
         var sections: [ListSection] {
             var sectionsArray: [ListSection] = []
             if let company = company {
-                let section: ListSection = ListSection(title: localize(.main_companySectionTitle), items: [company])
+                let section: ListSection = ListSection(key: .main_companySectionTitle, items: [company])
                 sectionsArray.append(section)
             }
             
-            if let launches = launches {
-                sectionsArray.append(ListSection(title: localize(.main_launchesSectionTitle), items: launches))
-            }
-            return sectionsArray
+            return sectionsArray + [ListSection(key: .main_launchesSectionTitle, items: filteredLaunches)]
         }
         
         func fetchData() {
             apiClient.company { [unowned self] in
                 if let company = $0.apiData {
                     self.company = company
-                    self.onNewData?()
                 }
             }
             
             apiClient.launches { [unowned self] in
                 if let launches = $0.apiData?.documents {
                     self.launches = launches
-                    self.onNewData?()
                 }
             }
+        }
+        
+        @objc func toggleSort() {
+            sortDescending.toggle()
         }
     }
 }
 
 extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelegate {
-
         func numberOfSections(in tableView: UITableView) -> Int {
             sections.count
         }
@@ -82,6 +147,7 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
         
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
             UIView()
+               
                 .background(.black)
                 .add(UILabel(sections[section].title).textColor(.white).background(.clear), padding: 4)
         }

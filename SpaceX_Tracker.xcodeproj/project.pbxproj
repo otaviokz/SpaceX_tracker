@@ -19,7 +19,6 @@
 		3062A18526644CBA00D13B1E /* CompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A18426644CBA00D13B1E /* CompanyCell.swift */; };
 		3062A18726644CE900D13B1E /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A18626644CE900D13B1E /* LaunchCell.swift */; };
 		3062A18A26644D2100D13B1E /* UIView+Constrainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A18926644D2100D13B1E /* UIView+Constrainable.swift */; };
-		3062A18C26644D6100D13B1E /* UILabel+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A18B26644D6100D13B1E /* UILabel+Localization.swift */; };
 		3062A18E26644E1F00D13B1E /* UITableView+Dequeue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A18D26644E1F00D13B1E /* UITableView+Dequeue.swift */; };
 		3062A192266452A100D13B1E /* RuntimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A191266452A100D13B1E /* RuntimeService.swift */; };
 		3062A194266455E600D13B1E /* BaseUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A193266455E600D13B1E /* BaseUITestCase.swift */; };
@@ -42,6 +41,13 @@
 		3072074B266D3855005A7F5D /* ThreadSafeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072074A266D3855005A7F5D /* ThreadSafeCache.swift */; };
 		30720752266D71B3005A7F5D /* XCTestCase+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30720751266D71B3005A7F5D /* XCTestCase+Utils.swift */; };
 		30720754266D77CB005A7F5D /* APIQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30720753266D77CB005A7F5D /* APIQueryResponse.swift */; };
+		307207562672561F005A7F5D /* UIButton+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307207552672561F005A7F5D /* UIButton+Utils.swift */; };
+		3072075A26725E70005A7F5D /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072075926725E70005A7F5D /* FilterViewController.swift */; };
+		3072075C26726136005A7F5D /* FilterViewController+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072075B26726136005A7F5D /* FilterViewController+ViewModel.swift */; };
+		3072075E26726287005A7F5D /* CheckboxFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072075D26726287005A7F5D /* CheckboxFilterCell.swift */; };
+		307207602672C37D005A7F5D /* UIBarButtonItem+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072075F2672C37D005A7F5D /* UIBarButtonItem+Styling.swift */; };
+		307207632672CC2E005A7F5D /* MainViewController+ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307207622672CC2E005A7F5D /* MainViewController+ViewModelTests.swift */; };
+		3072076B2672EB3D005A7F5D /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072076A2672EB3D005A7F5D /* StyleProvider.swift */; };
 		307C9FBB265BCBDC00CB111A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBA265BCBDC00CB111A /* AppDelegate.swift */; };
 		307C9FBD265BCBDC00CB111A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */; };
 		307C9FBF265BCBDC00CB111A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBE265BCBDC00CB111A /* MainViewController.swift */; };
@@ -96,7 +102,6 @@
 		3062A18426644CBA00D13B1E /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
 		3062A18626644CE900D13B1E /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
 		3062A18926644D2100D13B1E /* UIView+Constrainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constrainable.swift"; sourceTree = "<group>"; };
-		3062A18B26644D6100D13B1E /* UILabel+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Localization.swift"; sourceTree = "<group>"; };
 		3062A18D26644E1F00D13B1E /* UITableView+Dequeue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Dequeue.swift"; sourceTree = "<group>"; };
 		3062A18F26644E8900D13B1E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3062A1902664505D00D13B1E /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -121,6 +126,13 @@
 		3072074A266D3855005A7F5D /* ThreadSafeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeCache.swift; sourceTree = "<group>"; };
 		30720751266D71B3005A7F5D /* XCTestCase+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Utils.swift"; sourceTree = "<group>"; };
 		30720753266D77CB005A7F5D /* APIQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIQueryResponse.swift; sourceTree = "<group>"; };
+		307207552672561F005A7F5D /* UIButton+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Utils.swift"; sourceTree = "<group>"; };
+		3072075926725E70005A7F5D /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		3072075B26726136005A7F5D /* FilterViewController+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterViewController+ViewModel.swift"; sourceTree = "<group>"; };
+		3072075D26726287005A7F5D /* CheckboxFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxFilterCell.swift; sourceTree = "<group>"; };
+		3072075F2672C37D005A7F5D /* UIBarButtonItem+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Styling.swift"; sourceTree = "<group>"; };
+		307207622672CC2E005A7F5D /* MainViewController+ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+ViewModelTests.swift"; sourceTree = "<group>"; };
+		3072076A2672EB3D005A7F5D /* StyleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		307C9FB7265BCBDC00CB111A /* SpaceX_Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX_Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		307C9FBA265BCBDC00CB111A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		307C9FBC265BCBDC00CB111A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -201,6 +213,7 @@
 				3062A17926644A2A00D13B1E /* MainViewController+ViewModel.swift */,
 				3062A17F26644AED00D13B1E /* ListSection.swift */,
 				3072072126646F81005A7F5D /* ListItemCellType.swift */,
+				3072075B26726136005A7F5D /* FilterViewController+ViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -216,9 +229,11 @@
 		3062A18326644CA800D13B1E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				307207692672EB2D005A7F5D /* Styling */,
 				3062A18826644D0500D13B1E /* Extensions */,
 				3062A18426644CBA00D13B1E /* CompanyCell.swift */,
 				3062A18626644CE900D13B1E /* LaunchCell.swift */,
+				3072075D26726287005A7F5D /* CheckboxFilterCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -227,10 +242,11 @@
 			isa = PBXGroup;
 			children = (
 				3062A18926644D2100D13B1E /* UIView+Constrainable.swift */,
-				3062A18B26644D6100D13B1E /* UILabel+Localization.swift */,
 				3062A18D26644E1F00D13B1E /* UITableView+Dequeue.swift */,
 				30720728266817C3005A7F5D /* UIView+Styling.swift */,
 				3072072A266817FE005A7F5D /* UILabel+Styling.swift */,
+				307207552672561F005A7F5D /* UIButton+Utils.swift */,
+				3072075F2672C37D005A7F5D /* UIBarButtonItem+Styling.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -300,6 +316,22 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		307207612672CC17005A7F5D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				307207622672CC2E005A7F5D /* MainViewController+ViewModelTests.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		307207692672EB2D005A7F5D /* Styling */ = {
+			isa = PBXGroup;
+			children = (
+				3072076A2672EB3D005A7F5D /* StyleProvider.swift */,
+			);
+			path = Styling;
+			sourceTree = "<group>";
+		};
 		307C9FAE265BCBDC00CB111A = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +372,7 @@
 		307C9FD0265BCBDD00CB111A /* SpaceX_TrackerTests */ = {
 			isa = PBXGroup;
 			children = (
+				307207612672CC17005A7F5D /* ViewModel */,
 				30720735266823B9005A7F5D /* API */,
 				3072073226682398005A7F5D /* Mock */,
 				307CA00B265BD15500CB111A /* Model */,
@@ -378,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				307C9FBE265BCBDC00CB111A /* MainViewController.swift */,
+				3072075926725E70005A7F5D /* FilterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -590,6 +624,7 @@
 				3062A18026644AED00D13B1E /* ListSection.swift in Sources */,
 				307C9FF4265BCED900CB111A /* Links.swift in Sources */,
 				307C9FF6265BCEEC00CB111A /* Patch.swift in Sources */,
+				3072075E26726287005A7F5D /* CheckboxFilterCell.swift in Sources */,
 				3072072726681459005A7F5D /* MainCoordinator.swift in Sources */,
 				307C9FBB265BCBDC00CB111A /* AppDelegate.swift in Sources */,
 				307C9FBD265BCBDC00CB111A /* SceneDelegate.swift in Sources */,
@@ -598,20 +633,24 @@
 				3062A17D26644A9100D13B1E /* ListViewModelType.swift in Sources */,
 				3062A1972664638B00D13B1E /* DataResponse.swift in Sources */,
 				3062A199266463A500D13B1E /* ImageLoader.swift in Sources */,
+				307207562672561F005A7F5D /* UIButton+Utils.swift in Sources */,
 				3062A192266452A100D13B1E /* RuntimeService.swift in Sources */,
-				3062A18C26644D6100D13B1E /* UILabel+Localization.swift in Sources */,
+				3072076B2672EB3D005A7F5D /* StyleProvider.swift in Sources */,
 				30720754266D77CB005A7F5D /* APIQueryResponse.swift in Sources */,
 				307C9FF1265BCEB400CB111A /* Launch.swift in Sources */,
 				3072073C266837E5005A7F5D /* MockSpaceXAPIClient.swift in Sources */,
 				307C9FEF265BCE9E00CB111A /* Company.swift in Sources */,
 				3072072B266817FE005A7F5D /* UILabel+Styling.swift in Sources */,
 				3072072526681430005A7F5D /* Coordinating.swift in Sources */,
+				307207602672C37D005A7F5D /* UIBarButtonItem+Styling.swift in Sources */,
 				3062A18726644CE900D13B1E /* LaunchCell.swift in Sources */,
 				3062A18E26644E1F00D13B1E /* UITableView+Dequeue.swift in Sources */,
 				3062A19D266463F300D13B1E /* APIResponse.swift in Sources */,
 				307207452668411E005A7F5D /* APIAssembler.swift in Sources */,
 				307C9FF8265BCEFE00CB111A /* Rocket.swift in Sources */,
 				3062A1A02664643700D13B1E /* URLRequest+Utils.swift in Sources */,
+				3072075A26725E70005A7F5D /* FilterViewController.swift in Sources */,
+				3072075C26726136005A7F5D /* FilterViewController+ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,6 +660,7 @@
 			files = (
 				307CA008265BD0E100CB111A /* JSONLoader.swift in Sources */,
 				30720752266D71B3005A7F5D /* XCTestCase+Utils.swift in Sources */,
+				307207632672CC2E005A7F5D /* MainViewController+ViewModelTests.swift in Sources */,
 				307CA00A265BD12400CB111A /* JSONLoader+TestData.swift in Sources */,
 				30720737266823D4005A7F5D /* SpaceXAPIClientTests.swift in Sources */,
 				307CA013265BD24C00CB111A /* LaunchTests.swift in Sources */,

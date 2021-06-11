@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let mainCoordinator = MainCoordinator(imageLoader: ImageLoader.shared, apiClient: APIAssembler.apiClient)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -19,8 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let winScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: winScene)
         RuntimeService.optimiseForTestsIfTesting(window: window)
-        let mainCoordinator: Coordinating = MainCoordinator(imageLoader: ImageLoader.shared, apiClient: APIAssembler.apiClient)
-        window?.rootViewController = mainCoordinator.navigationController        
+        window?.rootViewController = mainCoordinator.navigationController
         window?.makeKeyAndVisible()
         mainCoordinator.start()
     }

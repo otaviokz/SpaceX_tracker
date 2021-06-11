@@ -41,6 +41,16 @@ struct Launch: Codable {
         rocket = try container.decode(Rocket.self, forKey: .rocket)
         links = try container.decode(Links.self, forKey: .links)
     }
+    
+    var launchYear: Int {
+        Calendar.current.component(.year, from: localDate)
+    }
+}
+
+extension Launch: Comparable {
+    static func < (lhs: Launch, rhs: Launch) -> Bool {
+        lhs.localDate < rhs.localDate
+    }
 }
 
 enum DecodingError: Error {

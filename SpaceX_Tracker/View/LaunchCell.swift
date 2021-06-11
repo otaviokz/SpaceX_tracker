@@ -18,19 +18,19 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         return formatter
     }
     
-    let badgeimageView = UIImageView(image: UIImage(named: "badge_placeholder")).constrainable
-    let missionLabel = UILabel(key: .main_label_mission).asTitle()
-    let missionValueLabel = UILabel().asValue()
-    let dateLabel = UILabel(key: .main_label_date).asTitle()
-    let dateValueLabel = UILabel().asValue()
-    let rocketLabel = UILabel(key: .main_label_rocket).asTitle()
-    let rocketValueLabel = UILabel().asValue()
-    let daysLabel = UILabel().asTitle()
-    let daysValueLabel = UILabel().asValue()
-    let successImageView = UIImageView().constrainable
-    var imageURL: URL?
+    private let badgeimageView = UIImageView(image: Style.Image.badgePlaceholder).constrainable
+    private let missionLabel = UILabel.title(localize(.main_label_mission))
+    private let missionValueLabel = UILabel.value()
+    private let dateLabel = UILabel.title(localize(.main_label_date))
+    private let dateValueLabel = UILabel.value()
+    private let rocketLabel = UILabel.value(localize(.main_label_rocket))
+    private let rocketValueLabel = UILabel.value()
+    private let daysLabel = UILabel.title()
+    private let daysValueLabel = UILabel.value()
+    private let successImageView = UIImageView().constrainable
+    private var imageURL: URL?
     
-    lazy var labelsStack: UIStackView = {
+    private lazy var labelsStack: UIStackView = {
         let labelsStack = UIStackView(arrangedSubviews: [missionLabel, dateLabel, rocketLabel, daysLabel]).constrainable
         labelsStack.axis = .vertical
         labelsStack.alignment = .leading
@@ -38,7 +38,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         return labelsStack
     }()
     
-    lazy var valuesStack: UIStackView = {
+    private lazy var valuesStack: UIStackView = {
         let valuesStack = UIStackView(arrangedSubviews: [missionValueLabel, dateValueLabel, rocketValueLabel, daysValueLabel]).constrainable
         valuesStack.axis = .vertical
         valuesStack.alignment = .leading
@@ -46,7 +46,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         return valuesStack
     }()
     
-    lazy var contentStack: UIStackView = {
+    private lazy var contentStack: UIStackView = {
         let contentStack = UIStackView(arrangedSubviews: [badgeimageView, labelsStack, valuesStack, successImageView]).constrainable
         contentStack.axis = .horizontal
         contentStack.alignment = .top
@@ -62,7 +62,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        badgeimageView.image = UIImage(named: "badge_placeholder")
+        badgeimageView.image = Style.Image.badgePlaceholder
         missionValueLabel.text = nil
         dateValueLabel.text = nil
         rocketValueLabel.text = nil
@@ -95,8 +95,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         }
         
         if let success = item.success {
-            let imageName = success ? "success" : "failure"
-            successImageView.image = UIImage(named: imageName)
+            successImageView.image = success ? Style.Image.success : Style.Image.failure
         }
         
         imageURL = item.links.patch.small
@@ -105,6 +104,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
                 guard let url = self.imageURL, url == $0.data?.1, let image = $0.data?.0 else { return }
                 DispatchQueue.main.async {
                     self.badgeimageView.image = image
+                    self.badgeimageView.image?.accessibilityIdentifier = url.absoluteString
                     self.badgeimageView.accessibilityIdentifier = url.absoluteString
                 }
             }
@@ -114,8 +114,8 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }
     
     private func setUI() {
-        badgeimageView.tintColor = .black
-        successImageView.tintColor = .black
+        badgeimageView.tint(.solidBlack)
+        successImageView.tint(.solidBlack)
         
         contentView.addSubview(contentStack)
         
@@ -142,9 +142,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }
     
     private func days(from startDate: Date, to endDate: Date) -> Int? {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: startDate, to: endDate)
-        return components.day
+        Calendar.current.dateComponents([.day], from: startDate, to: endDate).day
     }
     
     @available(*, unavailable)
@@ -154,21 +152,16 @@ class LaunchCell: UITableViewCell, ListItemCellType {
 extension Launch: ListItemType {}
 
 private extension UILabel {
-    @discardableResult
-    func asTitle() -> Self {
-        textColor = .gray
-        return self.resizable()
+    
+    static func title(_ text: String? = nil) -> UILabel {
+        UILabel(text).textColor(.gray).multiline
     }
     
-    @discardableResult
-    func asValue() -> Self {
-        textColor = .black
-        return self.resizable()
+    static func value(_ text: String? = nil) -> UILabel {
+        UILabel(text).textColor(.black).multiline
     }
-    
-    @discardableResult
-    func resizable() -> Self {
-        numberOfLines = 0
-        return self.constrainable
+
+    var multiline: UILabel {
+        numberOfLines(0).constrainable
     }
 }
