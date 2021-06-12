@@ -28,11 +28,8 @@ extension URLRequest {
         return request.settingHTTPValue("application/json", forHeader: "Content-Type")
     }
     
-    static func get(_ url: URL, cachePolicy: NSURLRequest.CachePolicy? = nil) -> Self {
-        var request = URLRequest(url: url)
-        if let policy = cachePolicy {
-            request.cachePolicy = policy
-        }
+    static func get(_ url: URL, cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Self {
+        var request = URLRequest(url: url, cachePolicy: cachePolicy)
         return request.forMethod(.get)
     }
     

@@ -14,8 +14,14 @@ extension UILabel {
         return self
     }
     
-    convenience init(_ text: String) {
+    convenience init(_ text: String? = nil) {
         self.init()
         self.text = text
+    }
+    
+    @discardableResult
+    func numberOfLines(_ number: Int) -> Self {
+        numberOfLines = number
+        return self
     }
 }

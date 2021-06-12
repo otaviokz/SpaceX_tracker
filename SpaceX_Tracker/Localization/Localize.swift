@@ -31,6 +31,10 @@ enum LocalizationKey: String {
     case main_wiki
     case main_webcast
     case main_article
+    case filter_title
+    case filter_years
+    case filter_status
+    case filter_success
 }
 
 enum FormatedLocalizationKey: String {

@@ -13,4 +13,21 @@ extension UIView {
         backgroundColor = color
         return self
     }
+    
+    @discardableResult
+    func tint(_ color: UIColor) -> Self {
+        tintColor = color
+        return self
+    }
+    
+    @discardableResult
+    func tint(_ color: Style.Color) -> Self {
+        tint(color.color)
+    }
+    
+    @discardableResult
+    @objc func identifier(_ identifier: String) -> Self {
+        accessibilityIdentifier = identifier
+        return self
+    }
 }

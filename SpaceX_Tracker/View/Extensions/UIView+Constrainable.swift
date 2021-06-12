@@ -35,6 +35,13 @@ extension UIView {
         NSLayoutConstraint.activate(subview.constraintTo(self, constant: padding))
         return self
     }
+    
+    @discardableResult
+    func add(_ subview: UIView, horizontalPadding: CGFloat = 0, verticalPadding: CGFloat = 0) -> Self {
+        addSubview(subview.constrainable)
+        NSLayoutConstraint.activate(subview.constraintHorizontal(to: self, constant: horizontalPadding) + subview.constraintVertical(to: self, constant: verticalPadding))
+        return self
+    }
 }
 
 extension UIView {
