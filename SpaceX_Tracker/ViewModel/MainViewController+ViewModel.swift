@@ -19,8 +19,9 @@ extension MainViewController {
                 checkedYears = Set(checkedYears).union(Set(years)).sorted()
             }
         }
-        private(set) var checkedYears: [Int] = []
-        private(set) var success: Bool = false
+        
+        var checkedYears: [Int] = []
+        var success: Bool = false
         
         init(availableYears: [Int] = []) {
             self.years = availableYears
@@ -75,7 +76,7 @@ extension MainViewController {
             
             if !filterOptions.checkedYears.isEmpty {
                 filteredLaunches = filteredLaunches.filter {
-                    filterOptions.checkedYears.contains(Calendar.current.component(.year, from: $0.localDate))
+                    filterOptions.checkedYears.contains($0.launchYear)
                 }
             }
             

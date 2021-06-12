@@ -13,8 +13,7 @@ struct Launch: Codable {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         return formatter
     }
-    
-    
+
     let missionName: String
     let success: Bool?
     let dateUTC: String
@@ -33,10 +32,9 @@ struct Launch: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Launch.CodingKeys.self)
         missionName = try container.decode(String.self, forKey: .missionName)
-        success = try? container.decodeIfPresent(Bool.self, forKey: .success)
+        success = try container.decodeIfPresent(Bool.self, forKey: .success)
         dateUTC = try container.decode(String.self, forKey: .dateUTC)
-        guard let date = Self.utcFormatter.date(from: dateUTC) else { throw DecodingError.invalidDate }
-        localDate = date
+        localDate = Self.utcFormatter.date(from: dateUTC)!
         dateIsTBD = try container.decode(Bool.self, forKey: .dateIsTBD)
         rocket = try container.decode(Rocket.self, forKey: .rocket)
         links = try container.decode(Links.self, forKey: .links)
@@ -51,8 +49,4 @@ extension Launch: Comparable {
     static func < (lhs: Launch, rhs: Launch) -> Bool {
         lhs.localDate < rhs.localDate
     }
-}
-
-enum DecodingError: Error {
-    case invalidDate
 }
