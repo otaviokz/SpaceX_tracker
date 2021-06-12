@@ -11,8 +11,8 @@ typealias CompanyCompletion = APICompletion<Company>
 typealias LaunchesCompletion = APICompletion<APIQueryResponse<[Launch]>>
 
 protocol SpaceXAPIClientType {
-    func launches(_ completion: @escaping LaunchesCompletion)
     func company(_ completion: @escaping CompanyCompletion)
+    func launches(_ completion: @escaping LaunchesCompletion)
 }
 
 struct SpaceXAPIClient: SpaceXAPIClientType {
@@ -28,15 +28,15 @@ struct SpaceXAPIClient: SpaceXAPIClientType {
         queue.maxConcurrentOperationCount = 1
     }
     
-    func launches(_ completion: @escaping LaunchesCompletion) {
-        queue.addOperation {
-            httpClient.post(url: launchesURL, body: launchQuery(), completion: completion)
-        }
-    }
-    
     func company(_ completion: @escaping CompanyCompletion) {
         queue.addOperation {
             httpClient.get(url: companyURL, completion: completion)
+        }
+    }
+    
+    func launches(_ completion: @escaping LaunchesCompletion) {
+        queue.addOperation {
+            httpClient.post(url: launchesURL, body: launchQuery(), completion: completion)
         }
     }
 }

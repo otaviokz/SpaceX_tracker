@@ -154,11 +154,11 @@ extension Launch: ListItemType {}
 private extension UILabel {
     
     static func title(_ text: String? = nil) -> UILabel {
-        UILabel(text).textColor(.gray).multiline
+        UILabel(text).text(.gray).multiline
     }
     
     static func value(_ text: String? = nil) -> UILabel {
-        UILabel(text).textColor(.black).multiline
+        UILabel(text).text(.black).multiline
     }
 
     var multiline: UILabel {

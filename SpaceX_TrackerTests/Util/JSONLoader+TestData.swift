@@ -9,10 +9,10 @@ import Foundation
 @testable import SpaceX_Tracker
 
 extension JsonLoader {
-    static func sampleLaunches() throws -> [Launch] { try loadJson("TestLaunches_PopulatedRockets_v4") }
-    static func sampleLaunchesLong() throws -> [Launch] { try loadJson("TestLaunches_PopulatedRockets_v4_long") }
-    static func sampleRockets() throws -> [Rocket] { try loadJson("TestRockets_v4") }
-    static func sampleLinks() throws -> [Links] { try loadJson("TestLinks_v4") }
-    static func samplePatches() throws -> [Patch] { try loadJson("TestPatches_v4") }
-    static func sampleCompany() throws -> Company { try loadJson("TestCompanyInfo_v4") }
+    static func launches() throws -> [Launch] { try loadJson("TestLaunches_PopulatedRockets_v4") }
+    static func launchesLong() throws -> [Launch] { try loadJson("TestLaunches_PopulatedRockets_v4_long") }
+    static func rockets() throws -> [Rocket] { try loadJson("TestRockets_v4") }
+    static func links() throws -> [Links] { try loadJson("TestLinks_v4") }
+    static func patches() throws -> [Patch] { try loadJson("TestPatches_v4") }
+    static func company() throws -> Company { try loadJson("TestCompanyInfo_v4") }
 }

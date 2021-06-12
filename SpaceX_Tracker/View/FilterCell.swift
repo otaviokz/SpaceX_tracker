@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CheckboxFilterCell: UITableViewCell, ListItemCellType {
+class FilterCell: UITableViewCell, ListItemCellType {
     private static let verticalPadding: CGFloat = 4
     private static let horizontalPadding: CGFloat = 12
     private static let imageSide: CGFloat = 24
@@ -40,7 +40,7 @@ class CheckboxFilterCell: UITableViewCell, ListItemCellType {
     
     
     @discardableResult
-    func configure(for item: CheckboxFilterItem) -> Self {
+    func configure(for item: FilterItem) -> Self {
         yearLabel.text = "\(item.title)"
         checkmarkView.isHidden = !item.checked
         return self
@@ -73,7 +73,7 @@ class CheckboxFilterCell: UITableViewCell, ListItemCellType {
     required init?(coder: NSCoder) { fatalError("Not implemented!") }
 }
 
-struct CheckboxFilterItem: ListItemType {
+struct FilterItem: ListItemType {
     let title: String
     let checked: Bool
 }

@@ -8,6 +8,6 @@
 import Foundation
 
 extension JsonLoader {
-    static func sampleCompany() throws -> Company { try loadJson("TestCompanyInfo_v4") }
-    static func sampleLaunches() throws -> [Launch] { try loadJson("SampleLaunches_PopulatedRockets_v4") }
+    static func company() throws -> Company { try loadJson("TestCompanyInfo_v4") }
+    static func launches() throws -> [Launch] { try loadJson("SampleLaunches_PopulatedRockets_v4") }
 }

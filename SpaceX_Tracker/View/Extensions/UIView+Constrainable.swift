@@ -32,42 +32,45 @@ extension UIView {
     @discardableResult
     func add(_ subview: UIView, padding: CGFloat) -> Self {
         addSubview(subview.constrainable)
-        NSLayoutConstraint.activate(subview.constraintTo(self, constant: padding))
+        NSLayoutConstraint.activate(subview.constrainTo(self, constant: padding))
         return self
     }
     
     @discardableResult
     func add(_ subview: UIView, horizontalPadding: CGFloat = 0, verticalPadding: CGFloat = 0) -> Self {
         addSubview(subview.constrainable)
-        NSLayoutConstraint.activate(subview.constraintHorizontal(to: self, constant: horizontalPadding) + subview.constraintVertical(to: self, constant: verticalPadding))
+        NSLayoutConstraint.activate(
+            subview.constrainHorizontal(to: self, constant: horizontalPadding) +
+            subview.constrainVertical(to: self, constant: verticalPadding)
+        )
         return self
     }
 }
 
 extension UIView {
-    func constraintTo(_ to: UIView, constant: CGFloat) -> [NSLayoutConstraint] {
-        constraintHorizontal(to: to, constant: constant) + constraintVertical(to: to, constant: constant)
+    func constrainTo(_ to: UIView, constant: CGFloat) -> [NSLayoutConstraint] {
+        constrainHorizontal(to: to, constant: constant) + constrainVertical(to: to, constant: constant)
     }
     
-    func constraintHorizontal(to: UIView, constant: CGFloat) -> [NSLayoutConstraint] {
-        [constraintLead(to: to, constant: constant), constraintTrail(to: to, constant: constant)]
+    func constrainHorizontal(to: UIView, constant: CGFloat) -> [NSLayoutConstraint] {
+        [constrainLead(to: to, constant: constant), constrainTrail(to: to, constant: constant)]
     }
     
-    func constraintVertical(to: UIView, constant: CGFloat) -> [NSLayoutConstraint] {
-        [constraintTop(to: to, constant: constant), constraintBottom(to: to, constant: constant)]
+    func constrainVertical(to: UIView, constant: CGFloat) -> [NSLayoutConstraint] {
+        [constrainTop(to: to, constant: constant), constraintBottom(to: to, constant: constant)]
     }
     
-    func constraintLead(to: UIView, constant: CGFloat) -> NSLayoutConstraint {
+    func constrainLead(to: UIView, constant: CGFloat) -> NSLayoutConstraint {
         guard constant >= 0 else { fatalError("Requires a positive constant") }
         return leadingAnchor.constraint(equalTo: to.leadingAnchor, constant: constant)
     }
     
-    func constraintTrail(to: UIView, constant: CGFloat) -> NSLayoutConstraint {
+    func constrainTrail(to: UIView, constant: CGFloat) -> NSLayoutConstraint {
         guard constant >= 0 else { fatalError("Requires a positive constant") }
         return trailingAnchor.constraint(equalTo: to.trailingAnchor, constant: -constant.abs)
     }
     
-    func constraintTop(to: UIView, constant: CGFloat) -> NSLayoutConstraint {
+    func constrainTop(to: UIView, constant: CGFloat) -> NSLayoutConstraint {
         guard constant >= 0 else { fatalError("Requires a positive constant") }
         return topAnchor.constraint(equalTo: to.topAnchor, constant: constant)
     }

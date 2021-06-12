@@ -7,7 +7,7 @@
 
 import XCTest
 
-class MainViewControllerTests: BaseUITestCase {
+class MainViewControllerTests: BaseUITestCase {    
     func testBasics() throws {
         XCTAssertTrue(app.navigationBars.staticTexts["SpaceX"].waitForExistence(timeout: 1))
         

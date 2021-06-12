@@ -14,14 +14,24 @@ extension MainViewController {
     }
     
     struct FilterOptions {
-        var availableYears: [Int] = []
-        var checkedYears: [Int] = []
-        var success: Bool = false
+        var years: [Int] = [] {
+            didSet {
+                checkedYears = Set(checkedYears).union(Set(years)).sorted()
+            }
+        }
+        private(set) var checkedYears: [Int] = []
+        private(set) var success: Bool = false
         
-        init(availableYears: [Int] = [], checkedYears: [Int] = [], success: Bool = false) {
-            self.availableYears = availableYears
-            self.checkedYears = checkedYears
-            self.success = success
+        init(availableYears: [Int] = []) {
+            self.years = availableYears
+        }
+        
+        mutating func toggleChecked(year: Int) {
+            checkedYears = Set(checkedYears + [year]).sorted()
+        }
+        
+        mutating func toggleSucces() {
+            success.toggle()
         }
     }
     
@@ -40,7 +50,7 @@ extension MainViewController {
         
         var launches: [Launch] = [] {
             didSet {
-                filterOptions.availableYears = availableYears
+                filterOptions.years = availableYears
                 filterAndSort()
                 onNewData?()
             }
@@ -100,15 +110,11 @@ extension MainViewController {
         
         func fetchData() {
             apiClient.company { [unowned self] in
-                if let company = $0.apiData {
-                    self.company = company
-                }
+                self.company = $0.apiData
             }
             
             apiClient.launches { [unowned self] in
-                if let launches = $0.apiData?.documents {
-                    self.launches = launches
-                }
+                self.launches = $0.apiData?.documents ?? []
             }
         }
         
@@ -149,7 +155,7 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
             UIView()
                
                 .background(.black)
-                .add(UILabel(sections[section].title).textColor(.white).background(.clear), padding: 4)
+                .add(UILabel(sections[section].title).text(.white).background(.clear), padding: 4)
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

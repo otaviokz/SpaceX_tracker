@@ -11,13 +11,16 @@ import XCTest
 class MainViewControllerViewModelTests: XCTestCase {
     var viewModel: MainViewController.ViewModel!
     var launches: [Launch]!
+    var httpClient: HTTPClientType!
     
     override func setUpWithError() throws {
-        viewModel = .init(imageLoader: ImageLoader.shared, apiClient: MockAPIClient.shared)
-        viewModel.launches = try JsonLoader.sampleLaunches()
-        launches = try JsonLoader.sampleLaunches().reversed()
-        
+        httpClient = MockHTTPClient(company: try! JsonLoader.company(), launches:  try! JsonLoader.launches())
+        viewModel = .init(imageLoader: ImageLoader.shared, apiClient: SpaceXAPIClient(httpClient: httpClient))
+        viewModel.fetchData()
+        launches = try JsonLoader.launches().reversed()
     }
+    
+    
     
     func testPopulateAllYears() throws {
         XCTAssertEqual(viewModel.availableYears, [2006, 2007, 2010])
@@ -33,7 +36,6 @@ class MainViewControllerViewModelTests: XCTestCase {
         viewModel.filterOptions.checkedYears = [2006, 2007, 2010]
         XCTAssertEqual(viewModel.filteredLaunches.count, 3)
         
-        
         viewModel.filterOptions.checkedYears = []
         XCTAssertEqual(viewModel.filteredLaunches.count, 3)
         
@@ -46,7 +48,7 @@ class MainViewControllerViewModelTests: XCTestCase {
         viewModel.filterOptions.checkedYears = [2006, 2007, 2010]
         viewModel.filterOptions.success = true
         XCTAssertEqual(viewModel.filteredLaunches.count, 1)
-        viewModel.filterOptions.checkedYears = [2007]
+        viewModel.filterOptions.checkedYears = [2006, 2007]
         XCTAssertEqual(viewModel.filteredLaunches.count, 0)
     }
 }

@@ -29,7 +29,7 @@ class FilterViewController: UITableViewController {
     }
     
     @objc func reset() {
-        delegate?.didFinish(with: .init(availableYears: viewModel.filterOptions.availableYears))
+        delegate?.didFinish(with: .init(availableYears: viewModel.filterOptions.years))
     }
     
     @objc func cancel() {
@@ -43,7 +43,7 @@ class FilterViewController: UITableViewController {
 private extension FilterViewController {
     private func setUI() {
         title = localize(.filter_title)
-        tableView.register(CheckboxFilterCell.self, forCellReuseIdentifier: CheckboxFilterCell.reuseIdentifier)
+        tableView.register(FilterCell.self, forCellReuseIdentifier: FilterCell.reuseIdentifier)
         tableView.seViewModel(viewModel)
         navigationItem.setRightBarButtonItems(
             [

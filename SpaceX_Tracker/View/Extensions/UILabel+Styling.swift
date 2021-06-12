@@ -9,7 +9,7 @@ import UIKit
 
 extension UILabel {
     @discardableResult
-    func textColor(_ color: UIColor) -> Self {
+    func text(_ color: UIColor) -> Self {
         textColor = color
         return self
     }
