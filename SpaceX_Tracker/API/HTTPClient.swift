@@ -11,20 +11,14 @@ typealias APICompletion<T: Decodable> = (APIResponse<T>) -> Void
 typealias DataCompletion<T: Decodable> = (DataResponse<T>) -> Void
 
 protocol HTTPClientType {
-    func get<T: Decodable>(url: URL, completion: @escaping APICompletion<T>)
     func getData(url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>)
+    func get<T: Decodable>(url: URL, completion: @escaping APICompletion<T>)
     func post<T: Decodable>(url: URL, body: [String: Any], completion: @escaping APICompletion<T>)
 }
 
 struct HTTPClient: HTTPClientType {
     static let shared = HTTPClient()
     private init() {}
-    
-    func get<T: Decodable>(url: URL, completion: @escaping APICompletion<T>) {
-        URLSession.shared.dataTask(with: .get(url)) {
-            parseJSON($0, $2, completion)
-        }.resume()
-    }
     
     func getData(url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>) {
         URLSession.shared.dataTask(with: .get(url, cachePolicy: cachePolicy)) {
@@ -33,6 +27,12 @@ struct HTTPClient: HTTPClientType {
             } else {
                 completion(.failure($2 ?? APIError.invalidHTTPResponse))
             }
+        }.resume()
+    }
+    
+    func get<T: Decodable>(url: URL, completion: @escaping APICompletion<T>) {
+        URLSession.shared.dataTask(with: .get(url)) {
+            parseJSON($0, $2, completion)
         }.resume()
     }
     

@@ -39,7 +39,6 @@
 		307207452668411E005A7F5D /* APIAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307207442668411E005A7F5D /* APIAssembler.swift */; };
 		307207492668557D005A7F5D /* XCUIApplication+Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307207482668557D005A7F5D /* XCUIApplication+Shortcuts.swift */; };
 		3072074B266D3855005A7F5D /* ThreadSafeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072074A266D3855005A7F5D /* ThreadSafeCache.swift */; };
-		30720752266D71B3005A7F5D /* XCTestCase+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30720751266D71B3005A7F5D /* XCTestCase+Utils.swift */; };
 		30720754266D77CB005A7F5D /* APIQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30720753266D77CB005A7F5D /* APIQueryResponse.swift */; };
 		307207562672561F005A7F5D /* UIButton+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307207552672561F005A7F5D /* UIButton+Utils.swift */; };
 		3072075A26725E70005A7F5D /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072075926725E70005A7F5D /* FilterViewController.swift */; };
@@ -124,7 +123,6 @@
 		307207442668411E005A7F5D /* APIAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAssembler.swift; sourceTree = "<group>"; };
 		307207482668557D005A7F5D /* XCUIApplication+Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Shortcuts.swift"; sourceTree = "<group>"; };
 		3072074A266D3855005A7F5D /* ThreadSafeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeCache.swift; sourceTree = "<group>"; };
-		30720751266D71B3005A7F5D /* XCTestCase+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Utils.swift"; sourceTree = "<group>"; };
 		30720753266D77CB005A7F5D /* APIQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIQueryResponse.swift; sourceTree = "<group>"; };
 		307207552672561F005A7F5D /* UIButton+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Utils.swift"; sourceTree = "<group>"; };
 		3072075926725E70005A7F5D /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
@@ -379,7 +377,6 @@
 				307CA006265BD0BF00CB111A /* Util */,
 				307C9FF9265BD04B00CB111A /* Resources */,
 				307C9FD3265BCBDD00CB111A /* Info.plist */,
-				30720751266D71B3005A7F5D /* XCTestCase+Utils.swift */,
 			);
 			path = SpaceX_TrackerTests;
 			sourceTree = "<group>";
@@ -659,7 +656,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				307CA008265BD0E100CB111A /* JSONLoader.swift in Sources */,
-				30720752266D71B3005A7F5D /* XCTestCase+Utils.swift in Sources */,
 				307207632672CC2E005A7F5D /* MainViewController+ViewModelTests.swift in Sources */,
 				307CA00A265BD12400CB111A /* JSONLoader+TestData.swift in Sources */,
 				30720737266823D4005A7F5D /* SpaceXAPIClientTests.swift in Sources */,
