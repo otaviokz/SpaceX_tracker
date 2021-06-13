@@ -22,14 +22,8 @@ class FilterCell: UITableViewCell, ListItemCellType {
         }
     }
     
-    lazy var containerView: UIView = {
-        let containerView = UIView().constrainable
-        containerView.addSubview(yearLabel)
-        containerView.addSubview(checkmarkView)
-        return containerView
-    }()
-    
-    var checkmarkView = UIImageView(image: Style.Image.checkmark).tint(.checkbox).constrainable
+    lazy var containerView = UIView().addConstrainable([yearLabel, checkmarkView])
+    var checkmarkView = UIImageView(image: Images.checkmark).tint(.checkbox)
     var yearLabel = UILabel.body()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -37,7 +31,6 @@ class FilterCell: UITableViewCell, ListItemCellType {
         selectionStyle = .none
         setUI()
     }
-    
     
     @discardableResult
     func configure(for item: FilterItem) -> Self {
@@ -49,7 +42,7 @@ class FilterCell: UITableViewCell, ListItemCellType {
     private func setUI() {
         textLabel?.numberOfLines = 0
         textLabel?.textAlignment = .left
-        contentView.addSubview(containerView)
+        contentView.addConstrainable(containerView)
         
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(equalTo: containerView.heightAnchor, constant: 2 * Self.verticalPadding),

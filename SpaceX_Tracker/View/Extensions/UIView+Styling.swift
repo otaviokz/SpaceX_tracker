@@ -9,19 +9,14 @@ import UIKit
 
 extension UIView {
     @discardableResult
-    func background(_ color: UIColor) -> Self {
-        backgroundColor = color
-        return self
-    }
-    
-    @discardableResult
-    func tint(_ color: UIColor) -> Self {
-        tintColor = color
+    func background(_ color: Style.Color) -> Self {
+        backgroundColor = color.color
         return self
     }
     
     @discardableResult
     func tint(_ color: Style.Color) -> Self {
-        tint(color.color)
+        tintColor = color.color
+        return self
     }
 }

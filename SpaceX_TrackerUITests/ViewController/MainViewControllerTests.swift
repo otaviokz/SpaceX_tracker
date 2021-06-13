@@ -67,7 +67,7 @@ class MainViewControllerTests: BaseUITestCase {
         app.verifyTableCell(identifier: "FilterCell_1_0", staticText: "2006")
         app.verifyTableCell(identifier: "FilterCell_1_17", staticText: "2099")
         app.tableCell(identifier: "FilterCell_1_0").tap()
-        app.navigationBars.buttons["Save"].tap()
+        app.navigationBars.buttons["Done"].tap()
         
         app.buttons["FilterButton"].tap()
         XCTAssertTrue(app.tableCell(identifier: "FilterCell_0_0_selected").waitForExistence(timeout: 1))
@@ -78,6 +78,5 @@ class MainViewControllerTests: BaseUITestCase {
         app.buttons["FilterButton"].tap()
         XCTAssertTrue(app.tableCell(identifier: "FilterCell_0_0").waitForExistence(timeout: 1))
         XCTAssertTrue(app.tableCell(identifier: "FilterCell_1_0").waitForExistence(timeout: 1))
-        app.navigationBars.buttons["Cancel"].tap()
     }
 }

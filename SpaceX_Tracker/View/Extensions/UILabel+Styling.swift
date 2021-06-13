@@ -20,12 +20,6 @@ extension UILabel {
     }
     
     @discardableResult
-    func textColor(_ color: UIColor) -> Self {
-        textColor = color
-        return self
-    }
-    
-    @discardableResult
     func font(_ font: Style.Font) -> Self {
         self.font = font.font
         textColor = font.color
@@ -33,7 +27,7 @@ extension UILabel {
     }
     
     static func header(_ text: String? = nil) -> UILabel {
-        UILabel(text).font(.header).multiline
+        UILabel(text).font(.header)
     }
     
     static func body(_ text: String? = nil) -> UILabel {
@@ -45,6 +39,15 @@ extension UILabel {
     }
     
     var multiline: UILabel {
-        numberOfLines(0).constrainable
+        numberOfLines(0)
+    }
+}
+
+extension UIView {
+    static func tableSectionHeader(_ title: String, labelPadding: CGFloat) -> UIView {
+        let label = UILabel.header(title)
+        let view = UIView().addConstrainable(label).background(.solidBlack)
+        label.constrainTo(view, constant: labelPadding)
+        return view
     }
 }

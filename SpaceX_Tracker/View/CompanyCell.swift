@@ -12,8 +12,6 @@ class CompanyCell: UITableViewCell, ListItemCellType {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
-        textLabel?.setConstrainable()
         setUI()
     }
     
@@ -24,12 +22,14 @@ class CompanyCell: UITableViewCell, ListItemCellType {
     }
     
     private func setUI() {
+        selectionStyle = .none
+        textLabel?.setConstrainable()
         textLabel?.numberOfLines = 0
         textLabel?.textAlignment = .left
         textLabel?.font(.body)
         
         if let label = textLabel {
-            NSLayoutConstraint.activate(label.constrainTo(contentView, constant: Self.padding))
+            label.constrainTo(contentView, constant: Self.padding)
         }
     }
     

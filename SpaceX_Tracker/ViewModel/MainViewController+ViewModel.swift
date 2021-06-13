@@ -144,23 +144,19 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let item = sections[indexPath.section].items[indexPath.row]
             
-            if let company = item as? Company, let cell: CompanyCell = tableView.cell(for: indexPath) {
-                return cell
-                    .configure(for: company)
-                    .identifier("CompanyCell_\(indexPath.section)_\(indexPath.row)")
+            if let item = item as? Company, let cell: CompanyCell = tableView.cell(for: indexPath) {
+                return cell.configure(for: item)
             }
             
             if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(for: indexPath) {
-                return cell
-                    .configure(for: launch, imageLoader: imageLoader)
-                    .identifier("LaunchCell_\(indexPath.section)_\(indexPath.row)")
+                return cell.configure(for: launch, imageLoader: imageLoader)
             }
             
             fatalError("Unrecognized item from ViewModel \(String(describing: item.self))")
         }
         
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            UIView().background(.black).adding(UILabel.header(sections[section].title), padding: 4)
+            .tableSectionHeader(sections[section].title, labelPadding: 4)
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

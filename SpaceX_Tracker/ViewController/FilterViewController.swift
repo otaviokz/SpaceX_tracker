@@ -9,7 +9,6 @@ import UIKit
 
 protocol LaunchesFilterDelegate: AnyObject {
     func didFinish(with options: MainViewController.FilterOptions)
-    func didCancel()
 }
 
 class FilterViewController: UITableViewController {
@@ -32,10 +31,6 @@ class FilterViewController: UITableViewController {
         delegate?.didFinish(with: .init(availableYears: viewModel.filterOptions.years))
     }
     
-    @objc func cancel() {
-        delegate?.didCancel()
-    }
-    
     @available(*, unavailable)
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
@@ -45,11 +40,7 @@ private extension FilterViewController {
         title = localize(.filter_title)
         tableView.register(FilterCell.self, forCellReuseIdentifier: FilterCell.reuseIdentifier)
         tableView.seViewModel(viewModel)
-        navigationItem.setRightBarButtonItems(
-            [
-                UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(finish)).identifier("Save"),
-                UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(reset)).identifier("Reset")
-            ], animated: false)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel)).identifier("Cancel")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish)).identifier("Done")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(reset)).identifier("Reset")
     }
 }

@@ -18,7 +18,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         return formatter
     }
     
-    private let badgeimageView = UIImageView(image: Style.Image.badgePlaceholder).constrainable
+    private let badgeImageView = UIImageView(image: Images.badgePlaceholder)
     private let missionLabel = UILabel.grayBody(localize(.main_label_mission))
     private let missionValueLabel = UILabel.body()
     private let dateLabel = UILabel.grayBody(localize(.main_label_date))
@@ -27,11 +27,11 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     private let rocketValueLabel = UILabel.body()
     private let daysLabel = UILabel.grayBody()
     private let daysValueLabel = UILabel.body()
-    private let successImageView = UIImageView().constrainable
+    private let successImageView = UIImageView()
     private var imageURL: URL?
     
     private lazy var labelsStack: UIStackView = {
-        let labelsStack = UIStackView(arrangedSubviews: [missionLabel, dateLabel, rocketLabel, daysLabel]).constrainable
+        let labelsStack = UIStackView(arrangedSubviews: [missionLabel, dateLabel, rocketLabel, daysLabel])
         labelsStack.axis = .vertical
         labelsStack.alignment = .leading
         labelsStack.spacing = 4
@@ -39,7 +39,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }()
     
     private lazy var valuesStack: UIStackView = {
-        let valuesStack = UIStackView(arrangedSubviews: [missionValueLabel, dateValueLabel, rocketValueLabel, daysValueLabel]).constrainable
+        let valuesStack = UIStackView(arrangedSubviews: [missionValueLabel, dateValueLabel, rocketValueLabel, daysValueLabel])
         valuesStack.axis = .vertical
         valuesStack.alignment = .leading
         valuesStack.spacing = 4
@@ -47,7 +47,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }()
     
     private lazy var contentStack: UIStackView = {
-        let contentStack = UIStackView(arrangedSubviews: [badgeimageView, labelsStack, valuesStack, successImageView]).constrainable
+        let contentStack = UIStackView(arrangedSubviews: [badgeImageView, labelsStack, valuesStack, successImageView])
         contentStack.axis = .horizontal
         contentStack.alignment = .top
         contentStack.spacing = Self.horizontalPadding
@@ -62,7 +62,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        badgeimageView.image = Style.Image.badgePlaceholder
+        badgeImageView.image = Images.badgePlaceholder
         missionValueLabel.text = nil
         dateValueLabel.text = nil
         rocketValueLabel.text = nil
@@ -95,7 +95,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         }
         
         if let success = item.success {
-            successImageView.image = success ? Style.Image.success : Style.Image.failure
+            successImageView.image = success ? Images.success : Images.failure
         }
         
         imageURL = item.links.patch.small
@@ -103,9 +103,9 @@ class LaunchCell: UITableViewCell, ListItemCellType {
             imageLoader.image(for: itemUrl) { [unowned self] in
                 guard let url = self.imageURL, url == $0.data?.1, let image = $0.data?.0 else { return }
                 DispatchQueue.main.async {
-                    self.badgeimageView.image = image
-                    self.badgeimageView.image?.accessibilityIdentifier = url.absoluteString
-                    self.badgeimageView.accessibilityIdentifier = url.absoluteString
+                    self.badgeImageView.image = image
+                    self.badgeImageView.image?.accessibilityIdentifier = url.absoluteString
+                    self.badgeImageView.accessibilityIdentifier = url.absoluteString
                 }
             }
         }
@@ -114,10 +114,10 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }
     
     private func setUI() {
-        badgeimageView.tint(.solidBlack)
+        badgeImageView.tint(.solidBlack)
         successImageView.tint(.solidBlack)
         
-        contentView.addSubview(contentStack)
+        contentView.addConstrainable(contentStack)
         
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(equalTo: contentStack.heightAnchor, constant: 3 * Self.verticalPadding),
@@ -127,16 +127,15 @@ class LaunchCell: UITableViewCell, ListItemCellType {
             contentStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2 * Self.verticalPadding),
             contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Self.verticalPadding),
             labelsStack.widthAnchor.constraint(equalTo: valuesStack.widthAnchor),
-            
-            badgeimageView.widthAnchor.constraint(equalToConstant: Self.imageSide),
-            badgeimageView.heightAnchor.constraint(equalToConstant: Self.imageSide),
+            badgeImageView.widthAnchor.constraint(equalToConstant: Self.imageSide),
+            badgeImageView.heightAnchor.constraint(equalToConstant: Self.imageSide),
             successImageView.heightAnchor.constraint(equalToConstant: Self.imageSide),
             successImageView.widthAnchor.constraint(equalToConstant: Self.imageSide),
             missionLabel.heightAnchor.constraint(equalTo: missionValueLabel.heightAnchor),
             dateLabel.heightAnchor.constraint(equalTo: dateValueLabel.heightAnchor),
             rocketLabel.heightAnchor.constraint(equalTo: rocketValueLabel.heightAnchor),
             daysLabel.heightAnchor.constraint(equalTo: daysValueLabel.heightAnchor),
-            badgeimageView.topAnchor.constraint(equalTo: missionLabel.topAnchor),
+            badgeImageView.topAnchor.constraint(equalTo: missionLabel.topAnchor),
             successImageView.topAnchor.constraint(equalTo: missionValueLabel.topAnchor)
         ])
     }
