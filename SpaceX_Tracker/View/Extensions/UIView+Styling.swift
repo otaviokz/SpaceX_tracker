@@ -24,10 +24,4 @@ extension UIView {
     func tint(_ color: Style.Color) -> Self {
         tint(color.color)
     }
-    
-    @discardableResult
-    @objc func identifier(_ identifier: String) -> Self {
-        accessibilityIdentifier = identifier
-        return self
-    }
 }

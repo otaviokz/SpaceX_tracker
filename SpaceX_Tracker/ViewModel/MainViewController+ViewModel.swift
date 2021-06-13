@@ -13,25 +13,33 @@ extension MainViewController {
         case descending
     }
     
-    struct FilterOptions {
+    class FilterOptions {
         var years: [Int] = [] {
             didSet {
-                checkedYears = Set(checkedYears).union(Set(years)).sorted()
+                checkedYears = Set(checkedYears).intersection(Set(years)).sorted()
             }
         }
         
         var checkedYears: [Int] = []
         var success: Bool = false
         
-        init(availableYears: [Int] = []) {
+        init(availableYears: [Int] = [], checkedYears: [Int] = [], success: Bool = false) {
             self.years = availableYears
         }
         
-        mutating func toggleChecked(year: Int) {
-            checkedYears = Set(checkedYears + [year]).sorted()
+        func toggleChecked(year: Int) {
+            if checkedYears.contains(year) {
+                checkedYears = checkedYears.filter { $0 != year }
+            } else {
+                checkedYears.append(year)
+            }
         }
         
-        mutating func toggleSucces() {
+        func isChecked(year: Int) -> Bool {
+            checkedYears.contains(year)
+        }
+        
+        func toggleSucces() {
             success.toggle()
         }
     }
@@ -39,7 +47,7 @@ extension MainViewController {
     class ViewModel: NSObject, ListViewModelType {
         private(set) var filteredLaunches: [Launch] = []
         var onNewData: (() -> Void)?
-        var openURL: ((Links) -> Void)?
+        var openLinks: ((Links) -> Void)?
         private let imageLoader: ImageLoaderType
         private let apiClient: SpaceXAPIClientType
         
@@ -53,21 +61,18 @@ extension MainViewController {
             didSet {
                 filterOptions.years = availableYears
                 filterAndSort()
-                onNewData?()
             }
         }
         
         var filterOptions = FilterOptions() {
             didSet {
                 filterAndSort()
-                onNewData?()
             }
         }
         
         private var sortDescending = true {
             didSet {
                 filterAndSort()
-                onNewData?()
             }
         }
         
@@ -76,7 +81,7 @@ extension MainViewController {
             
             if !filterOptions.checkedYears.isEmpty {
                 filteredLaunches = filteredLaunches.filter {
-                    filterOptions.checkedYears.contains($0.launchYear)
+                    filterOptions.isChecked(year: $0.launchYear)
                 }
             }
             
@@ -88,6 +93,8 @@ extension MainViewController {
             if sortDescending {
                 filteredLaunches.reverse()
             }
+            
+            onNewData?()
         }
         
         var availableYears: [Int] {
@@ -140,28 +147,25 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
             if let company = item as? Company, let cell: CompanyCell = tableView.cell(for: indexPath) {
                 return cell
                     .configure(for: company)
-                    .accessibilityIdentifier("CompanyCell_\(indexPath.section)_\(indexPath.row)")
+                    .identifier("CompanyCell_\(indexPath.section)_\(indexPath.row)")
             }
             
             if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(for: indexPath) {
                 return cell
                     .configure(for: launch, imageLoader: imageLoader)
-                    .accessibilityIdentifier("LaunchCell_\(indexPath.section)_\(indexPath.row)")
+                    .identifier("LaunchCell_\(indexPath.section)_\(indexPath.row)")
             }
             
             fatalError("Unrecognized item from ViewModel \(String(describing: item.self))")
         }
         
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            UIView()
-               
-                .background(.black)
-                .add(UILabel(sections[section].title).text(.white).background(.clear), padding: 4)
+            UIView().background(.black).adding(UILabel.header(sections[section].title), padding: 4)
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let launch = sections[indexPath.section].items[indexPath.row] as? Launch, launch.links.hasInfo {
-            openURL?(launch.links)
+            openLinks?(launch.links)
         }
     }
 }

@@ -65,7 +65,7 @@ private extension MainViewController {
             }
         }
         
-        viewModel.openURL = { [unowned self] links in
+        viewModel.openLinks = { [unowned self] links in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             alert.add(urlActions: [(.main_wiki, links.wikipedia), (.main_webcast, links.webcast), (.main_article, links.article)])
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) {_ in self.dismiss(animated: true) })

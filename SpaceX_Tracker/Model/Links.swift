@@ -14,6 +14,6 @@ struct Links: Codable, Equatable {
     let wikipedia: URL?
     
     var hasInfo: Bool {
-        ![webcast, article, wikipedia].compactMap {$0}.isEmpty
+        webcast != nil && article != nil && wikipedia != nil
     }
 }

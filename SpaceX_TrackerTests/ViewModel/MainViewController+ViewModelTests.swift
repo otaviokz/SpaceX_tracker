@@ -34,21 +34,28 @@ class MainViewControllerViewModelTests: XCTestCase {
     
     func testFilter() {
         viewModel.filterOptions.checkedYears = [2006, 2007, 2010]
+        viewModel.filterAndSort()
         XCTAssertEqual(viewModel.filteredLaunches.count, 3)
         
         viewModel.filterOptions.checkedYears = []
+        viewModel.filterAndSort()
         XCTAssertEqual(viewModel.filteredLaunches.count, 3)
         
         viewModel.filterOptions.checkedYears = [2006, 2010]
+        viewModel.filterAndSort()
         XCTAssertEqual(viewModel.filteredLaunches.count, 2)
         
         viewModel.filterOptions.checkedYears = [2006]
+        viewModel.filterAndSort()
         XCTAssertEqual(viewModel.filteredLaunches.count, 1)
         
         viewModel.filterOptions.checkedYears = [2006, 2007, 2010]
         viewModel.filterOptions.success = true
+        viewModel.filterAndSort()
         XCTAssertEqual(viewModel.filteredLaunches.count, 1)
+        viewModel.filterAndSort()
         viewModel.filterOptions.checkedYears = [2006, 2007]
+        viewModel.filterAndSort()
         XCTAssertEqual(viewModel.filteredLaunches.count, 0)
     }
 }

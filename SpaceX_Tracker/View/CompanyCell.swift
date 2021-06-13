@@ -8,8 +8,7 @@
 import UIKit
 
 class CompanyCell: UITableViewCell, ListItemCellType {
-    private static let verticalPadding: CGFloat = 4
-    private static let horizontalPadding: CGFloat = 4
+    private static let padding: CGFloat = 4
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,15 +26,10 @@ class CompanyCell: UITableViewCell, ListItemCellType {
     private func setUI() {
         textLabel?.numberOfLines = 0
         textLabel?.textAlignment = .left
-        
+        textLabel?.font(.body)
         
         if let label = textLabel {
-            NSLayoutConstraint.activate([
-                label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Self.horizontalPadding),
-                label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Self.horizontalPadding),
-                label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Self.verticalPadding),
-                label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Self.verticalPadding)
-            ])
+            NSLayoutConstraint.activate(label.constrainTo(contentView, constant: Self.padding))
         }
     }
     

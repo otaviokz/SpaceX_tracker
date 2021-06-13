@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		302450482675A61700F1EBCF /* UIView+Identification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302450472675A61700F1EBCF /* UIView+Identification.swift */; };
 		3062A1682664468D00D13B1E /* Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062A1672664468D00D13B1E /* Localize.swift */; };
 		3062A16B2664475000D13B1E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3062A16D2664475000D13B1E /* Localizable.strings */; };
 		3062A171266448B100D13B1E /* JSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307CA007265BD0E100CB111A /* JSONLoader.swift */; };
@@ -41,7 +42,6 @@
 		3072075A26725E70005A7F5D /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072075926725E70005A7F5D /* FilterViewController.swift */; };
 		3072075C26726136005A7F5D /* FilterViewController+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072075B26726136005A7F5D /* FilterViewController+ViewModel.swift */; };
 		3072075E26726287005A7F5D /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072075D26726287005A7F5D /* FilterCell.swift */; };
-		307207602672C37D005A7F5D /* UIBarButtonItem+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072075F2672C37D005A7F5D /* UIBarButtonItem+Styling.swift */; };
 		307207632672CC2E005A7F5D /* MainViewController+ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307207622672CC2E005A7F5D /* MainViewController+ViewModelTests.swift */; };
 		3072076B2672EB3D005A7F5D /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3072076A2672EB3D005A7F5D /* StyleProvider.swift */; };
 		307C9FBB265BCBDC00CB111A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C9FBA265BCBDC00CB111A /* AppDelegate.swift */; };
@@ -88,6 +88,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		302450472675A61700F1EBCF /* UIView+Identification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Identification.swift"; sourceTree = "<group>"; };
 		3062A1672664468D00D13B1E /* Localize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localize.swift; sourceTree = "<group>"; };
 		3062A1702664480B00D13B1E /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "en-GB"; path = "en-GB.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		3062A172266448DA00D13B1E /* JSONLoader+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONLoader+App.swift"; sourceTree = "<group>"; };
@@ -123,7 +124,6 @@
 		3072075926725E70005A7F5D /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		3072075B26726136005A7F5D /* FilterViewController+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterViewController+ViewModel.swift"; sourceTree = "<group>"; };
 		3072075D26726287005A7F5D /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
-		3072075F2672C37D005A7F5D /* UIBarButtonItem+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Styling.swift"; sourceTree = "<group>"; };
 		307207622672CC2E005A7F5D /* MainViewController+ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+ViewModelTests.swift"; sourceTree = "<group>"; };
 		3072076A2672EB3D005A7F5D /* StyleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		307C9FB7265BCBDC00CB111A /* SpaceX_Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX_Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,7 +238,7 @@
 				30720728266817C3005A7F5D /* UIView+Styling.swift */,
 				3072072A266817FE005A7F5D /* UILabel+Styling.swift */,
 				307207552672561F005A7F5D /* UIButton+Utils.swift */,
-				3072075F2672C37D005A7F5D /* UIBarButtonItem+Styling.swift */,
+				302450472675A61700F1EBCF /* UIView+Identification.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -605,6 +605,7 @@
 				307C9FF6265BCEEC00CB111A /* Patch.swift in Sources */,
 				3072075E26726287005A7F5D /* FilterCell.swift in Sources */,
 				3072072726681459005A7F5D /* MainCoordinator.swift in Sources */,
+				302450482675A61700F1EBCF /* UIView+Identification.swift in Sources */,
 				307C9FBB265BCBDC00CB111A /* AppDelegate.swift in Sources */,
 				307C9FBD265BCBDC00CB111A /* SceneDelegate.swift in Sources */,
 				30720729266817C3005A7F5D /* UIView+Styling.swift in Sources */,
@@ -620,7 +621,6 @@
 				307C9FEF265BCE9E00CB111A /* Company.swift in Sources */,
 				3072072B266817FE005A7F5D /* UILabel+Styling.swift in Sources */,
 				3072072526681430005A7F5D /* Coordinating.swift in Sources */,
-				307207602672C37D005A7F5D /* UIBarButtonItem+Styling.swift in Sources */,
 				3062A18726644CE900D13B1E /* LaunchCell.swift in Sources */,
 				3062A18E26644E1F00D13B1E /* UITableView+Dequeue.swift in Sources */,
 				3062A19D266463F300D13B1E /* APIResponse.swift in Sources */,

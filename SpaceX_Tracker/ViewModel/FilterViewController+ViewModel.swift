@@ -13,7 +13,7 @@ extension FilterViewController {
         
         var sections: [ListSection] {
             let statuses = [FilterItem(title: localize(.filter_success), checked: filterOptions.success)]
-            let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.checkedYears.contains($0)) }
+            let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.isChecked(year: $0)) }
             
             return [ListSection(key: .filter_status, items: statuses), ListSection(key: .filter_years, items: years)]
         }
@@ -38,7 +38,7 @@ extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDele
         if let year = item as? FilterItem, let cell: FilterCell = tableView.cell(for: indexPath) {
             return cell
                 .configure(for: year)
-                .accessibilityIdentifier("FilterCell_\(indexPath.section)_\(indexPath.row)")
+                .identifier("FilterCell_\(indexPath.section)_\(indexPath.row)")
         }
         
         fatalError("Unrecognized item from ViewModel")
@@ -55,8 +55,6 @@ extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        UIView()
-            .background(.black)
-            .add(UILabel(sections[section].title).text(.white).background(.clear), horizontalPadding: 12, verticalPadding: 4)
+        UIView().background(.black).adding(UILabel.header(sections[section].title), padding: 8)
     }
 }

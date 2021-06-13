@@ -30,7 +30,7 @@ class FilterCell: UITableViewCell, ListItemCellType {
     }()
     
     var checkmarkView = UIImageView(image: Style.Image.checkmark).tint(.checkbox).constrainable
-    var yearLabel = UILabel().constrainable
+    var yearLabel = UILabel.body()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -35,12 +35,6 @@ class MainViewControllerTests: BaseUITestCase {
         
         app.tableCell(identifier: "LaunchCell_1_0").tap()
         XCTAssertFalse(app.sheets.buttons["Cancel"].exists)
-
-        app.tableCell(identifier: "LaunchCell_1_8").tap()
-        XCTAssertTrue(app.sheets.buttons["Wikipedia"].exists)
-        XCTAssertFalse(app.sheets.buttons["Webcast"].exists)
-        XCTAssertFalse(app.sheets.buttons["Article"].exists)
-        app.sheets.buttons["Cancel"].tap()
         
         app.tableCell(identifier: "LaunchCell_1_21").tap()
         XCTAssertTrue(app.sheets.buttons["Wikipedia"].exists)
