@@ -33,4 +33,30 @@ struct Style {
             }
         }
     }
+    
+    enum Font {
+        case body
+        case grayBody
+        case header
+        
+        var font: UIFont {
+            switch self {
+            case .body, .grayBody:
+                return .systemFont(ofSize: 17, weight: .regular)
+            case .header:
+                return .systemFont(ofSize: 17, weight: .medium)
+            }
+        }
+        
+        var color: UIColor {
+            switch self {
+            case .body:
+                return .black
+            case .grayBody:
+                return .gray
+            case .header:
+                return .white
+            }
+        }
+    }
 }

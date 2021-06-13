@@ -10,9 +10,9 @@ import XCTest
 
 class LinksTests: XCTestCase {
     func testDecodeJson() throws {
-        let samplePatches = try JsonLoader.samplePatches()  //tested in PatchTests
+        let samplePatches = try JsonLoader.patches()  //tested in PatchTests
         
-        let sampleLinks = try? JsonLoader.sampleLinks()
+        let sampleLinks = try? JsonLoader.links()
         XCTAssertNotNil(sampleLinks)
         
         for index in 0...2 {

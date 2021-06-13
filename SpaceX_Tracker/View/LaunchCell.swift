@@ -19,14 +19,14 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }
     
     private let badgeimageView = UIImageView(image: Style.Image.badgePlaceholder).constrainable
-    private let missionLabel = UILabel.title(localize(.main_label_mission))
-    private let missionValueLabel = UILabel.value()
-    private let dateLabel = UILabel.title(localize(.main_label_date))
-    private let dateValueLabel = UILabel.value()
-    private let rocketLabel = UILabel.value(localize(.main_label_rocket))
-    private let rocketValueLabel = UILabel.value()
-    private let daysLabel = UILabel.title()
-    private let daysValueLabel = UILabel.value()
+    private let missionLabel = UILabel.grayBody(localize(.main_label_mission))
+    private let missionValueLabel = UILabel.body()
+    private let dateLabel = UILabel.grayBody(localize(.main_label_date))
+    private let dateValueLabel = UILabel.body()
+    private let rocketLabel = UILabel.grayBody(localize(.main_label_rocket))
+    private let rocketValueLabel = UILabel.body()
+    private let daysLabel = UILabel.grayBody()
+    private let daysValueLabel = UILabel.body()
     private let successImageView = UIImageView().constrainable
     private var imageURL: URL?
     
@@ -150,18 +150,3 @@ class LaunchCell: UITableViewCell, ListItemCellType {
 }
 
 extension Launch: ListItemType {}
-
-private extension UILabel {
-    
-    static func title(_ text: String? = nil) -> UILabel {
-        UILabel(text).textColor(.gray).multiline
-    }
-    
-    static func value(_ text: String? = nil) -> UILabel {
-        UILabel(text).textColor(.black).multiline
-    }
-
-    var multiline: UILabel {
-        numberOfLines(0).constrainable
-    }
-}

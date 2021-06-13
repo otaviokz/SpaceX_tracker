@@ -10,7 +10,7 @@ import XCTest
 
 class CompanyTests: XCTestCase {
     func testDecodeJson() throws {
-        let sampleCompany = try? JsonLoader.sampleCompany()
+        let sampleCompany = try? JsonLoader.company()
         XCTAssertNotNil(sampleCompany)
         XCTAssertEqual(sampleCompany?.name, "SpaceX")
         XCTAssertEqual(sampleCompany?.founder, "Elon Musk")

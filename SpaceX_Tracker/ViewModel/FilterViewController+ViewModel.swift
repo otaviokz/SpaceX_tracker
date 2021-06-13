@@ -12,12 +12,10 @@ extension FilterViewController {
         var filterOptions: MainViewController.FilterOptions
         
         var sections: [ListSection] {
-            let statusItems = [CheckboxFilterItem(title: localize(.filter_success), checked: filterOptions.success)]
-            let yearsItems = filterOptions.availableYears.map {
-                CheckboxFilterItem(title: "\($0)", checked: filterOptions.checkedYears.contains($0))
-            }
+            let statuses = [FilterItem(title: localize(.filter_success), checked: filterOptions.success)]
+            let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.isChecked(year: $0)) }
             
-            return [ListSection(key: .filter_status, items: statusItems), ListSection(key: .filter_years, items: yearsItems)]
+            return [ListSection(key: .filter_status, items: statuses), ListSection(key: .filter_years, items: years)]
         }
         
         init(filterOptions: MainViewController.FilterOptions) {
@@ -37,10 +35,10 @@ extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = sections[indexPath.section].items[indexPath.row]
         
-        if let year = item as? CheckboxFilterItem, let cell: CheckboxFilterCell = tableView.cell(for: indexPath) {
+        if let year = item as? FilterItem, let cell: FilterCell = tableView.cell(for: indexPath) {
             return cell
                 .configure(for: year)
-                .accessibilityIdentifier("FilterCell_\(indexPath.section)_\(indexPath.row)")
+                .identifier("FilterCell_\(indexPath.section)_\(indexPath.row)")
         }
         
         fatalError("Unrecognized item from ViewModel")
@@ -49,21 +47,14 @@ extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            filterOptions.success.toggle()
+            filterOptions.toggleSucces()
         default:
-            let tappedYear = filterOptions.availableYears[indexPath.row]
-            if filterOptions.checkedYears.contains(tappedYear) {
-                filterOptions.checkedYears = filterOptions.checkedYears.filter { $0 != tappedYear }
-            } else {
-                filterOptions.checkedYears.append(tappedYear)
-            }
+            filterOptions.toggleChecked(year: filterOptions.years[indexPath.row])
         }
         tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        UIView()
-            .background(.black)
-            .add(UILabel(sections[section].title).textColor(.white).background(.clear), horizontalPadding: 12, verticalPadding: 4)
+        UIView().background(.black).adding(UILabel.header(sections[section].title), padding: 8)
     }
 }

@@ -10,10 +10,10 @@ import XCTest
 
 class LaunchTests: XCTestCase {
     func testDecodeJson() throws {
-        let sampleRockets = try JsonLoader.sampleRockets() //tested in PatchTests
-        let sampleLinks = try JsonLoader.sampleLinks() //tested in LinksTests
+        let sampleRockets = try JsonLoader.rockets() //tested in PatchTests
+        let sampleLinks = try JsonLoader.links() //tested in LinksTests
         
-        let sampleLaunches = try? JsonLoader.sampleLaunches()
+        let sampleLaunches = try? JsonLoader.launches()
         XCTAssertNotNil(sampleLaunches)
         
         for index in 0...2 {

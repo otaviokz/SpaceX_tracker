@@ -10,7 +10,7 @@ import XCTest
 
 class RocketTests: XCTestCase {
     func testDecodeJson() throws {
-        let sampleRockets = try? JsonLoader.sampleRockets()
+        let sampleRockets = try? JsonLoader.rockets()
         XCTAssertNotNil(sampleRockets)
         
         for index in 0...2 {

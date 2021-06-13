@@ -10,7 +10,7 @@ import XCTest
 
 class PatchTests: XCTestCase {
     func testDecodeJson() throws {
-        let samplePatches = try? JsonLoader.samplePatches()
+        let samplePatches = try? JsonLoader.patches()
         XCTAssertNotNil(samplePatches)
         
         for index in 0...2 {

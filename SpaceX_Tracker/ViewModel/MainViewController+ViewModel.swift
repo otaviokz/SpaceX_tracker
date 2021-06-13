@@ -13,22 +13,41 @@ extension MainViewController {
         case descending
     }
     
-    struct FilterOptions {
-        var availableYears: [Int] = []
+    class FilterOptions {
+        var years: [Int] = [] {
+            didSet {
+                checkedYears = Set(checkedYears).intersection(Set(years)).sorted()
+            }
+        }
+        
         var checkedYears: [Int] = []
         var success: Bool = false
         
         init(availableYears: [Int] = [], checkedYears: [Int] = [], success: Bool = false) {
-            self.availableYears = availableYears
-            self.checkedYears = checkedYears
-            self.success = success
+            self.years = availableYears
+        }
+        
+        func toggleChecked(year: Int) {
+            if checkedYears.contains(year) {
+                checkedYears = checkedYears.filter { $0 != year }
+            } else {
+                checkedYears.append(year)
+            }
+        }
+        
+        func isChecked(year: Int) -> Bool {
+            checkedYears.contains(year)
+        }
+        
+        func toggleSucces() {
+            success.toggle()
         }
     }
     
     class ViewModel: NSObject, ListViewModelType {
         private(set) var filteredLaunches: [Launch] = []
         var onNewData: (() -> Void)?
-        var openURL: ((Links) -> Void)?
+        var openLinks: ((Links) -> Void)?
         private let imageLoader: ImageLoaderType
         private let apiClient: SpaceXAPIClientType
         
@@ -40,23 +59,20 @@ extension MainViewController {
         
         var launches: [Launch] = [] {
             didSet {
-                filterOptions.availableYears = availableYears
+                filterOptions.years = availableYears
                 filterAndSort()
-                onNewData?()
             }
         }
         
         var filterOptions = FilterOptions() {
             didSet {
                 filterAndSort()
-                onNewData?()
             }
         }
         
         private var sortDescending = true {
             didSet {
                 filterAndSort()
-                onNewData?()
             }
         }
         
@@ -65,7 +81,7 @@ extension MainViewController {
             
             if !filterOptions.checkedYears.isEmpty {
                 filteredLaunches = filteredLaunches.filter {
-                    filterOptions.checkedYears.contains(Calendar.current.component(.year, from: $0.localDate))
+                    filterOptions.isChecked(year: $0.launchYear)
                 }
             }
             
@@ -77,6 +93,8 @@ extension MainViewController {
             if sortDescending {
                 filteredLaunches.reverse()
             }
+            
+            onNewData?()
         }
         
         var availableYears: [Int] {
@@ -100,15 +118,11 @@ extension MainViewController {
         
         func fetchData() {
             apiClient.company { [unowned self] in
-                if let company = $0.apiData {
-                    self.company = company
-                }
+                self.company = $0.apiData
             }
             
             apiClient.launches { [unowned self] in
-                if let launches = $0.apiData?.documents {
-                    self.launches = launches
-                }
+                self.launches = $0.apiData?.documents ?? []
             }
         }
         
@@ -133,28 +147,25 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
             if let company = item as? Company, let cell: CompanyCell = tableView.cell(for: indexPath) {
                 return cell
                     .configure(for: company)
-                    .accessibilityIdentifier("CompanyCell_\(indexPath.section)_\(indexPath.row)")
+                    .identifier("CompanyCell_\(indexPath.section)_\(indexPath.row)")
             }
             
             if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(for: indexPath) {
                 return cell
                     .configure(for: launch, imageLoader: imageLoader)
-                    .accessibilityIdentifier("LaunchCell_\(indexPath.section)_\(indexPath.row)")
+                    .identifier("LaunchCell_\(indexPath.section)_\(indexPath.row)")
             }
             
             fatalError("Unrecognized item from ViewModel \(String(describing: item.self))")
         }
         
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            UIView()
-               
-                .background(.black)
-                .add(UILabel(sections[section].title).textColor(.white).background(.clear), padding: 4)
+            UIView().background(.black).adding(UILabel.header(sections[section].title), padding: 4)
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let launch = sections[indexPath.section].items[indexPath.row] as? Launch, launch.links.hasInfo {
-            openURL?(launch.links)
+            openLinks?(launch.links)
         }
     }
 }
