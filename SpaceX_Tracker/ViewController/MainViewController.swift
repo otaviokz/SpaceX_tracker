@@ -9,7 +9,7 @@ import UIKit
 
 class MainViewController: UITableViewController {
     private let viewModel: ViewModel
-    var showFilter: (() -> Void)!
+    var showFilterAction: (() -> Void)!
     
     private lazy var filterBarButton: UIBarButtonItem = {
         let menuBarItem = UIBarButtonItem(customView: filterButton)
@@ -27,18 +27,13 @@ class MainViewController: UITableViewController {
     
     private lazy var sortButton: UIButton = {
         UIButton(type: .custom)
-            .image(Style.Image.sort)
-            .tint(.barbutton)
+            .image(Images.sort)
             .onTap(viewModel, action: #selector(ViewModel.toggleSort))
             .identifier("SortButton")
     }()
     
     private lazy var filterButton: UIButton = {
-        UIButton(type: .custom)
-            .image(Style.Image.filter)
-            .tint(.barbutton)
-            .onTap(self, action: #selector(showFilterView))
-            .identifier("FilterButton")
+        UIButton(type: .custom).image(Images.filter).onTap(self, action: #selector(showFilter)).identifier("FilterButton")
     }()
     
     init(viewModel: ViewModel) {
@@ -65,9 +60,9 @@ private extension MainViewController {
             }
         }
         
-        viewModel.openLinks = { [unowned self] links in
+        viewModel.openLinks = { [unowned self] in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.add(urlActions: [(.main_wiki, links.wikipedia), (.main_webcast, links.webcast), (.main_article, links.article)])
+            alert.add([(.main_wiki, $0.wikipedia), (.main_webcast, $0.webcast), (.main_article, $0.article)])
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) {_ in self.dismiss(animated: true) })
             self.present(alert, animated: true)
         }
@@ -75,8 +70,8 @@ private extension MainViewController {
         navigationItem.setRightBarButtonItems([filterBarButton, sortBarButton], animated: false)
     }
     
-    @objc func showFilterView() {
-        showFilter()
+    @objc func showFilter() {
+        showFilterAction()
     }
 }
 
@@ -85,17 +80,13 @@ extension MainViewController: LaunchesFilterDelegate {
         dismiss(animated: true)
         viewModel.filterOptions = options
     }
-    
-    func didCancel() {
-        dismiss(animated: true)
-    }
 }
 
 private extension UIAlertController {
-    func add(urlActions: [(key: LocalizationKey, url: URL?)]) {
-        urlActions.forEach {
-            if let url = $0.url {
-                addAction(.init(title: localize($0.key), style: .default) {_ in UIApplication.shared.open(url) })
+    func add(_ urlActions: [(LocalizationKey, URL?)]) {
+        urlActions.forEach { key, url in
+            if let url = url {
+                addAction(.init(title: localize(key), style: .default) {_ in UIApplication.shared.open(url) })
             }
         }
     }

@@ -7,16 +7,16 @@
 
 import UIKit
 
-struct Style {
-    struct Image {
-        static let checkmark = UIImage(named: "checkmark")
-        static let badgePlaceholder = UIImage(named: "badge_placeholder")
-        static let success = UIImage(named: "success")
-        static let failure = UIImage(named: "failure")
-        static let filter = UIImage(named: "filter")
-        static let sort = UIImage(named: "sort")
-    }
-    
+struct Images {
+    static let checkmark = UIImage(named: "checkmark")
+    static let badgePlaceholder = UIImage(named: "badge_placeholder")
+    static let success = UIImage(named: "success")
+    static let failure = UIImage(named: "failure")
+    static let filter = UIImage(named: "filter")
+    static let sort = UIImage(named: "sort")
+}
+
+struct Style {    
     enum Color {
         case barbutton
         case checkbox
@@ -24,12 +24,9 @@ struct Style {
         
         var color: UIColor {
             switch self {
-            case .barbutton:
-                return .black.withAlphaComponent(0.8)
-            case .checkbox:
-                return .black.withAlphaComponent(0.7)
-            case .solidBlack:
-                return .black
+            case .barbutton: return .black.withAlphaComponent(0.8)
+            case .checkbox: return .black.withAlphaComponent(0.7)
+            case .solidBlack: return .black
             }
         }
     }
@@ -42,7 +39,7 @@ struct Style {
         var font: UIFont {
             switch self {
             case .body, .grayBody:
-                return .systemFont(ofSize: 17, weight: .regular)
+                return .systemFont(ofSize: 17)
             case .header:
                 return .systemFont(ofSize: 17, weight: .medium)
             }
@@ -50,12 +47,9 @@ struct Style {
         
         var color: UIColor {
             switch self {
-            case .body:
-                return .black
-            case .grayBody:
-                return .gray
-            case .header:
-                return .white
+            case .body: return .black
+            case .grayBody: return .gray
+            case .header: return .white
             }
         }
     }

@@ -9,7 +9,8 @@ import UIKit
 
 extension UITableView {
     func cell<T: ListItemCellType>(for indexPath: IndexPath) -> T? {
-        dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T
+        let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T
+        return cell?.identifier("\(T.reuseIdentifier)_\(indexPath.section)_\(indexPath.row)")
     }
     
     func seViewModel<T: ListViewModelType>(_ listViewModel: T) {

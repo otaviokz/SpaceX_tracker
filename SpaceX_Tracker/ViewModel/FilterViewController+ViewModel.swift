@@ -9,13 +9,12 @@ import UIKit
 
 extension FilterViewController {
     class ViewModel: NSObject, ListViewModelType {
-        var filterOptions: MainViewController.FilterOptions
+        let filterOptions: MainViewController.FilterOptions
         
         var sections: [ListSection] {
-            let statuses = [FilterItem(title: localize(.filter_success), checked: filterOptions.success)]
+            let status = [FilterItem(title: localize(.filter_success), checked: filterOptions.success)]
             let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.isChecked(year: $0)) }
-            
-            return [ListSection(key: .filter_status, items: statuses), ListSection(key: .filter_years, items: years)]
+            return [ListSection(key: .filter_status, items: status), ListSection(key: .filter_years, items: years)]
         }
         
         init(filterOptions: MainViewController.FilterOptions) {
@@ -33,12 +32,10 @@ extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = sections[indexPath.section].items[indexPath.row]
+        let item = sections[indexPath.section].items[indexPath.row] as? FilterItem
         
-        if let year = item as? FilterItem, let cell: FilterCell = tableView.cell(for: indexPath) {
-            return cell
-                .configure(for: year)
-                .identifier("FilterCell_\(indexPath.section)_\(indexPath.row)")
+        if let year = item, let cell: FilterCell = tableView.cell(for: indexPath) {
+            return cell.configure(for: year)
         }
         
         fatalError("Unrecognized item from ViewModel")
@@ -55,6 +52,6 @@ extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        UIView().background(.black).adding(UILabel.header(sections[section].title), padding: 8)
+        .tableSectionHeader(sections[section].title, labelPadding: 8)
     }
 }
