@@ -11,6 +11,7 @@ class FilterCell: UITableViewCell, ListItemCellType {
     private static let verticalPadding: CGFloat = 4
     private static let horizontalPadding: CGFloat = 12
     private static let imageSide: CGFloat = 24
+    private static let minHeight: CGFloat = 32
     
     override var accessibilityIdentifier: String? {
         set {
@@ -22,7 +23,7 @@ class FilterCell: UITableViewCell, ListItemCellType {
         }
     }
     
-    lazy var containerView = UIView().addConstrainable([yearLabel, checkmarkView])
+    lazy var containerView = UIView().add([yearLabel, checkmarkView].constrainable)
     var checkmarkView = UIImageView(image: Images.checkmark).tint(.checkbox)
     var yearLabel = UILabel.body()
     
@@ -42,11 +43,11 @@ class FilterCell: UITableViewCell, ListItemCellType {
     private func setUI() {
         textLabel?.numberOfLines = 0
         textLabel?.textAlignment = .left
-        contentView.addConstrainable(containerView)
+        contentView.add(containerView.constrainable)
         
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(equalTo: containerView.heightAnchor, constant: 2 * Self.verticalPadding),
-            containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 32),
+            containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: Self.minHeight),
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Self.horizontalPadding),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Self.horizontalPadding),
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Self.verticalPadding),

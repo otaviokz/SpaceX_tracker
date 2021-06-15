@@ -15,6 +15,7 @@
 "main_label_days_since" = "Days since now:";
 "main_label_days_from" = "Days from now:";
 "main_dateTimeFormat" = "MM/dd/yy 'at' HH:mm";
+"main_cancel" = "Cancel";
 "main_wiki" = "Wikipedia";
 "main_webcast" = "Webcast";
 "main_article" = "Article";

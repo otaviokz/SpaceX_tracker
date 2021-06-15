@@ -25,16 +25,15 @@ class MainViewController: UITableViewController {
         return menuBarItem
     }()
     
-    private lazy var sortButton: UIButton = {
-        UIButton(type: .custom)
-            .image(Images.sort)
-            .onTap(viewModel, action: #selector(ViewModel.toggleSort))
-            .identifier("SortButton")
-    }()
+    private lazy var sortButton = UIButton(type: .custom)
+        .image(Images.sort)
+        .onTap(viewModel, action: #selector(ViewModel.toggleSort))
+        .identifier("SortButton")
     
-    private lazy var filterButton: UIButton = {
-        UIButton(type: .custom).image(Images.filter).onTap(self, action: #selector(showFilter)).identifier("FilterButton")
-    }()
+    private lazy var filterButton = UIButton(type: .custom)
+        .image(Images.filter)
+        .onTap(self, action: #selector(showFilter))
+        .identifier("FilterButton")
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -63,7 +62,7 @@ private extension MainViewController {
         viewModel.openLinks = { [unowned self] in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             alert.add([(.main_wiki, $0.wikipedia), (.main_webcast, $0.webcast), (.main_article, $0.article)])
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) {_ in self.dismiss(animated: true) })
+            alert.addAction(.init(title: localize(.main_cancel), style: .cancel) {_ in dismiss(animated: true) })
             self.present(alert, animated: true)
         }
         

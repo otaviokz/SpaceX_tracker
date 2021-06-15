@@ -23,14 +23,10 @@ class CompanyCell: UITableViewCell, ListItemCellType {
     
     private func setUI() {
         selectionStyle = .none
-        textLabel?.setConstrainable()
         textLabel?.numberOfLines = 0
         textLabel?.textAlignment = .left
         textLabel?.font(.body)
-        
-        if let label = textLabel {
-            label.constrainTo(contentView, constant: Self.padding)
-        }
+        textLabel?.constrainable.constrainTo(contentView, constant: Self.padding)
     }
     
     @available(*, unavailable)
@@ -41,9 +37,6 @@ extension Company: ListItemType {}
 
 private extension Company {
     var localizedDescription: String {
-        localize(
-            key: .main_companyDescription,
-            with: [name, founder, "\(foundationYear)", "\(employees)", "\(launchSites)", "\(valuationUSD)"]
-        )
+        localize(.company_info, [name, founder, "\(foundationYear)", "\(employees)", "\(launchSites)", "\(valuationUSD)"])
     }
 }

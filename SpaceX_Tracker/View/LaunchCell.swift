@@ -19,11 +19,11 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }
     
     private let badgeImageView = UIImageView(image: Images.badgePlaceholder)
-    private let missionLabel = UILabel.grayBody(localize(.main_label_mission))
+    private let missionLabel = UILabel.grayBody(localize(.main_mission))
     private let missionValueLabel = UILabel.body()
-    private let dateLabel = UILabel.grayBody(localize(.main_label_date))
+    private let dateLabel = UILabel.grayBody(localize(.main_date))
     private let dateValueLabel = UILabel.body()
-    private let rocketLabel = UILabel.grayBody(localize(.main_label_rocket))
+    private let rocketLabel = UILabel.grayBody(localize(.main_rocket))
     private let rocketValueLabel = UILabel.body()
     private let daysLabel = UILabel.grayBody()
     private let daysValueLabel = UILabel.body()
@@ -83,12 +83,12 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         rocketValueLabel.text = "\(item.rocket.name) / \(item.rocket.type)"
         let now = Date()
         if item.localDate <= now {
-            daysLabel.text = localize(.main_label_days_since)
+            daysLabel.text = localize(.main_days_since)
             if let days = days(from: item.localDate, to: now) {
                 daysValueLabel.text = "\(days)"
             }
         } else {
-            daysLabel.text = localize(.main_label_days_from)
+            daysLabel.text = localize(.main_days_from)
             if let days = days(from: now, to: item.localDate) {
                 daysValueLabel.text = "\(days)"
             }
@@ -117,7 +117,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         badgeImageView.tint(.solidBlack)
         successImageView.tint(.solidBlack)
         
-        contentView.addConstrainable(contentStack)
+        contentView.add(contentStack.constrainable)
         
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(equalTo: contentStack.heightAnchor, constant: 3 * Self.verticalPadding),

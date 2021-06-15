@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LaunchesFilterDelegate: AnyObject {
-    func didFinish(with options: MainViewController.FilterOptions)
+    func didFinish(with options: FilterOptions)
 }
 
 class FilterViewController: UITableViewController {

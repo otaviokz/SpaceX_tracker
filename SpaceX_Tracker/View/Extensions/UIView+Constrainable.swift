@@ -9,23 +9,19 @@ import UIKit
 
 extension UIView {    
     var constrainable: Self {
-        setConstrainable()
-        return self
-    }
-    
-    func setConstrainable() {
         translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    @discardableResult
-    func addConstrainable(_ subview: UIView) -> Self {
-        addSubview(subview.constrainable)
         return self
     }
     
     @discardableResult
-    func addConstrainable(_ views: [UIView]) -> Self {
-        views.forEach { addConstrainable($0) }
+    func add(_ subview: UIView) -> Self {
+        addSubview(subview)
+        return self
+    }
+    
+    @discardableResult
+    func add(_ views: [UIView]) -> Self {
+        views.forEach { addSubview($0) }
         return self
     }
 }
@@ -61,6 +57,10 @@ extension UIView {
     func constraintBottom(to: UIView, constant: CGFloat = 0) {
         NSLayoutConstraint.activate([bottomAnchor.constraint(equalTo: to.bottomAnchor, constant: -constant.abs)])
     }
+}
+
+extension Array where Element == UIView {
+    var constrainable: [UIView] { map { $0.constrainable } }
 }
 
 private extension CGFloat {

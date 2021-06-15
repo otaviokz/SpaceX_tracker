@@ -9,15 +9,15 @@ import UIKit
 
 extension FilterViewController {
     class ViewModel: NSObject, ListViewModelType {
-        let filterOptions: MainViewController.FilterOptions
+        let filterOptions: FilterOptions
         
         var sections: [ListSection] {
-            let status = [FilterItem(title: localize(.filter_success), checked: filterOptions.success)]
+            let status = FilterItem(title: localize(.filter_success), checked: filterOptions.success)
             let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.isChecked(year: $0)) }
-            return [ListSection(key: .filter_status, items: status), ListSection(key: .filter_years, items: years)]
+            return [.init(key: .filter_status, items: [status]), .init(key: .filter_years, items: years)]
         }
         
-        init(filterOptions: MainViewController.FilterOptions) {
+        init(filterOptions: FilterOptions) {
             self.filterOptions = filterOptions
         }
     }
