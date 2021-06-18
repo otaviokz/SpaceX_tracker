@@ -33,7 +33,7 @@ class CompanyCell: UITableViewCell, ListItemCellType {
     required init?(coder: NSCoder) { fatalError("Not implemented!") }
 }
 
-extension Company: ListItemType {}
+extension Company: ItemType {}
 
 private extension Company {
     var localizedDescription: String {

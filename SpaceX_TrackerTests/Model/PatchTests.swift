@@ -10,17 +10,10 @@ import XCTest
 
 class PatchTests: XCTestCase {
     func testDecodeJson() throws {
-        let samplePatches = try? JsonLoader.patches()
-        XCTAssertNotNil(samplePatches)
+        let patches = try JsonLoader.patches()
         
-        for index in 0...2 {
-            if let patch = samplePatches?[index]  {
-                XCTAssertEqual(patch.small?.absoluteString, expectedSmalls[index])
-                XCTAssertEqual(patch.large?.absoluteString, expectedLarges[index])
-            } else {
-                XCTFail("Array missing item for index: \(index)")
-            }
-        }
+        XCTAssertEqual(patches.map { $0.small?.absoluteString }, expectedSmalls)
+        XCTAssertEqual(patches.map { $0.large?.absoluteString }, expectedLarges)
     }
 }
 

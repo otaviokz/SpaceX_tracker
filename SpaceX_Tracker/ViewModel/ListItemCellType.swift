@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ListItemType {}
+protocol ItemType {}
 
 protocol ListItemCellType: UITableViewCell {
     associatedtype ItemType

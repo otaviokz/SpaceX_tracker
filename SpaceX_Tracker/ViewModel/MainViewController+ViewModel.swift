@@ -14,19 +14,19 @@ extension MainViewController {
     }
     
     class ViewModel: NSObject, ListViewModelType {
-        private(set) var filteredLaunches: [Launch] = []
+        private(set) var launches: [Launch] = []
         var onNewData: (() -> Void)?
         var openLinks: ((Links) -> Void)?
-        private let imageLoader: ImageLoaderType
         private let apiClient: SpaceXAPIClientType
         
         private(set) var company: Company? {
             didSet {
+                calculateSections()
                 onNewData?()
             }
         }
         
-        var launches: [Launch] = [] {
+        private var allLaunches: [Launch] = [] {
             didSet {
                 filterOptions.years = availableYears
                 filterAndSort()
@@ -39,49 +39,51 @@ extension MainViewController {
             }
         }
         
-        private var sortDescending = true {
+        private var sortAscending = false {
             didSet {
                 filterAndSort()
             }
         }
         
         func filterAndSort() {
-            filteredLaunches = launches
-            
-            if !filterOptions.checkedYears.isEmpty {
-                filteredLaunches = filteredLaunches.filter {
-                    filterOptions.isChecked(year: $0.launchYear)
-                }
-            }
+            launches = allLaunches
             
             if filterOptions.success {
-                filteredLaunches = filteredLaunches.filter { $0.success == true }
+                launches = launches.filter { $0.success == true }
             }
             
-            filteredLaunches.sort()
-            if sortDescending {
-                filteredLaunches.reverse()
+            
+            if filterOptions.shouldFilterYears {
+                launches = launches.filter { filterOptions.isChecked(year: $0.launchYear) }
             }
             
+            if sortAscending {
+                launches.sort()
+            }
+            
+            calculateSections()
             onNewData?()
         }
         
         var availableYears: [Int] {
-            Set(launches.map { $0.launchYear }).sorted()
+            Set(allLaunches.map { $0.launchYear }).sorted()
         }
         
-        init(imageLoader: ImageLoaderType, apiClient: SpaceXAPIClientType) {
-            self.imageLoader = imageLoader
+        init(apiClient: SpaceXAPIClientType) {
             self.apiClient = apiClient
         }
         
-        var sections: [ListSection] {
-            var sectionsArray: [ListSection] = []
+        var sections: [Section] = []
+        
+        func calculateSections() {
+            sections = []
             if let company = company {
-                sectionsArray.append(ListSection(key: .main_company, items: [company]))
+                sections.append(Section(.main_company, items: [company]))
             }
             
-            return sectionsArray + [ListSection(key: .main_launches, items: filteredLaunches)]
+            if !allLaunches.isEmpty {
+                sections.append(Section(.main_launches, items: launches))
+            }
         }
         
         func fetchData() {
@@ -90,12 +92,12 @@ extension MainViewController {
             }
             
             apiClient.launches { [unowned self] in
-                self.launches = $0.apiData?.documents ?? []
+                self.allLaunches = $0.apiData?.documents.sorted(by: >) ?? []
             }
         }
         
         @objc func toggleSort() {
-            sortDescending.toggle()
+            sortAscending.toggle()
         }
     }
 }
@@ -117,7 +119,7 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
             }
             
             if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(for: indexPath) {
-                return cell.configure(for: launch, imageLoader: imageLoader)
+                return cell.configure(for: launch)
             }
             
             fatalError("Unrecognized item from ViewModel \(String(describing: item.self))")

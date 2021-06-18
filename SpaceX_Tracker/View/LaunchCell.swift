@@ -11,6 +11,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     private static let verticalPadding: CGFloat = 8
     private static let horizontalPadding: CGFloat = 4
     private static let imageSide: CGFloat = 32
+    private static let labelSpacingTop: CGFloat = 4
     
     private static var dateTimeFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -33,16 +34,16 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     private lazy var labelsStack: UIStackView = {
         let labelsStack = UIStackView(arrangedSubviews: [missionLabel, dateLabel, rocketLabel, daysLabel])
         labelsStack.axis = .vertical
-        labelsStack.alignment = .leading
-        labelsStack.spacing = 4
+        labelsStack.alignment = .fill
+        labelsStack.spacing = Self.labelSpacingTop
         return labelsStack
     }()
     
     private lazy var valuesStack: UIStackView = {
         let valuesStack = UIStackView(arrangedSubviews: [missionValueLabel, dateValueLabel, rocketValueLabel, daysValueLabel])
         valuesStack.axis = .vertical
-        valuesStack.alignment = .leading
-        valuesStack.spacing = 4
+        valuesStack.alignment = .fill
+        valuesStack.spacing = Self.labelSpacingTop
         return valuesStack
     }()
     
@@ -56,7 +57,6 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
         setUI()
     }
     
@@ -69,15 +69,11 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         daysLabel.text = nil
         daysValueLabel.text = nil
         successImageView.image = nil
+        imageURL = nil
     }
     
     @discardableResult
     func configure(for item: Launch) -> Self {
-        configure(for: item, imageLoader: ImageLoader.shared)
-    }
-    
-    @discardableResult
-    func configure(for item: Launch, imageLoader: ImageLoaderType) -> Self {
         missionValueLabel.text = item.missionName
         dateValueLabel.text = Self.dateTimeFormatter.string(from: item.localDate)
         rocketValueLabel.text = "\(item.rocket.name) / \(item.rocket.type)"
@@ -100,7 +96,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         
         imageURL = item.links.patch.small
         if let itemUrl = imageURL {
-            imageLoader.image(for: itemUrl) { [unowned self] in
+            ImageLoader.shared.image(for: itemUrl) { [unowned self] in
                 guard let url = self.imageURL, url == $0.data?.1, let image = $0.data?.0 else { return }
                 DispatchQueue.main.async {
                     self.badgeImageView.image = image
@@ -114,6 +110,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }
     
     private func setUI() {
+        selectionStyle = .none
         badgeImageView.tint(.solidBlack)
         successImageView.tint(.solidBlack)
         
@@ -148,4 +145,4 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     required init?(coder: NSCoder) { fatalError("Not implemented!") }
 }
 
-extension Launch: ListItemType {}
+extension Launch: ItemType {}

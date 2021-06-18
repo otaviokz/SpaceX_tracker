@@ -8,5 +8,5 @@
 import UIKit
 
 protocol ListViewModelType: UITableViewDataSource, UITableViewDelegate {
-    var sections: [ListSection] { get }
+    var sections: [Section] { get }
 }

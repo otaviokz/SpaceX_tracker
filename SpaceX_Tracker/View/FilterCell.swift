@@ -23,26 +23,24 @@ class FilterCell: UITableViewCell, ListItemCellType {
         }
     }
     
-    lazy var containerView = UIView().add([yearLabel, checkmarkView].constrainable)
+    lazy var containerView = UIView().add([titleLabel, checkmarkView].constrainable)
     var checkmarkView = UIImageView(image: Images.checkmark).tint(.checkbox)
-    var yearLabel = UILabel.body()
+    var titleLabel = UILabel.body()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
         setUI()
     }
     
     @discardableResult
     func configure(for item: FilterItem) -> Self {
-        yearLabel.text = "\(item.title)"
+        titleLabel.text = "\(item.title)"
         checkmarkView.isHidden = !item.checked
         return self
     }
     
     private func setUI() {
-        textLabel?.numberOfLines = 0
-        textLabel?.textAlignment = .left
+        selectionStyle = .none
         contentView.add(containerView.constrainable)
         
         NSLayoutConstraint.activate([
@@ -56,10 +54,10 @@ class FilterCell: UITableViewCell, ListItemCellType {
             checkmarkView.widthAnchor.constraint(equalToConstant: Self.imageSide),
             checkmarkView.heightAnchor.constraint(equalToConstant: Self.imageSide),
             checkmarkView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            yearLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            yearLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: 2 * -Self.imageSide),
-            yearLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
-            yearLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            titleLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: 2 * -Self.imageSide),
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         ])
     }
     
@@ -67,7 +65,7 @@ class FilterCell: UITableViewCell, ListItemCellType {
     required init?(coder: NSCoder) { fatalError("Not implemented!") }
 }
 
-struct FilterItem: ListItemType {
+struct FilterItem: ItemType {
     let title: String
     let checked: Bool
 }

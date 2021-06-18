@@ -10,20 +10,23 @@ import UIKit
 extension FilterViewController {
     class ViewModel: NSObject, ListViewModelType {
         let filterOptions: FilterOptions
-        
-        var sections: [ListSection] {
-            let status = FilterItem(title: localize(.filter_success), checked: filterOptions.success)
-            let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.isChecked(year: $0)) }
-            return [.init(key: .filter_status, items: [status]), .init(key: .filter_years, items: years)]
-        }
+        private(set) var sections: [Section] = []
         
         init(filterOptions: FilterOptions) {
             self.filterOptions = filterOptions
+            super.init()
+            recalculateSections()
         }
     }
 }
 
 extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDelegate {
+    private func recalculateSections() {
+        let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.isChecked(year: $0)) }
+        let status = FilterItem(title: localize(.filter_success), checked: filterOptions.success)
+        sections = [Section(.filter_status, items: [status]), Section(.filter_years, items: years)]
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }
@@ -48,7 +51,8 @@ extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDele
         default:
             filterOptions.toggleChecked(year: filterOptions.years[indexPath.row])
         }
-        tableView.reloadData()
+        recalculateSections()
+        tableView.reloadRows(at: [indexPath], with: .fade)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -50,7 +50,7 @@ private extension MainViewController {
         title = viewModel.company?.name
         tableView.register(CompanyCell.self, forCellReuseIdentifier: CompanyCell.reuseIdentifier)
         tableView.register(LaunchCell.self, forCellReuseIdentifier: LaunchCell.reuseIdentifier)
-        tableView.seViewModel(viewModel)
+        tableView.setViewModel(viewModel)
         
         viewModel.onNewData = { [unowned self] in
             DispatchQueue.main.async {

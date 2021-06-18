@@ -39,7 +39,7 @@ private extension FilterViewController {
     private func setUI() {
         title = localize(.filter_title)
         tableView.register(FilterCell.self, forCellReuseIdentifier: FilterCell.reuseIdentifier)
-        tableView.seViewModel(viewModel)
+        tableView.setViewModel(viewModel)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish)).identifier("Done")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(reset)).identifier("Reset")
     }

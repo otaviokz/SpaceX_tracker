@@ -17,13 +17,16 @@ class FilterOptions {
     var checkedYears: [Int] = []
     var success: Bool = false
     
+    var shouldFilterYears: Bool {
+        !checkedYears.isEmpty
+    }
+    
     init(availableYears: [Int] = [], checkedYears: [Int] = [], success: Bool = false) {
         self.years = availableYears
     }
     
     func toggleChecked(year: Int) {
         if checkedYears.contains(year) {
-            checkedYears = checkedYears.filter { $0 != year }
         } else {
             checkedYears.append(year)
         }

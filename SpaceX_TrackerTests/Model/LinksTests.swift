@@ -10,21 +10,13 @@ import XCTest
 
 class LinksTests: XCTestCase {
     func testDecodeJson() throws {
-        let samplePatches = try JsonLoader.patches()  //tested in PatchTests
+        let patches = try JsonLoader.patches()
+        let links = try JsonLoader.links()
         
-        let sampleLinks = try? JsonLoader.links()
-        XCTAssertNotNil(sampleLinks)
-        
-        for index in 0...2 {
-            if let link = sampleLinks?[index]  {
-                XCTAssertEqual(link.webcast?.absoluteString, expectedWebcasts[index])
-                XCTAssertEqual(link.article?.absoluteString, expectedArticles[index])
-                XCTAssertEqual(link.wikipedia?.absoluteString, expectedWikipedias[index])
-                XCTAssertEqual(link.patch, samplePatches[index])
-            } else {
-                XCTFail("Array missing item for index: \(index)")
-            }
-        }
+        XCTAssertEqual(links.map { $0.webcast?.absoluteString }, expectedWebcasts)
+        XCTAssertEqual(links.map { $0.article?.absoluteString }, expectedArticles)
+        XCTAssertEqual(links.map { $0.wikipedia?.absoluteString }, expectedWikipedias)
+        XCTAssertEqual(links.map { $0.patch }, patches)
     }
 }
 

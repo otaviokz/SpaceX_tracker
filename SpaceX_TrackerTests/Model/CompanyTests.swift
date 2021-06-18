@@ -10,13 +10,13 @@ import XCTest
 
 class CompanyTests: XCTestCase {
     func testDecodeJson() throws {
-        let sampleCompany = try? JsonLoader.company()
-        XCTAssertNotNil(sampleCompany)
-        XCTAssertEqual(sampleCompany?.name, "SpaceX")
-        XCTAssertEqual(sampleCompany?.founder, "Elon Musk")
-        XCTAssertEqual(sampleCompany?.foundationYear, 2002)
-        XCTAssertEqual(sampleCompany?.employees, 9500)
-        XCTAssertEqual(sampleCompany?.launchSites, 3)
-        XCTAssertEqual(sampleCompany?.valuationUSD, 74000000000)
+        let company = try JsonLoader.company()
+        
+        XCTAssertEqual(company.name, "SpaceX")
+        XCTAssertEqual(company.founder, "Elon Musk")
+        XCTAssertEqual(company.foundationYear, 2002)
+        XCTAssertEqual(company.employees, 9500)
+        XCTAssertEqual(company.launchSites, 3)
+        XCTAssertEqual(company.valuationUSD, 74000000000)
     }
 }

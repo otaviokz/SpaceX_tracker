@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct ListSection {
+struct Section {
     let title: String
-    let items: [ListItemType]
+    let items: [ItemType]
     
-    init(key: LocalizationKey, items: [ListItemType]) {
+    init(_ key: LocalizationKey, items: [ItemType]) {
         self.title = localize(key)
         self.items = items
     }

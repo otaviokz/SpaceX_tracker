@@ -12,22 +12,12 @@ extension XCUIApplication {
         tables.cells.element(matching: .cell, identifier: identifier)
     }
     
-    func verifyTableCell(_ identifier: String, staticKey: LocalizationKey? = nil, exists: Bool = true) {
-        let cell = tableCell(identifier)
-        if let staticKey = staticKey {
-            XCTAssertEqual(cell.staticTexts[staticKey].exists, exists)
-        } else {
-            XCTAssertEqual(cell.exists, exists)
-        }
+    func verifyTableCell(_ identifier: String, textKey: LocalizationKey, exists: Bool = true) {
+        XCTAssertEqual(tableCell(identifier).staticTexts[textKey].exists, exists)
     }
     
-    func verifyTableCell(_ identifier: String, staticText: String? = nil, exists: Bool = true) {
-        let cell = tableCell(identifier)
-        if let staticText = staticText {
-            XCTAssertEqual(cell.staticTexts[staticText].exists, exists)
-        } else {
-            XCTAssertEqual(cell.exists, exists)
-        }
+    func verifyTableCell(_ identifier: String, text: String, exists: Bool = true) {
+        XCTAssertEqual(tableCell(identifier).staticTexts[text].exists, exists)
     }
 }
 

@@ -10,21 +10,9 @@ import XCTest
 
 class RocketTests: XCTestCase {
     func testDecodeJson() throws {
-        let sampleRockets = try? JsonLoader.rockets()
-        XCTAssertNotNil(sampleRockets)
+        let rockets = try JsonLoader.rockets()
         
-        for index in 0...2 {
-            if let rocket = sampleRockets?[index]  {
-                XCTAssertEqual(rocket.name, expectedNames[index])
-                XCTAssertEqual(rocket.type, expectedTypes[index])
-            } else {
-                XCTFail("Array missing item for index: \(index)")
-            }
-        }
+        XCTAssertEqual(rockets.map { $0.name }, ["Falcon 1", "Falcon 1", "Falcon 9"])
+        XCTAssertEqual(rockets.map { $0.type }, ["rocket", "rocket", "rocket"])
     }
-}
-
-private extension RocketTests {
-    var expectedNames: [String] { ["Falcon 1", "Falcon 1", "Falcon 9"] }
-    var expectedTypes: [String] { ["rocket", "rocket", "rocket"] }
 }

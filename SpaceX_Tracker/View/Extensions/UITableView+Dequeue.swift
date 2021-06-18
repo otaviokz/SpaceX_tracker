@@ -13,7 +13,7 @@ extension UITableView {
         return cell?.identifier("\(T.reuseIdentifier)_\(indexPath.section)_\(indexPath.row)")
     }
     
-    func seViewModel<T: ListViewModelType>(_ listViewModel: T) {
+    func setViewModel<T: ListViewModelType>(_ listViewModel: T) {
         delegate = listViewModel
         dataSource = listViewModel
     }

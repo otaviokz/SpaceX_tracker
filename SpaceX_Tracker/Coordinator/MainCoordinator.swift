@@ -11,8 +11,8 @@ class MainCoordinator: Coordinating {
     let navigationController: UINavigationController
     private let viewModel: MainViewController.ViewModel
     
-    init(imageLoader: ImageLoaderType, apiClient: SpaceXAPIClientType) {
-        viewModel = .init(imageLoader: imageLoader, apiClient: apiClient)
+    init(apiClient: SpaceXAPIClientType) {
+        viewModel = .init(apiClient: apiClient)
         let mainViewController = MainViewController(viewModel: viewModel)
         navigationController = UINavigationController(rootViewController: mainViewController)
         mainViewController.showFilterAction = { [unowned self] in

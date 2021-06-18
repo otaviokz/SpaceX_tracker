@@ -14,16 +14,16 @@ class MainViewControllerTests: BaseUITestCase {
         // Assert company info is populated correctly
         XCTAssertTrue(app.staticTexts[.main_company].exists)
         let text = "SpaceX was founded by Elon Musk in 2002. It has now 9500 employees, 3 launch sites, and is valued at USD 74000000000."
-        app.verifyTableCell("CompanyCell_0_0", staticText: text)
+        app.verifyTableCell("CompanyCell_0_0", text: text)
 
         // Assert launches info is populated correctly
         XCTAssertTrue(app.staticTexts[.main_launches].exists)
-        app.verifyTableCell("LaunchCell_1_0", staticKey: .main_mission)
-        app.verifyTableCell("LaunchCell_1_0", staticText: "DART")
-        app.verifyTableCell("LaunchCell_1_0", staticKey: .main_date)
-        app.verifyTableCell("LaunchCell_1_0", staticText: "11/23/99 at 00:00")
-        app.verifyTableCell("LaunchCell_1_0", staticKey: .main_rocket)
-        app.verifyTableCell("LaunchCell_1_0", staticText: "Falcon 9 / rocket")
+        app.verifyTableCell("LaunchCell_1_0", textKey: .main_mission)
+        app.verifyTableCell("LaunchCell_1_0", text: "DART")
+        app.verifyTableCell("LaunchCell_1_0", textKey: .main_date)
+        app.verifyTableCell("LaunchCell_1_0", text: "11/23/99 at 00:00")
+        app.verifyTableCell("LaunchCell_1_0", textKey: .main_rocket)
+        app.verifyTableCell("LaunchCell_1_0", text: "Falcon 9 / rocket")
         
         // Assert correct nomber os launch cells are populated
         XCTAssertTrue(app.tableCell("LaunchCell_1_146").exists)
@@ -39,29 +39,29 @@ class MainViewControllerTests: BaseUITestCase {
         XCTAssertTrue(app.sheets.buttons[.main_wiki].exists)
         XCTAssertTrue(app.sheets.buttons[.main_webcast].exists)
         XCTAssertTrue(app.sheets.buttons[.main_article].exists)
-        XCTAssertTrue(app.sheets.buttons[.main_cancel].exists)
+        app.sheets.buttons[.main_cancel].tap()
     }
     
     func testSort() {
         app.buttons["SortButton"].tap()
-        app.verifyTableCell("LaunchCell_1_0", staticText: "03/24/06 at 22:30")
-        app.verifyTableCell("LaunchCell_1_0", staticKey: .main_days_since)
+        app.verifyTableCell("LaunchCell_1_0", text: "03/24/06 at 22:30")
+        app.verifyTableCell("LaunchCell_1_0", textKey: .main_days_since)
         
         app.buttons["SortButton"].tap()
-        app.verifyTableCell("LaunchCell_1_0", staticText: "11/23/99 at 00:00")
-        app.verifyTableCell("LaunchCell_1_0", staticKey: .main_days_from)
+        app.verifyTableCell("LaunchCell_1_0", text: "11/23/99 at 00:00")
+        app.verifyTableCell("LaunchCell_1_0", textKey: .main_days_from)
     }
     
     func testFilter() {
         app.buttons["FilterButton"].tap()
         XCTAssertTrue(app.navigationBars.staticTexts[.filter_title].exists)
         XCTAssertTrue(app.staticTexts[.filter_status].exists)
-        app.verifyTableCell("FilterCell_0_0", staticKey: .filter_success)
+        app.verifyTableCell("FilterCell_0_0", textKey: .filter_success)
         app.tableCell("FilterCell_0_0").tap()
         
         XCTAssertTrue(app.staticTexts[.filter_years].exists)
-        app.verifyTableCell("FilterCell_1_0", staticText: "2006")
-        app.verifyTableCell("FilterCell_1_17", staticText: "2099")
+        app.verifyTableCell("FilterCell_1_0", text: "2006")
+        app.verifyTableCell("FilterCell_1_17", text: "2099")
         app.tableCell("FilterCell_1_0").tap()
         
         app.navigationBars.buttons["Done"].tap()
