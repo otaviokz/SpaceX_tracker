@@ -13,28 +13,27 @@ enum HTTPMethod: String {
 }
 
 extension URLRequest {
-    private mutating func forMethod(_ method: HTTPMethod) -> Self {
-        httpMethod = method.rawValue
-        return self
+    private func forMethod(_ method: HTTPMethod) -> Self {
+        var request = self
+        request.httpMethod = method.rawValue
+        return request
     }
     
     static func post(_ url: URL) -> Self {
-        var request = URLRequest(url: url)
-        return request.forMethod(.post)
+        URLRequest(url: url).forMethod(.post)
     }
     
-    static func jsonPost(_ url: URL) -> Self {
-        var request = URLRequest.post(url)
-        return request.settingHTTPValue("application/json", forHeader: "Content-Type")
+    static func json(_ url: URL) -> Self {
+        URLRequest.post(url).settingHTTPValue("application/json", forHeader: "Content-Type")
     }
     
     static func get(_ url: URL, cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Self {
-        var request = URLRequest(url: url, cachePolicy: cachePolicy)
-        return request.forMethod(.get)
+        URLRequest(url: url, cachePolicy: cachePolicy).forMethod(.get)
     }
     
-    mutating func settingHTTPValue(_ value: String, forHeader: String) -> Self {
-        setValue(value, forHTTPHeaderField: forHeader)
-        return self
+    func settingHTTPValue(_ value: String, forHeader: String) -> Self {
+        var request = self
+        request.setValue(value, forHTTPHeaderField: forHeader)
+        return request
     }
 }

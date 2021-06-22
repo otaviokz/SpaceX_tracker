@@ -10,14 +10,13 @@ import UIKit
 struct RuntimeService {
     static var isRunningTests: Bool {
         #if DEBUG
-        return ProcessInfo().environment["UITesting"] == "YES"
+        ProcessInfo().environment["UITesting"] == "YES"
         #else
-        return false
+        false
         #endif
     }
     
     static func optimiseForTestsIfTesting(window: UIWindow?) {
-        #if targetEnvironment(simulator)
         guard isRunningTests else { return }
         // Disable animations
         UIView.setAnimationsEnabled(false)
@@ -25,10 +24,7 @@ struct RuntimeService {
         window?.layer.speed = 2000
         
         // Disable hardware keyboards.
-        let selector = NSSelectorFromString("setHardwareLayout:")
-        UITextInputMode.activeInputModes
-            .filter { $0.responds(to: selector) }
-            .forEach { $0.perform(selector, with: nil) }
-        #endif
+        let sel = NSSelectorFromString("setHardwareLayout:")
+        UITextInputMode.activeInputModes.filter { $0.responds(to: sel) }.forEach { $0.perform(sel, with: nil) }
     }
 }

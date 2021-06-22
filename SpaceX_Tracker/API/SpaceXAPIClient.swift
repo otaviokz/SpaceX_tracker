@@ -10,12 +10,7 @@ import Foundation
 typealias CompanyCompletion = APICompletion<Company>
 typealias LaunchesCompletion = APICompletion<APIQueryResponse<[Launch]>>
 
-protocol SpaceXAPIClientType {
-    func company(_ completion: @escaping CompanyCompletion)
-    func launches(_ completion: @escaping LaunchesCompletion)
-}
-
-struct SpaceXAPIClient: SpaceXAPIClientType {
+struct SpaceXAPIClient {
     private let httpClient: HTTPClientType
     private let baseURL: URL
     private var launchesURL: URL { baseURL.appendingPathComponent("launches/query") }
@@ -30,13 +25,13 @@ struct SpaceXAPIClient: SpaceXAPIClientType {
     
     func company(_ completion: @escaping CompanyCompletion) {
         queue.addOperation {
-            httpClient.get(url: companyURL, completion: completion)
+            httpClient.get(companyURL, completion: completion)
         }
     }
     
-    func launches(_ completion: @escaping LaunchesCompletion) {
+    func launches(page: Int = 0, limit: Int = 200, completion: @escaping LaunchesCompletion) {
         queue.addOperation {
-            httpClient.post(url: launchesURL, body: launchQuery(), completion: completion)
+            httpClient.post(launchesURL, body: launchQuery(), completion: completion)
         }
     }
 }

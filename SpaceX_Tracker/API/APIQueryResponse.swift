@@ -13,7 +13,7 @@ struct APIQueryResponse<T: Decodable>: Decodable {
     let page: Int
     let nextPage: Int?
     
-    init(documents: T) {
+    init(_ documents: T) {
         self.documents = documents
         totalDocs = 0
         limit = 0

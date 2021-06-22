@@ -9,44 +9,36 @@ import UIKit
 
 class MainViewController: UITableViewController {
     private let viewModel: ViewModel
-    var showFilterAction: (() -> Void)!
+    var showFilterAction: (() -> Void)?
     
     private lazy var filterBarButton: UIBarButtonItem = {
-        let menuBarItem = UIBarButtonItem(customView: filterButton)
+        let button = UIButton().image(Images.filter).onTap(self, #selector(showFilter)).identifier("SortButton")
+        let menuBarItem = UIBarButtonItem(customView: button)
         menuBarItem.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
         menuBarItem.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
         return menuBarItem
     }()
     
     private lazy var sortBarButton: UIBarButtonItem = {
-        let menuBarItem = UIBarButtonItem(customView: sortButton)
+        let button = UIButton().image(Images.sort).onTap(self, #selector(toggleSort)).identifier("SortButton")
+        let menuBarItem = UIBarButtonItem(customView: button)
         menuBarItem.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
         menuBarItem.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
         return menuBarItem
     }()
-    
-    private lazy var sortButton = UIButton(type: .custom)
-        .image(Images.sort)
-        .onTap(viewModel, action: #selector(ViewModel.toggleSort))
-        .identifier("SortButton")
-    
-    private lazy var filterButton = UIButton(type: .custom)
-        .image(Images.filter)
-        .onTap(self, action: #selector(showFilter))
-        .identifier("FilterButton")
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
         super.init(style: .grouped)
         setUI()
     }
-
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 private extension MainViewController {
-    private func setUI() {
+    func setUI() {
         title = viewModel.company?.name
         tableView.register(CompanyCell.self, forCellReuseIdentifier: CompanyCell.reuseIdentifier)
         tableView.register(LaunchCell.self, forCellReuseIdentifier: LaunchCell.reuseIdentifier)
@@ -69,12 +61,16 @@ private extension MainViewController {
         navigationItem.setRightBarButtonItems([filterBarButton, sortBarButton], animated: false)
     }
     
+    @objc func toggleSort() {
+        viewModel.toggleSort()
+    }
+    
     @objc func showFilter() {
-        showFilterAction()
+        showFilterAction?()
     }
 }
 
-extension MainViewController: LaunchesFilterDelegate {
+extension MainViewController: FilterDelegate {
     func didFinish(with options: FilterOptions) {
         dismiss(animated: true)
         viewModel.filterOptions = options

@@ -12,11 +12,11 @@ func localize(_ key: LocalizationKey, bundle: Bundle = Bundle.main) -> String {
 }
 
 func localize(_ key: FormatedLocalizationKey, _ args: [String], bundle: Bundle = Bundle.main) -> String {
-    var baseString = NSLocalizedString(key.rawValue, bundle: bundle, comment: "")
+    var result = NSLocalizedString(key.rawValue, bundle: bundle, comment: "")
     for index in 0..<args.count {
-        baseString = baseString.replacingOccurrences(of: "[$\(index)]", with: args[index])
+        result = result.replacingOccurrences(of: "[$\(index)]", with: args[index])
     }
-    return baseString
+    return result
 }
 
 enum LocalizationKey: String {

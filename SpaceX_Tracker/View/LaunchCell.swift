@@ -110,6 +110,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }
     
     private func setUI() {
+        backgroundColor = traitCollection.userInterfaceStyle == .light ? .white : .darkGray
         selectionStyle = .none
         badgeImageView.tint(.solidBlack)
         successImageView.tint(.solidBlack)

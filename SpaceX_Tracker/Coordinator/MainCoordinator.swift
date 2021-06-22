@@ -9,18 +9,18 @@ import UIKit
 
 class MainCoordinator: Coordinating {
     let navigationController: UINavigationController
-    private let viewModel: MainViewController.ViewModel
+    private var viewModel: MainViewController.ViewModel
     
-    init(apiClient: SpaceXAPIClientType) {
+    init(apiClient: SpaceXAPIClient) {
         viewModel = .init(apiClient: apiClient)
-        let mainViewController = MainViewController(viewModel: viewModel)
-        navigationController = UINavigationController(rootViewController: mainViewController)
-        mainViewController.showFilterAction = { [unowned self] in
-            let viewController = FilterViewController(viewModel: .init(filterOptions: viewModel.filterOptions), delegate: mainViewController)
-            let filterNavigationController = UINavigationController(rootViewController: viewController)
+        let viewController = MainViewController(viewModel: viewModel)
+        navigationController = UINavigationController(rootViewController: viewController)
+        viewController.showFilterAction = { [unowned self] in
+            let filterMenu = FilterViewController(.init(filterOptions: viewModel.filterOptions), delegate: viewController)
+            let filterNavigationController = UINavigationController(rootViewController: filterMenu)
             filterNavigationController.modalPresentationStyle = .overCurrentContext
             filterNavigationController.modalTransitionStyle = .coverVertical
-            mainViewController.present(filterNavigationController, animated: true, completion: nil)
+            viewController.present(filterNavigationController, animated: true, completion: nil)
         } 
     }
     

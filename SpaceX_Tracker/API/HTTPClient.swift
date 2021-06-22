@@ -11,16 +11,16 @@ typealias APICompletion<T: Decodable> = (APIResponse<T>) -> Void
 typealias DataCompletion<T: Decodable> = (DataResponse<T>) -> Void
 
 protocol HTTPClientType {
-    func getData(url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>)
-    func get<T: Decodable>(url: URL, completion: @escaping APICompletion<T>)
-    func post<T: Decodable>(url: URL, body: [String: Any], completion: @escaping APICompletion<T>)
+    func getData(_ url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>)
+    func get<T: Decodable>(_ url: URL, completion: @escaping APICompletion<T>)
+    func post<T: Decodable>(_ url: URL, body: [String: Any], completion: @escaping APICompletion<T>)
 }
 
 struct HTTPClient: HTTPClientType {
     static let shared = HTTPClient()
     private init() {}
     
-    func getData(url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>) {
+    func getData(_ url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>) {
         URLSession.shared.dataTask(with: .get(url, cachePolicy: cachePolicy)) {
             if let data = $0 {
                 completion(.success(data))
@@ -30,26 +30,22 @@ struct HTTPClient: HTTPClientType {
         }.resume()
     }
     
-    func get<T: Decodable>(url: URL, completion: @escaping APICompletion<T>) {
-        URLSession.shared.dataTask(with: .get(url)) {
-            parseJSON($0, $2, completion)
-        }.resume()
+    func get<T: Decodable>(_ url: URL, completion: @escaping APICompletion<T>) {
+        URLSession.shared.dataTask(with: .get(url)) { parse($0, $2, completion) }.resume()
     }
     
-    func post<T: Decodable>(url: URL, body: [String: Any], completion: @escaping APICompletion<T>) {
+    func post<T: Decodable>(_ url: URL, body: [String: Any], completion: @escaping APICompletion<T>) {
         do {
-            URLSession.shared.uploadTask(with: .jsonPost(url), from: try body.jsData()) {
-                parseJSON($0, $2, completion)
-            }.resume()
+            URLSession.shared.uploadTask(with: .json(url), from: try body.json()) { parse($0, $2, completion) }.resume()
         } catch {
             completion(.failure(error))
         }
     }
     
-    private func parseJSON<T: Decodable>(_ data: Data?, _ error: Error?, _ completion: @escaping APICompletion<T>) {
+    private func parse<T: Decodable>(_ jsonData: Data?, _ error: Error?, _ completion: @escaping APICompletion<T>) {
         do {
-            if let data = data {
-                completion(.success(try JSONDecoder().decode(T.self, from: data)))
+            if let jsonData = jsonData {
+                completion(.success(try JSONDecoder().decode(T.self, from: jsonData)))
             } else {
                 completion(.failure(error ?? APIError.invalidHTTPResponse))
             }
@@ -60,8 +56,6 @@ struct HTTPClient: HTTPClientType {
 }
 
 private extension Dictionary where Key == String {
-    func jsData() throws -> Data {
-        try JSONSerialization.data(withJSONObject: self)
-    }
+    func json() throws -> Data { try JSONSerialization.data(withJSONObject: self) }
 }
 

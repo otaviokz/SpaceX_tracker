@@ -28,7 +28,7 @@ class ImageLoader: ImageLoaderType {
             return
         } else {
             downloadQueue.addOperation { [unowned self] in
-                APIAssembler.httpClient.getData(url: url, cachePolicy: .returnCacheDataElseLoad) {
+                APIAssembler.httpClient.getData(url, cachePolicy: .returnCacheDataElseLoad) {
                     if let data = $0.data, let image = UIImage(data: data) {
                         completion(.success((image, url)))
                         cache[url] = image

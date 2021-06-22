@@ -14,17 +14,17 @@ class MockHTTPClient: HTTPClientType {
     
     private init() {
         companyData = try! JsonLoader.company()
-        launchesData = APIQueryResponse(documents: try! JsonLoader.launches())
+        launchesData = APIQueryResponse(try! JsonLoader.launches())
     }
     
     init(company: Company?, launches: [Launch]?) {
         self.companyData = company
         if let launches = launches {
-            self.launchesData = APIQueryResponse(documents: launches)
+            self.launchesData = APIQueryResponse(launches)
         }
     }
     
-    func getData(url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>) {
+    func getData(_ url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>) {
         if let data = Images.badgePlaceholder?.pngData() {
             completion(.success(data))
         } else {
@@ -32,15 +32,15 @@ class MockHTTPClient: HTTPClientType {
         }
     }
     
-    func get<T>(url: URL, completion: @escaping APICompletion<T>) where T : Decodable {
-        if let company = companyData as? T {
-            completion(.success(company))
+    func get<T>(_ url: URL, completion: @escaping APICompletion<T>) where T : Decodable {
+        if let data = companyData as? T {
+            completion(.success(data))
         } else {
             completion(.failure(APIError.invalidHTTPResponse))
         }
     }
     
-    func post<T>(url: URL, body: [String : Any], completion: @escaping APICompletion<T>) where T : Decodable {
+    func post<T>(_ url: URL, body: [String : Any], completion: @escaping APICompletion<T>) where T : Decodable {
         if let response = launchesData as? T {
             completion(.success(response))
         } else {

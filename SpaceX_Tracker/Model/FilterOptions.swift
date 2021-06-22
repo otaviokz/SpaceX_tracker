@@ -8,27 +8,35 @@
 import Foundation
 
 class FilterOptions {
-    var years: [Int] = [] {
+    private var yearsSet: Set<Int> = [] {
         didSet {
-            checkedYears = Set(checkedYears).intersection(Set(years)).sorted()
+            checkedYears = checkedYears.intersection(yearsSet)
         }
     }
     
-    var checkedYears: [Int] = []
+    var years: [Int] = [] {
+        didSet {
+            yearsSet = Set(years)
+        }
+    }
+    
+    var checkedYears: Set<Int> = []
     var success: Bool = false
     
     var shouldFilterYears: Bool {
         !checkedYears.isEmpty
     }
     
-    init(availableYears: [Int] = [], checkedYears: [Int] = [], success: Bool = false) {
-        self.years = availableYears
+    init(years: [Int] = [], checkedYears: Set<Int> = [], success: Bool = false) {
+        self.years = years
+        self.checkedYears = checkedYears
     }
     
     func toggleChecked(year: Int) {
         if checkedYears.contains(year) {
+            checkedYears.remove(year)
         } else {
-            checkedYears.append(year)
+            checkedYears.insert(year)
         }
     }
     

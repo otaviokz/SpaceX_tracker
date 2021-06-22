@@ -15,7 +15,7 @@ extension UIButton {
     }
     
     @discardableResult
-    func onTap(_ target: Any?, action: Selector) -> Self {
+    func onTap(_ target: Any?, _ action: Selector) -> Self {
         addTarget(target, action: action, for: .touchUpInside)
         return self
     }

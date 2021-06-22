@@ -44,10 +44,10 @@ extension UILabel {
 }
 
 extension UIView {
-    static func tableSectionHeader(_ title: String, labelPadding: CGFloat) -> UIView {
+    static func tableSectionHeader(_ title: String, textInset: CGFloat) -> UIView {
         let label = UILabel.header(title)
-        let view = UIView().add(label.constrainable).background(.solidBlack)
-        label.constrainTo(view, constant: labelPadding)
+        let view = UIView().background(.solidBlack).add(label.constrainable)
+        label.constrainTo(view, constant: textInset)
         return view
     }
 }

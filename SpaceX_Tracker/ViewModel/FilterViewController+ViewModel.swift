@@ -52,10 +52,10 @@ extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDele
             filterOptions.toggleChecked(year: filterOptions.years[indexPath.row])
         }
         recalculateSections()
-        tableView.reloadRows(at: [indexPath], with: .fade)
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        .tableSectionHeader(sections[section].title, labelPadding: 8)
+        .tableSectionHeader(sections[section].title, textInset: 8)
     }
 }

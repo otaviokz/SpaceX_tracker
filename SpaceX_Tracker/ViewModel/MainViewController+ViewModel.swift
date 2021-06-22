@@ -7,17 +7,12 @@
 
 import UIKit
 
-extension MainViewController {
-    enum SortOrder {
-        case ascending
-        case descending
-    }
-    
+extension MainViewController {   
     class ViewModel: NSObject, ListViewModelType {
         private(set) var launches: [Launch] = []
         var onNewData: (() -> Void)?
         var openLinks: ((Links) -> Void)?
-        private let apiClient: SpaceXAPIClientType
+        private let apiClient: SpaceXAPIClient
         
         private(set) var company: Company? {
             didSet {
@@ -69,7 +64,7 @@ extension MainViewController {
             Set(allLaunches.map { $0.launchYear }).sorted()
         }
         
-        init(apiClient: SpaceXAPIClientType) {
+        init(apiClient: SpaceXAPIClient) {
             self.apiClient = apiClient
         }
         
@@ -96,7 +91,7 @@ extension MainViewController {
             }
         }
         
-        @objc func toggleSort() {
+        func toggleSort() {
             sortAscending.toggle()
         }
     }
@@ -126,7 +121,7 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
         }
         
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            .tableSectionHeader(sections[section].title, labelPadding: 4)
+            .tableSectionHeader(sections[section].title, textInset: 4)
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
