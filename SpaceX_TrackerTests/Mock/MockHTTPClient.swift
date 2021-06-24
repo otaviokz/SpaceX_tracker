@@ -40,7 +40,7 @@ class MockHTTPClient: HTTPClientType {
         }
     }
     
-    func post<T>(_ url: URL, body: [String : Any], completion: @escaping APICompletion<T>) where T : Decodable {
+    func postJSON<T>(_ url: URL, body: [String : Any], completion: @escaping APICompletion<T>) where T : Decodable {
         if let response = launchesData as? T {
             completion(.success(response))
         } else {

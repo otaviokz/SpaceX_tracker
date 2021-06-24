@@ -13,7 +13,7 @@ typealias DataCompletion<T: Decodable> = (DataResponse<T>) -> Void
 protocol HTTPClientType {
     func getData(_ url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>)
     func get<T: Decodable>(_ url: URL, completion: @escaping APICompletion<T>)
-    func post<T: Decodable>(_ url: URL, body: [String: Any], completion: @escaping APICompletion<T>)
+    func postJSON<T: Decodable>(_ url: URL, body: [String: Any], completion: @escaping APICompletion<T>)
 }
 
 struct HTTPClient: HTTPClientType {
@@ -34,7 +34,7 @@ struct HTTPClient: HTTPClientType {
         URLSession.shared.dataTask(with: .get(url)) { parse($0, $2, completion) }.resume()
     }
     
-    func post<T: Decodable>(_ url: URL, body: [String: Any], completion: @escaping APICompletion<T>) {
+    func postJSON<T: Decodable>(_ url: URL, body: [String: Any], completion: @escaping APICompletion<T>) {
         do {
             URLSession.shared.uploadTask(with: .json(url), from: try body.json()) { parse($0, $2, completion) }.resume()
         } catch {

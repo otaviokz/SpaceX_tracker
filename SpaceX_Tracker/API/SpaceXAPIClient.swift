@@ -31,7 +31,7 @@ struct SpaceXAPIClient {
     
     func launches(page: Int = 0, limit: Int = 200, completion: @escaping LaunchesCompletion) {
         queue.addOperation {
-            httpClient.post(launchesURL, body: launchQuery(), completion: completion)
+            httpClient.postJSON(launchesURL, body: launchQuery(), completion: completion)
         }
     }
 }
