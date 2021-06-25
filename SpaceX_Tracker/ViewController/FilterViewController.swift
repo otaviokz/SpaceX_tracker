@@ -22,24 +22,24 @@ class FilterViewController: UITableViewController {
         setUI()
     }
     
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+private extension FilterViewController {
+    func setUI() {
+        title = localize(.filter_title)
+        tableView.register(FilterCell.self, forCellReuseIdentifier: FilterCell.reuseIdentifier)
+        tableView.setViewModel(viewModel)
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .done, target: self, action: #selector(finish)).identifier("Done")
+        navigationItem.leftBarButtonItem = .init(barButtonSystemItem: .trash, target: self, action: #selector(reset)).identifier("Reset")
+    }
+    
     @objc func finish() {
         delegate?.didFinish(with: viewModel.filterOptions)
     }
     
     @objc func reset() {
         delegate?.didFinish(with: .init(years: viewModel.filterOptions.years))
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-}
-
-private extension FilterViewController {
-    private func setUI() {
-        title = localize(.filter_title)
-        tableView.register(FilterCell.self, forCellReuseIdentifier: FilterCell.reuseIdentifier)
-        tableView.setViewModel(viewModel)
-        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .done, target: self, action: #selector(finish)).identifier("Done")
-        navigationItem.leftBarButtonItem = .init(barButtonSystemItem: .trash, target: self, action: #selector(reset)).identifier("Reset")
     }
 }

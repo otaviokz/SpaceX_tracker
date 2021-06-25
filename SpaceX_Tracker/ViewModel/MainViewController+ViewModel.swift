@@ -6,71 +6,45 @@
 //
 
 import UIKit
+import Combine
 
 extension MainViewController {   
     class ViewModel: NSObject, ListViewModelType {
         private(set) var launches: [Launch] = []
+        private let apiClient: SpaceXAPIClient
+        private var cancellables: [AnyCancellable] = []
         var onNewData: (() -> Void)?
         var openLinks: ((Links) -> Void)?
-        private let apiClient: SpaceXAPIClient
+        private(set) var sections: [Section] = []
         
         private(set) var company: Company? {
-            didSet {
-                calculateSections()
-                onNewData?()
-            }
+            didSet { filterAndSort() }
         }
         
         private var allLaunches: [Launch] = [] {
-            didSet {
-                filterOptions.years = availableYears
-                filterAndSort()
-            }
+            didSet { filterAndSort() }
         }
         
         var filterOptions = FilterOptions() {
-            didSet {
-                filterAndSort()
-            }
+            didSet { filterAndSort() }
         }
         
         private var sortAscending = false {
-            didSet {
-                filterAndSort()
-            }
-        }
-        
-        func filterAndSort() {
-            launches = allLaunches
-            
-            if filterOptions.success {
-                launches = launches.filter { $0.success == true }
-            }
-            
-            
-            if filterOptions.shouldFilterYears {
-                launches = launches.filter { filterOptions.isChecked(year: $0.launchYear) }
-            }
-            
-            if sortAscending {
-                launches.sort()
-            }
-            
-            calculateSections()
-            onNewData?()
-        }
-        
-        var availableYears: [Int] {
-            Set(allLaunches.map { $0.launchYear }).sorted()
+            didSet { filterAndSort() }
         }
         
         init(apiClient: SpaceXAPIClient) {
             self.apiClient = apiClient
         }
         
-        var sections: [Section] = []
+        private func filterAndSort() {
+            filterOptions.update(for: allLaunches)
+            launches = filterOptions.filter(allLaunches, sortAscending: sortAscending)
+            calculateSections()
+            onNewData?()
+        }
         
-        func calculateSections() {
+        private func calculateSections() {
             sections = []
             if let company = company {
                 sections.append(Section(.main_company, items: [company]))
@@ -82,13 +56,17 @@ extension MainViewController {
         }
         
         func fetchData() {
-            apiClient.company { [unowned self] in
-                self.company = $0.apiData
-            }
+            cancellables = []
             
-            apiClient.launches { [unowned self] in
-                self.allLaunches = $0.apiData?.documents.sorted(by: >) ?? []
-            }
+            apiClient.launches().zip(apiClient.company())
+                .receive(on: DispatchQueue.main)
+                .sink {
+                    if case .failure(let error) = $0 { print(error) }
+                } receiveValue: { [weak self] in
+                    self?.allLaunches = $0.0.documents.sorted(by: >)
+                    self?.company = $0.1
+                }
+                .store(in: &cancellables)
         }
         
         func toggleSort() {

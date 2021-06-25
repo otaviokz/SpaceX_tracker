@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 class MockHTTPClient: HTTPClientType {
     static var shared = MockHTTPClient()
     var companyData: Company?
     var launchesData: APIQueryResponse<[Launch]>?
+    var expectaion: Any?
     
     private init() {
         companyData = try! JsonLoader.company()
@@ -24,27 +26,18 @@ class MockHTTPClient: HTTPClientType {
         }
     }
     
-    func getData(_ url: URL, cachePolicy: NSURLRequest.CachePolicy, completion: @escaping DataCompletion<Data>) {
-        if let data = Images.badgePlaceholder?.pngData() {
-            completion(.success(data))
-        } else {
-            completion(.failure(APIError.invalidHTTPResponse))
-        }
+    func getImage(_ url: URL, cachePolicy: NSURLRequest.CachePolicy) -> AnyPublisher<UIImage, APIError> {
+        guard let image = Images.badgePlaceholder else { return Fail(error: .httpError).eraseToAnyPublisher() }
+        return Just(image).setFailureType(to: APIError.self).eraseToAnyPublisher()
     }
     
-    func get<T>(_ url: URL, completion: @escaping APICompletion<T>) where T : Decodable {
-        if let data = companyData as? T {
-            completion(.success(data))
-        } else {
-            completion(.failure(APIError.invalidHTTPResponse))
-        }
+    func get<T: Decodable>(_ url: URL) -> AnyPublisher<T, APIError> {
+        guard let data = companyData as? T else { return Fail(error: .httpError).eraseToAnyPublisher() }
+        return Just(data).setFailureType(to: APIError.self).eraseToAnyPublisher()
     }
     
-    func postJSON<T>(_ url: URL, body: [String : Any], completion: @escaping APICompletion<T>) where T : Decodable {
-        if let response = launchesData as? T {
-            completion(.success(response))
-        } else {
-            completion(.failure(APIError.invalidHTTPResponse))
-        }
+    func postJSON<T: Decodable>(_ url: URL, body: Data) -> AnyPublisher<T, APIError> {
+        guard let data = launchesData as? T else { return Fail(error: .httpError).eraseToAnyPublisher() }
+        return Just(data).setFailureType(to: APIError.self).eraseToAnyPublisher()
     }
 }

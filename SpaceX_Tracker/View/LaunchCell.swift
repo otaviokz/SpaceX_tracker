@@ -12,7 +12,6 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     private static let horizontalPadding: CGFloat = 4
     private static let imageSide: CGFloat = 32
     private static let labelSpacingTop: CGFloat = 4
-    
     private static var dateTimeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = localize(.main_dateTimeFormat)
@@ -34,7 +33,6 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     private lazy var labelsStack: UIStackView = {
         let labelsStack = UIStackView(arrangedSubviews: [missionLabel, dateLabel, rocketLabel, daysLabel])
         labelsStack.axis = .vertical
-        labelsStack.alignment = .fill
         labelsStack.spacing = Self.labelSpacingTop
         return labelsStack
     }()
@@ -42,14 +40,12 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     private lazy var valuesStack: UIStackView = {
         let valuesStack = UIStackView(arrangedSubviews: [missionValueLabel, dateValueLabel, rocketValueLabel, daysValueLabel])
         valuesStack.axis = .vertical
-        valuesStack.alignment = .fill
         valuesStack.spacing = Self.labelSpacingTop
         return valuesStack
     }()
     
     private lazy var contentStack: UIStackView = {
         let contentStack = UIStackView(arrangedSubviews: [badgeImageView, labelsStack, valuesStack, successImageView])
-        contentStack.axis = .horizontal
         contentStack.alignment = .top
         contentStack.spacing = Self.horizontalPadding
         return contentStack
@@ -77,6 +73,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         missionValueLabel.text = item.missionName
         dateValueLabel.text = Self.dateTimeFormatter.string(from: item.localDate)
         rocketValueLabel.text = "\(item.rocket.name) / \(item.rocket.type)"
+        
         let now = Date()
         if item.localDate <= now {
             daysLabel.text = localize(.main_days_since)
@@ -94,14 +91,12 @@ class LaunchCell: UITableViewCell, ListItemCellType {
             successImageView.image = success ? Images.success : Images.failure
         }
         
-        imageURL = item.links.patch.small
-        if let itemUrl = imageURL {
-            ImageLoader.shared.image(for: itemUrl) { [unowned self] in
-                guard let url = self.imageURL, url == $0.data?.1, let image = $0.data?.0 else { return }
+        if let currentURL = item.links.patch.small {
+            imageURL = currentURL
+            ImageLoader.shared.image(for: currentURL) { [weak self] in
+                guard let url = self?.imageURL, url == $0.data?.1, let image = $0.data?.0 else { return }
                 DispatchQueue.main.async {
-                    self.badgeImageView.image = image
-                    self.badgeImageView.image?.accessibilityIdentifier = url.absoluteString
-                    self.badgeImageView.accessibilityIdentifier = url.absoluteString
+                    self?.badgeImageView.image = image
                 }
             }
         }
@@ -110,7 +105,6 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     }
     
     private func setUI() {
-        backgroundColor = traitCollection.userInterfaceStyle == .light ? .white : .darkGray
         selectionStyle = .none
         badgeImageView.tint(.solidBlack)
         successImageView.tint(.solidBlack)

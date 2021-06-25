@@ -19,12 +19,18 @@ extension URLRequest {
         return request
     }
     
-    static func post(_ url: URL) -> URLRequest {
-        URLRequest(url: url).method(.post)
+    func body(_ body: Data) -> URLRequest {
+        var request = self
+        request.httpBody = body
+        return request
     }
     
-    static func json(_ url: URL) -> URLRequest {
-        var request = URLRequest.post(url)
+    static func post(_ body: Data, to url: URL) -> URLRequest {
+        URLRequest(url: url).method(.post).body(body)
+    }
+    
+    static func postJSON(_ body: Data, to url: URL) -> URLRequest {
+        var request = URLRequest.post(body, to: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         return request
     }

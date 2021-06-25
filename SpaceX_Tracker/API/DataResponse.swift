@@ -7,11 +7,11 @@
 
 struct DataResponse<T> {
     let data: T?
-    let error: Error?
+    let error: APIError?
 }
 
 extension DataResponse {
-    static func failure(_ error: Error) -> DataResponse {
+    static func failure(_ error: APIError) -> DataResponse {
         DataResponse(data: nil, error: error)
     }
     
