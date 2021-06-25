@@ -22,9 +22,6 @@ class ImageLoader: ImageLoaderType {
     static let shared = ImageLoader()
     private init() {}
     private var cancellables: [AnyCancellable] = []
-    func image(for url: URL)  -> AnyPublisher<UIImage, APIError> {
-        APIAssembler.httpClient.getImage(url, cachePolicy: .returnCacheDataElseLoad)
-    }
     
     func image(for url: URL, completion: @escaping (DataResponse<(UIImage, URL)>) -> Void) {
         if let image = cache[url] {

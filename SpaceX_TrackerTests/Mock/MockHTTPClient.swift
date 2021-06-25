@@ -18,14 +18,7 @@ class MockHTTPClient: HTTPClientType {
         companyData = try! JsonLoader.company()
         launchesData = APIQueryResponse(try! JsonLoader.launches())
     }
-    
-    init(company: Company?, launches: [Launch]?) {
-        self.companyData = company
-        if let launches = launches {
-            self.launchesData = APIQueryResponse(launches)
-        }
-    }
-    
+        
     func getImage(_ url: URL, cachePolicy: NSURLRequest.CachePolicy) -> AnyPublisher<UIImage, APIError> {
         guard let image = Images.badgePlaceholder else { return Fail(error: .httpError).eraseToAnyPublisher() }
         return Just(image).setFailureType(to: APIError.self).eraseToAnyPublisher()
