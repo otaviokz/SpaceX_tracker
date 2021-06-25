@@ -8,25 +8,17 @@
 import UIKit
 
 class MainViewController: UITableViewController {
-    private let viewModel: ViewModel
     var showFilterAction: (() -> Void)?
+    private let viewModel: ViewModel
     
-    private lazy var filterBarButton: UIBarButtonItem = {
-        let button = UIButton().image(Images.filter).onTap(self, #selector(showFilter)).identifier("SortButton")
-        let menuBarItem = UIBarButtonItem(customView: button)
-        menuBarItem.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
-        menuBarItem.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
-        return menuBarItem
-    }()
-    
-    private lazy var sortBarButton: UIBarButtonItem = {
-        let button = UIButton().image(Images.sort).onTap(self, #selector(toggleSort)).identifier("SortButton")
-        let menuBarItem = UIBarButtonItem(customView: button)
-        menuBarItem.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
-        menuBarItem.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
-        return menuBarItem
-    }()
-    
+    private lazy var filterBarButton = UIBarButtonItem(
+        customView: UIButton().image(Images.filter).onTap(self, #selector(showFilter))
+    ).identifier("FilterButton")
+        
+    private lazy var sortBarButton = UIBarButtonItem(
+        customView: UIButton().image(Images.sort).onTap(self, #selector(toggleSort))
+    ).identifier("SortButton")
+     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
         super.init(style: .grouped)
@@ -57,6 +49,11 @@ private extension MainViewController {
             alert.addAction(.init(title: localize(.main_cancel), style: .cancel) {_ in dismiss(animated: true) })
             self.present(alert, animated: true)
         }
+        
+        filterBarButton.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        filterBarButton.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        sortBarButton.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        sortBarButton.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
         
         navigationItem.setRightBarButtonItems([filterBarButton, sortBarButton], animated: false)
     }

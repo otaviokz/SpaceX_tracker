@@ -15,7 +15,7 @@ class MainCoordinator: Coordinating {
         viewModel = .init(apiClient: apiClient)
         let viewController = MainViewController(viewModel: viewModel)
         navigationController = UINavigationController(rootViewController: viewController)
-        viewController.showFilterAction = { [unowned self] in
+        viewController.showFilterAction = { [viewModel] in
             let filterMenu = FilterViewController(.init(filterOptions: viewModel.filterOptions), delegate: viewController)
             let filterNavigationController = UINavigationController(rootViewController: filterMenu)
             filterNavigationController.modalPresentationStyle = .overCurrentContext

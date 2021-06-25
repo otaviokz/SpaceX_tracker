@@ -8,15 +8,10 @@
 import Foundation
 
 class FilterOptions {
-    private var yearsSet: Set<Int> = [] {
-        didSet {
-            checkedYears = checkedYears.intersection(yearsSet)
-        }
-    }
     
     var years: [Int] = [] {
         didSet {
-            yearsSet = Set(years)
+            checkedYears = checkedYears.intersection(Set(years))
         }
     }
     
@@ -46,5 +41,33 @@ class FilterOptions {
     
     func toggleSucces() {
         success.toggle()
+    }
+    
+    func update(for launches: [Launch]) {
+        years = launches.availableYears
+    }
+    
+    func filter(_ launches: [Launch], sortAscending: Bool = false) -> [Launch] {
+        var filtered = launches
+        
+        if success {
+            filtered = filtered.filter { $0.success == true }
+        }
+        
+        if shouldFilterYears {
+            filtered = filtered.filter { isChecked(year: $0.launchYear) }
+        }
+        
+        if sortAscending {
+            filtered.sort()
+        }
+        
+        return filtered
+    }
+}
+
+extension Array where Element == Launch {
+    var availableYears: [Int] {
+        Set(map { $0.launchYear }).sorted()
     }
 }
