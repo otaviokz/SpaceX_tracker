@@ -12,12 +12,6 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     private static let horizontalPadding: CGFloat = 4
     private static let imageSide: CGFloat = 32
     private static let labelSpacingTop: CGFloat = 4
-    private static var dateTimeFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = localize(.main_dateTimeFormat)
-        return formatter
-    }
-    
     private let badgeImageView = UIImageView(image: Images.badgePlaceholder)
     private let missionLabel = UILabel.grayBody(localize(.main_mission))
     private let missionValueLabel = UILabel.body()
@@ -71,7 +65,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     @discardableResult
     func configure(for item: Launch) -> Self {
         missionValueLabel.text = item.missionName
-        dateValueLabel.text = Self.dateTimeFormatter.string(from: item.localDate)
+        dateValueLabel.text = Style.Date.local.string(from: item.localDate)
         rocketValueLabel.text = "\(item.rocket.name) / \(item.rocket.type)"
         
         let now = Date()

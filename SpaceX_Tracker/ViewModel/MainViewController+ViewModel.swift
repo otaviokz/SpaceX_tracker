@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-extension MainViewController {   
+extension MainViewController {
     class ViewModel: NSObject, ListViewModelType {
         private(set) var launches: [Launch] = []
         private let apiClient: SpaceXAPIClient
@@ -19,6 +19,10 @@ extension MainViewController {
         
         private(set) var company: Company? {
             didSet { filterAndSort() }
+        }
+        
+        private var launchesQuery = QueryResult<[Launch]>([]) {
+            didSet { allLaunches = launchesQuery.results.sorted(by: >) }
         }
         
         private var allLaunches: [Launch] = [] {
@@ -58,13 +62,13 @@ extension MainViewController {
         func fetchData() {
             cancellables = []
             
-            apiClient.launches().zip(apiClient.company())
+            apiClient.company().zip(apiClient.launches())
                 .receive(on: DispatchQueue.main)
                 .sink {
                     if case .failure(let error) = $0 { print(error) }
-                } receiveValue: { [weak self] in
-                    self?.allLaunches = $0.0.documents.sorted(by: >)
-                    self?.company = $0.1
+                } receiveValue: { [weak self] companyValue, launchesQuery in
+                    self?.launchesQuery = launchesQuery
+                    self?.company = companyValue
                 }
                 .store(in: &cancellables)
         }

@@ -14,7 +14,7 @@ class MainCoordinator: Coordinating {
     init(apiClient: SpaceXAPIClient) {
         viewModel = .init(apiClient: apiClient)
         let viewController = MainViewController(viewModel: viewModel)
-        navigationController = UINavigationController(rootViewController: viewController)
+        navigationController = .init(rootViewController: viewController)
         viewController.showFilterAction = { [viewModel] in
             let filterMenu = FilterViewController(.init(filterOptions: viewModel.filterOptions), delegate: viewController)
             let filterNavigationController = UINavigationController(rootViewController: filterMenu)

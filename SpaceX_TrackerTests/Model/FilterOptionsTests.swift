@@ -1,5 +1,5 @@
 //
-//  MainViewController+ViewModelTests.swift
+//  FilterOptionsTests.swift
 //  SpaceX_TrackerTests
 //
 //  Created by Otávio Zabaleta on 10/06/2021.

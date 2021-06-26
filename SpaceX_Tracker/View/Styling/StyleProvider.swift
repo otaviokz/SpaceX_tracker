@@ -16,7 +16,21 @@ struct Images {
     static let sort = UIImage(named: "sort")
 }
 
-struct Style {    
+struct Style {
+    struct Date {
+        static var utc: DateFormatter {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            return formatter
+        }
+        
+        static var local: DateFormatter {
+            let formatter = DateFormatter()
+            formatter.dateFormat = localize(.main_dateTimeFormat)
+            return formatter
+        }
+    }
+
     enum Color {
         case barbutton
         case checkbox

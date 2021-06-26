@@ -1,21 +1,21 @@
 //
-//  APIQueryResponse.swift
+//  QueryResponse.swift
 //  SpaceX_Tracker
 //
 //  Created by Otávio Zabaleta on 06/06/2021.
 //
 
-struct APIQueryResponse<T: Decodable>: Decodable {
-    let documents: T
-    let totalDocs: Int
+struct QueryResult<T: Decodable>: Decodable {
+    let results: T
+    let totalResults: Int
     let limit: Int
     let totalPages: Int
     let page: Int
     let nextPage: Int?
     
     init(_ documents: T) {
-        self.documents = documents
-        totalDocs = 0
+        self.results = documents
+        totalResults = 0
         limit = 0
         totalPages = 0
         page = 0
@@ -23,14 +23,15 @@ struct APIQueryResponse<T: Decodable>: Decodable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case totalDocs, limit, totalPages, page, nextPage
-        case documents = "docs"
+        case limit, totalPages, page, nextPage
+        case results = "docs"
+        case totalResults = "totalDocs"
     }
     
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: APIQueryResponse.CodingKeys.self)
-        documents = try container.decode(T.self, forKey: .documents)
-        totalDocs = try container.decode(Int.self, forKey: .totalDocs)
+        let container = try decoder.container(keyedBy: QueryResult.CodingKeys.self)
+        results = try container.decode(T.self, forKey: .results)
+        totalResults = try container.decode(Int.self, forKey: .totalResults)
         limit = try container.decode(Int.self, forKey: .limit)
         totalPages = try container.decode(Int.self, forKey: .totalPages)
         page = try container.decode(Int.self, forKey: .page)

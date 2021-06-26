@@ -23,7 +23,7 @@ struct SpaceXAPIClient {
         httpClient.get(companyURL)
     }
     
-    func launches(page: Int = 0, limit: Int = 200) -> AnyPublisher<APIQueryResponse<[Launch]>, APIError>  {
+    func launches(page: Int = 0, limit: Int = 200) -> AnyPublisher<QueryResult<[Launch]>, APIError>  {
         do {
             return httpClient.postJSON(launchesURL, body: try launchQuery().json())
         } catch {

@@ -8,12 +8,6 @@
 import Foundation
 
 struct Launch: Codable {
-    static var utcFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return formatter
-    }
-
     let missionName: String
     let success: Bool?
     let dateUTC: String
@@ -34,7 +28,7 @@ struct Launch: Codable {
         missionName = try container.decode(String.self, forKey: .missionName)
         success = try container.decodeIfPresent(Bool.self, forKey: .success)
         dateUTC = try container.decode(String.self, forKey: .dateUTC)
-        localDate = Self.utcFormatter.date(from: dateUTC)!
+        localDate = Style.Date.utc.date(from: dateUTC)!
         dateIsTBD = try container.decode(Bool.self, forKey: .dateIsTBD)
         rocket = try container.decode(Rocket.self, forKey: .rocket)
         links = try container.decode(Links.self, forKey: .links)

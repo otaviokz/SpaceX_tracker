@@ -12,7 +12,5 @@ struct APIAssembler {
         RuntimeService.isRunningTests ? MockHTTPClient.shared : HTTPClient.shared
     }
     
-    static var apiClient: SpaceXAPIClient {
-        SpaceXAPIClient(httpClient: httpClient)
-    }
+    static var apiClient = SpaceXAPIClient(httpClient: httpClient)
 }

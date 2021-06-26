@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 protocol ImageLoaderType {
-    func image(for url: URL, completion: @escaping (DataResponse<(UIImage, URL)>) -> Void)
+    func image(for url: URL, completion: @escaping (DataResult<(UIImage, URL)>) -> Void)
 }
 
 class ImageLoader: ImageLoaderType {
@@ -23,7 +23,7 @@ class ImageLoader: ImageLoaderType {
     private init() {}
     private var cancellables: [AnyCancellable] = []
     
-    func image(for url: URL, completion: @escaping (DataResponse<(UIImage, URL)>) -> Void) {
+    func image(for url: URL, completion: @escaping (DataResult<(UIImage, URL)>) -> Void) {
         if let image = cache[url] {
             completion(.success((image, url)))
         } else {

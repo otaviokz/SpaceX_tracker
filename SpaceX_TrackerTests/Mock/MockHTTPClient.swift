@@ -11,12 +11,12 @@ import Combine
 class MockHTTPClient: HTTPClientType {
     static var shared = MockHTTPClient()
     var companyData: Company?
-    var launchesData: APIQueryResponse<[Launch]>?
+    var launchesData: QueryResult<[Launch]>?
     var expectaion: Any?
     
     private init() {
         companyData = try! JsonLoader.company()
-        launchesData = APIQueryResponse(try! JsonLoader.launches())
+        launchesData = QueryResult(try! JsonLoader.launches())
     }
         
     func getImage(_ url: URL, cachePolicy: NSURLRequest.CachePolicy) -> AnyPublisher<UIImage, APIError> {
