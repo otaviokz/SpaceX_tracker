@@ -13,9 +13,12 @@ extension MainViewController {
         private(set) var launches: [Launch] = []
         private let apiClient: SpaceXAPIClient
         private var cancellables: [AnyCancellable] = []
-        var onNewData: (() -> Void)?
+        var onNewData: (() -> Void)? {
+            didSet { refreshControl?.addTarget(self, action: #selector(fetchData), for: .valueChanged) }
+        }
         var openLinks: ((Links) -> Void)?
         private(set) var sections: [Section] = []
+        var refreshControl: UIRefreshControl? = UIRefreshControl()
         
         private(set) var company: Company? {
             didSet { filterAndSort() }
@@ -59,13 +62,18 @@ extension MainViewController {
             }
         }
         
-        func fetchData() {
+        @objc func fetchData(_ showRefresh: Bool = false) {
+            if showRefresh {
+                refreshControl?.beginRefreshing()
+            }
+            
             cancellables = []
             
             apiClient.company().zip(apiClient.launches())
                 .receive(on: DispatchQueue.main)
-                .sink {
+                .sink { [weak self] in
                     if case .failure(let error) = $0 { print(error) }
+                    self?.refreshControl?.endRefreshing()
                 } receiveValue: { [weak self] companyValue, launchesQuery in
                     self?.launchesQuery = launchesQuery
                     self?.company = companyValue
@@ -80,31 +88,31 @@ extension MainViewController {
 }
 
 extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelegate {
-        func numberOfSections(in tableView: UITableView) -> Int {
-            sections.count
+    func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        sections[section].items.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let item = sections[indexPath.section].items[indexPath.row]
+        
+        if let item = item as? Company, let cell: CompanyCell = tableView.cell(for: indexPath) {
+            return cell.configure(for: item)
         }
         
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            sections[section].items.count
+        if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(for: indexPath) {
+            return cell.configure(for: launch)
         }
         
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let item = sections[indexPath.section].items[indexPath.row]
-            
-            if let item = item as? Company, let cell: CompanyCell = tableView.cell(for: indexPath) {
-                return cell.configure(for: item)
-            }
-            
-            if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(for: indexPath) {
-                return cell.configure(for: launch)
-            }
-            
-            fatalError("Unrecognized item from ViewModel \(String(describing: item.self))")
-        }
-        
-        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            .tableSectionHeader(sections[section].title, textInset: 4)
-        }
+        fatalError("Unrecognized item from ViewModel \(String(describing: item.self))")
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        .tableSectionHeader(sections[section].title, textInset: 4)
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let launch = sections[indexPath.section].items[indexPath.row] as? Launch, launch.links.hasInfo {

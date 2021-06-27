@@ -9,4 +9,9 @@ import UIKit
 
 protocol ListViewModelType: UITableViewDataSource, UITableViewDelegate {
     var sections: [Section] { get }
+    var refreshControl: UIRefreshControl? { get }
+}
+
+extension ListViewModelType {
+    var refreshControl: UIRefreshControl? { nil }
 }

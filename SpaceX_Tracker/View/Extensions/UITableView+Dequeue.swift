@@ -16,5 +16,6 @@ extension UITableView {
     func setViewModel<T: ListViewModelType>(_ listViewModel: T) {
         delegate = listViewModel
         dataSource = listViewModel
+        refreshControl = listViewModel.refreshControl
     }
 }

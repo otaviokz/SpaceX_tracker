@@ -39,7 +39,6 @@ class FilterCell: UITableViewCell, ListItemCellType {
     }
     
     private func setUI() {
-        backgroundColor = traitCollection.userInterfaceStyle == .light ? .white : .darkGray
         selectionStyle = .none
         contentView.add(containerView.constrainable)
         

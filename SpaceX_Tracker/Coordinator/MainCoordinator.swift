@@ -25,6 +25,6 @@ class MainCoordinator: Coordinating {
     }
     
     func start() {
-        viewModel.fetchData()
+        viewModel.fetchData(true)
     }
 }

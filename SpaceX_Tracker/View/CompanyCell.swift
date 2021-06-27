@@ -22,7 +22,6 @@ class CompanyCell: UITableViewCell, ListItemCellType {
     }
     
     private func setUI() {
-        backgroundColor = traitCollection.userInterfaceStyle == .light ? .white : .darkGray
         selectionStyle = .none
         textLabel?.numberOfLines = 0
         textLabel?.textAlignment = .left
