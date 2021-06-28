@@ -28,23 +28,23 @@ class FilterOptionsTests: XCTestCase {
     }
 
     func testFilter() {
-        filterOptions.checkedYears = Set([2006, 2007, 2010])
+        filterOptions.set(checked: Set([2006, 2007, 2010]))
         XCTAssertEqual(filterOptions.filter(launches).count, 3)
 
-        filterOptions.checkedYears = Set([])
+        filterOptions.set(checked: Set([]))
         XCTAssertEqual(filterOptions.filter(launches).count, 3)
 
-        filterOptions.checkedYears = Set([2006, 2010])
+        filterOptions.set(checked: Set([2006, 2010]))
         XCTAssertEqual(filterOptions.filter(launches).count, 2)
 
-        filterOptions.checkedYears = Set([2006])
+        filterOptions.set(checked: Set([2006]))
         XCTAssertEqual(filterOptions.filter(launches).count, 1)
 
-        filterOptions.checkedYears = Set([2006, 2007, 2010])
-        filterOptions.success = true
+        filterOptions.set(checked: Set([2006, 2007, 2010]))
+        filterOptions.toggleSucces()
         XCTAssertEqual(filterOptions.filter(launches).count, 1)
 
-        filterOptions.checkedYears = Set([2006, 2007])
+        filterOptions.set(checked: Set([2006, 2007]))
         XCTAssertEqual(filterOptions.filter(launches).count, 0)
     }
 
@@ -53,14 +53,26 @@ class FilterOptionsTests: XCTestCase {
             let years = Array(2000...2050)
             let checkedYears = Set([2000, 2005, 2010, 2015, 2020, 2025, 2030, 2035, 2040, 2045, 2050])
             filterOptions.years = years
-            filterOptions.checkedYears = checkedYears
+            filterOptions.set(checked: checkedYears)
             measure(options: .default) {
                 for index in 0...10000 {
-                    filterOptions.checkedYears = checkedYears
+                    filterOptions.set(checked: checkedYears)
                     filterOptions.years = years
                     _ = filterOptions.filter(launches, sortAscending: index % 2 == 0)
                 }
             }
+        }
+    }
+}
+
+extension FilterOptions {
+    func set(checked visibleYears: Set<Int>) {
+        for year in self.years where isChecked(year: year) {
+            toggleChecked(year: year)
+        }
+        
+        visibleYears.forEach {
+            toggleChecked(year: $0)
         }
     }
 }

@@ -10,45 +10,49 @@ import Combine
 
 extension MainViewController {
     class ViewModel: NSObject, ListViewModelType {
-        private(set) var launches: [Launch] = []
+        @Published private(set) var navigationTitle: String?
+        @Published var canFilter: Bool = false
+        @Published private(set) var links: [(LocalizationKey, URL)]?
+        var tableView: UITableView?
         private let apiClient: SpaceXAPIClient
-        private var cancellables: [AnyCancellable] = []
-        var onNewData: (() -> Void)? {
-            didSet { refreshControl?.addTarget(self, action: #selector(fetchData), for: .valueChanged) }
-        }
-        var openLinks: ((Links) -> Void)?
+        private var subscriptions: Set<AnyCancellable> = []
         private(set) var sections: [Section] = []
-        var refreshControl: UIRefreshControl? = UIRefreshControl()
         
-        private(set) var company: Company? {
-            didSet { filterAndSort() }
-        }
+        lazy var refreshControl: UIRefreshControl? = {
+           let controll = UIRefreshControl()
+            controll.addTarget(self, action: #selector(fetchData), for: .valueChanged)
+            return controll
+        }()
         
+        private var company: Company? { didSet { computeState() } }
+        private var launches: [Launch] = []
         private var launchesQuery = QueryResult<[Launch]>([]) {
             didSet { allLaunches = launchesQuery.results.sorted(by: >) }
         }
         
         private var allLaunches: [Launch] = [] {
-            didSet { filterAndSort() }
+            didSet { computeState() }
         }
         
         var filterOptions = FilterOptions() {
-            didSet { filterAndSort() }
+            didSet { computeState() }
         }
         
         private var sortAscending = false {
-            didSet { filterAndSort() }
+            didSet { computeState() }
         }
         
         init(apiClient: SpaceXAPIClient) {
             self.apiClient = apiClient
         }
         
-        private func filterAndSort() {
+        private func computeState() {
+            canFilter = !allLaunches.isEmpty
+            navigationTitle = company?.name
             filterOptions.update(for: allLaunches)
             launches = filterOptions.filter(allLaunches, sortAscending: sortAscending)
             calculateSections()
-            onNewData?()
+            tableView?.reloadData()
         }
         
         private func calculateSections() {
@@ -67,18 +71,16 @@ extension MainViewController {
                 refreshControl?.beginRefreshing()
             }
             
-            cancellables = []
+            subscriptions = []
             
-            apiClient.company().zip(apiClient.launches())
-                .receive(on: DispatchQueue.main)
+            apiClient.company().zip(apiClient.launches()).receive(on: DispatchQueue.main)
                 .sink { [weak self] in
                     if case .failure(let error) = $0 { print(error) }
                     self?.refreshControl?.endRefreshing()
                 } receiveValue: { [weak self] companyValue, launchesQuery in
                     self?.launchesQuery = launchesQuery
                     self?.company = companyValue
-                }
-                .store(in: &cancellables)
+                }.store(in: &subscriptions)
         }
         
         func toggleSort() {
@@ -99,8 +101,8 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = sections[indexPath.section].items[indexPath.row]
         
-        if let item = item as? Company, let cell: CompanyCell = tableView.cell(for: indexPath) {
-            return cell.configure(for: item)
+        if let company = item as? Company, let cell: CompanyCell = tableView.cell(for: indexPath) {
+            return cell.configure(for: company)
         }
         
         if let launch = item as? Launch, let cell: LaunchCell = tableView.cell(for: indexPath) {
@@ -115,8 +117,8 @@ extension MainViewController.ViewModel: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let launch = sections[indexPath.section].items[indexPath.row] as? Launch, launch.links.hasInfo {
-            openLinks?(launch.links)
+        if let launch = sections[indexPath.section].items[indexPath.row] as? Launch {
+            links = launch.links.hasInfo ? launch.links.infoLinks : nil
         }
     }
 }

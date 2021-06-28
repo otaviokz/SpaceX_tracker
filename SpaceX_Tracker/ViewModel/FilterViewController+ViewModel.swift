@@ -6,22 +6,28 @@
 //
 
 import UIKit
+import Combine
 
 extension FilterViewController {
     class ViewModel: NSObject, ListViewModelType {
-        let filterOptions: FilterOptions
+        @Published private(set) var showResetButton: Bool = false
+        var tableView: UITableView?
         private(set) var sections: [Section] = []
+        private var subscriptions = Set<AnyCancellable>()
+        let filterOptions: FilterOptions
         
         init(filterOptions: FilterOptions) {
             self.filterOptions = filterOptions
             super.init()
-            recalculateSections()
+            calculateSections()
+            
+            filterOptions.$isFiltering.assign(to: \.showResetButton, on: self).store(in: &subscriptions)
         }
     }
 }
 
 extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDelegate {
-    private func recalculateSections() {
+    private func calculateSections() {
         let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.isChecked(year: $0)) }
         let status = FilterItem(title: localize(.filter_success), checked: filterOptions.success)
         sections = [Section(.filter_status, items: [status]), Section(.filter_years, items: years)]
@@ -51,7 +57,7 @@ extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDele
         default:
             filterOptions.toggleChecked(year: filterOptions.years[indexPath.row])
         }
-        recalculateSections()
+        calculateSections()
         tableView.reloadRows(at: [indexPath], with: .none)
     }
     
