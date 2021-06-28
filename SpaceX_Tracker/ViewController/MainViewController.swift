@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class MainViewController: UITableViewController {
     var showFilterAction: (() -> Void)?
     private let viewModel: ViewModel
+    private var subscriptions: [AnyCancellable] = []
     
     private lazy var filterBarButton = UIBarButtonItem(
         customView: UIButton().image(Images.filter).onTap(self, #selector(showFilter))
@@ -31,24 +33,20 @@ class MainViewController: UITableViewController {
 
 private extension MainViewController {
     func setUI() {
-        title = viewModel.company?.name
+        viewModel.$canFilter.assign(to: \.isEnabled, on: filterBarButton).store(in: &subscriptions)
+        viewModel.$navigationTitle.assign(to: \.title, on: navigationItem).store(in: &subscriptions)
+        
         tableView.register(CompanyCell.self, forCellReuseIdentifier: CompanyCell.reuseIdentifier)
         tableView.register(LaunchCell.self, forCellReuseIdentifier: LaunchCell.reuseIdentifier)
         tableView.setViewModel(viewModel)
-        
-        viewModel.onNewData = { [unowned self] in
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.title = self.viewModel.company?.name
-            }
-        }
-        
-        viewModel.openLinks = { [unowned self] in
+ 
+        viewModel.$links.sink { [weak self] links in
+            guard let links = links, let self = self else { return }
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.add([(.main_wiki, $0.wikipedia), (.main_webcast, $0.webcast), (.main_article, $0.article)])
-            alert.addAction(.init(title: localize(.main_cancel), style: .cancel) {_ in dismiss(animated: true) })
+            alert.add(links)
+            alert.addAction(.init(title: localize(.main_cancel), style: .cancel) {_ in self.dismiss(animated: true) })
             self.present(alert, animated: true)
-        }
+        }.store(in: &subscriptions)
         
         filterBarButton.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
         filterBarButton.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true

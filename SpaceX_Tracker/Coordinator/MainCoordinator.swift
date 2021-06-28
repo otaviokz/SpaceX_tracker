@@ -18,7 +18,7 @@ class MainCoordinator: Coordinating {
         viewController.showFilterAction = { [viewModel] in
             let filterMenu = FilterViewController(.init(filterOptions: viewModel.filterOptions), delegate: viewController)
             let filterNavigationController = UINavigationController(rootViewController: filterMenu)
-            filterNavigationController.modalPresentationStyle = .overCurrentContext
+            filterNavigationController.modalPresentationStyle = .overFullScreen
             filterNavigationController.modalTransitionStyle = .coverVertical
             viewController.present(filterNavigationController, animated: true, completion: nil)
         } 

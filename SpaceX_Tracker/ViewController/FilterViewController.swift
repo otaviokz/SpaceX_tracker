@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol FilterDelegate: AnyObject {
     func didFinish(with options: FilterOptions)
@@ -14,6 +15,9 @@ protocol FilterDelegate: AnyObject {
 class FilterViewController: UITableViewController {
     private let viewModel: ViewModel
     private weak var delegate: FilterDelegate?
+    private lazy var doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish)).identifier("Done")
+    private lazy var resetButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(reset)).identifier("Reset")
+    private var subscriptions = Set<AnyCancellable>()
     
     init(_ viewModel: ViewModel, delegate: FilterDelegate?) {
         self.viewModel = viewModel
@@ -31,8 +35,9 @@ private extension FilterViewController {
         title = localize(.filter_title)
         tableView.register(FilterCell.self, forCellReuseIdentifier: FilterCell.reuseIdentifier)
         tableView.setViewModel(viewModel)
-        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .done, target: self, action: #selector(finish)).identifier("Done")
-        navigationItem.leftBarButtonItem = .init(barButtonSystemItem: .trash, target: self, action: #selector(reset)).identifier("Reset")
+        navigationItem.rightBarButtonItem = doneButton
+        navigationItem.leftBarButtonItem =  resetButton
+        viewModel.$showResetButton.assign(to: \.isEnabled, on: self.resetButton).store(in: &subscriptions)
     }
     
     @objc func finish() {

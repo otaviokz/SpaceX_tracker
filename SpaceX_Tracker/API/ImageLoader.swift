@@ -21,7 +21,7 @@ class ImageLoader: ImageLoaderType {
     }()
     static let shared = ImageLoader()
     private init() {}
-    private var cancellables: [AnyCancellable] = []
+    private var subscriptions: [AnyCancellable] = []
     
     func image(for url: URL, completion: @escaping (DataResult<(UIImage, URL)>) -> Void) {
         if let image = cache[url] {
@@ -31,11 +31,12 @@ class ImageLoader: ImageLoaderType {
                 APIAssembler.httpClient.getImage(url, cachePolicy: .returnCacheDataElseLoad)
                     .sink {
                         if case .failure(let error) = $0 { completion(.failure(error)) }
-                    } receiveValue: {
+                    }
+                    receiveValue: {
                         completion(.success(($0, url)))
                         cache[url] = $0
                     }
-                    .store(in: &cancellables)
+                    .store(in: &subscriptions)
             }
         }
     }

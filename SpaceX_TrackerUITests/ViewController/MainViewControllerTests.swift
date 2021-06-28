@@ -56,6 +56,7 @@ class MainViewControllerTests: BaseUITestCase {
         app.buttons["FilterButton"].tap()
         XCTAssertTrue(app.navigationBars.staticTexts[.filter_title].exists)
         XCTAssertTrue(app.staticTexts[.filter_status].exists)
+        XCTAssertFalse(app.buttons["Reset"].isEnabled)
         app.verifyTableCell("FilterCell_0_0", textKey: .filter_success)
         app.tableCell("FilterCell_0_0").tap()
         
@@ -63,6 +64,7 @@ class MainViewControllerTests: BaseUITestCase {
         app.verifyTableCell("FilterCell_1_0", text: "2006")
         app.verifyTableCell("FilterCell_1_17", text: "2099")
         app.tableCell("FilterCell_1_0").tap()
+        XCTAssert(app.buttons["Reset"].exists)
         
         app.navigationBars.buttons["Done"].tap()
         app.buttons["FilterButton"].tap()
@@ -74,5 +76,6 @@ class MainViewControllerTests: BaseUITestCase {
         app.buttons["FilterButton"].tap()
         XCTAssertTrue(app.tableCell("FilterCell_0_0").exists)
         XCTAssertTrue(app.tableCell("FilterCell_1_0").exists)
+        XCTAssertFalse(app.buttons["Reset"].isEnabled)
     }
 }

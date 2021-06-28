@@ -17,5 +17,6 @@ extension UITableView {
         delegate = listViewModel
         dataSource = listViewModel
         refreshControl = listViewModel.refreshControl
+        listViewModel.tableView = self
     }
 }

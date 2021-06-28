@@ -8,15 +8,14 @@
 import Foundation
 
 class FilterOptions {
+    @Published private(set) var isFiltering: Bool = false
     
     var years: [Int] = [] {
-        didSet {
-            checkedYears = checkedYears.intersection(Set(years))
-        }
+        didSet { checkedYears = checkedYears.intersection(Set(years)) }
     }
     
-    var checkedYears: Set<Int> = []
-    var success: Bool = false
+    private(set) var checkedYears: Set<Int> = [] { didSet { updateIsFiltering() } }
+    private(set) var success: Bool = false { didSet { updateIsFiltering() } }
     
     var shouldFilterYears: Bool {
         !checkedYears.isEmpty
@@ -25,6 +24,10 @@ class FilterOptions {
     init(years: [Int] = [], checkedYears: Set<Int> = [], success: Bool = false) {
         self.years = years
         self.checkedYears = checkedYears
+    }
+    
+    private func updateIsFiltering() {
+        isFiltering = shouldFilterYears || success
     }
     
     func toggleChecked(year: Int) {
@@ -66,7 +69,7 @@ class FilterOptions {
     }
 }
 
-extension Array where Element == Launch {
+private extension Array where Element == Launch {
     var availableYears: [Int] {
         Set(map { $0.launchYear }).sorted()
     }

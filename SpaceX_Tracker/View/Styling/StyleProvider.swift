@@ -14,9 +14,12 @@ struct Images {
     static let failure = UIImage(named: "failure")
     static let filter = UIImage(named: "filter")
     static let sort = UIImage(named: "sort")
+    static let link = UIImage(named: "link")
 }
 
 struct Style {
+    static var isDarkMode: Bool { UIScreen.main.traitCollection.userInterfaceStyle == .dark }
+    
     struct Date {
         static var utc: DateFormatter {
             let formatter = DateFormatter()
@@ -32,15 +35,15 @@ struct Style {
     }
 
     enum Color {
-        case barbutton
         case checkbox
         case solidBlack
+        case imageTint
         
         var color: UIColor {
             switch self {
-            case .barbutton: return .black.withAlphaComponent(0.8)
-            case .checkbox: return .black.withAlphaComponent(0.7)
+            case .checkbox: return Style.isDarkMode ? .white.withAlphaComponent(0.7) : .black.withAlphaComponent(0.7)
             case .solidBlack: return .black
+            case .imageTint: return Style.isDarkMode ? .white.withAlphaComponent(0.7) : .black
             }
         }
     }
@@ -61,7 +64,7 @@ struct Style {
         
         var color: UIColor {
             switch self {
-            case .body: return .black
+            case .body: return Style.isDarkMode ? .white.withAlphaComponent(0.7) : .black
             case .grayBody: return .gray
             case .header: return .white
             }
