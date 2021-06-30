@@ -15,7 +15,7 @@ protocol FilterDelegate: AnyObject {
 class FilterViewController: UITableViewController {
     private let viewModel: ViewModel
     private weak var delegate: FilterDelegate?
-    private lazy var doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish)).identifier("Done")
+    private lazy var doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done)).identifier("Done")
     private lazy var resetButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(reset)).identifier("Reset")
     private var subscriptions = Set<AnyCancellable>()
     
@@ -37,10 +37,10 @@ private extension FilterViewController {
         tableView.setViewModel(viewModel)
         navigationItem.rightBarButtonItem = doneButton
         navigationItem.leftBarButtonItem =  resetButton
-        viewModel.$showResetButton.assign(to: \.isEnabled, on: self.resetButton).store(in: &subscriptions)
+        viewModel.$showResetButton.assign(to: \.isEnabled, on: resetButton).store(in: &subscriptions)
     }
     
-    @objc func finish() {
+    @objc func done() {
         delegate?.didFinish(with: viewModel.filterOptions)
     }
     

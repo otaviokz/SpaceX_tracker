@@ -16,7 +16,7 @@ extension FilterViewController {
         private var subscriptions = Set<AnyCancellable>()
         let filterOptions: FilterOptions
         
-        init(filterOptions: FilterOptions) {
+        init(_ filterOptions: FilterOptions) {
             self.filterOptions = filterOptions
             super.init()
             calculateSections()
@@ -28,8 +28,8 @@ extension FilterViewController {
 
 extension FilterViewController.ViewModel: UITableViewDataSource, UITableViewDelegate {
     private func calculateSections() {
-        let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.isChecked(year: $0)) }
         let status = FilterItem(title: localize(.filter_success), checked: filterOptions.success)
+        let years = filterOptions.years.map { FilterItem(title: "\($0)", checked: filterOptions.isChecked(year: $0)) }
         sections = [Section(.filter_status, items: [status]), Section(.filter_years, items: years)]
     }
     

@@ -57,10 +57,6 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     override func prepareForReuse() {
         super.prepareForReuse()
         badgeImageView.image = nil
-        missionValueLabel.text = nil
-        dateValueLabel.text = nil
-        rocketValueLabel.text = nil
-        daysLabel.text = nil
         daysValueLabel.text = nil
         successImageView.image = nil
         imageURL = nil
@@ -73,16 +69,9 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         rocketValueLabel.text = "\(item.rocket.name) / \(item.rocket.type)"
         
         let now = Date()
-        if item.localDate <= now {
-            daysLabel.text = localize(.main_days_since)
-            if let days = days(from: item.localDate, to: now) {
-                daysValueLabel.text = "\(days)"
-            }
-        } else {
-            daysLabel.text = localize(.main_days_from)
-            if let days = days(from: now, to: item.localDate) {
-                daysValueLabel.text = "\(days)"
-            }
+        daysLabel.text = localize(item.localDate <= now ? .main_days_since : .main_days_from)
+        if let days = days(from: min(now, item.localDate), to: max(now, item.localDate)) {
+            daysValueLabel.text = "\(days)"
         }
         
         if let success = item.success {
@@ -92,13 +81,9 @@ class LaunchCell: UITableViewCell, ListItemCellType {
         if let currentURL = item.links.patch.small {
             imageURL = currentURL
             ImageLoader.shared.image(for: currentURL) { [weak self] in
-                guard let url = self?.imageURL, url == $0.data?.1, let image = $0.data?.0 else { return }
-                DispatchQueue.main.async {
-                    self?.badgeImageView.image = image
-                }
+                guard let image = $0.data?.0, self?.imageURL == $0.data?.1 else { return }
+                DispatchQueue.main.async { self?.badgeImageView.image = image }
             }
-        } else {
-            badgeImageView.image = Images.badgePlaceholder
         }
         
         linkImageView.isHidden = !item.links.hasInfo
@@ -107,9 +92,7 @@ class LaunchCell: UITableViewCell, ListItemCellType {
     
     private func setUI() {
         selectionStyle = .none
-        badgeImageView.tint(.imageTint)
         successImageView.tint(.imageTint)
-        linkImageView.contentMode = .scaleAspectFill
         contentView.add(contentStack.constrainable)
         
         NSLayoutConstraint.activate([
@@ -122,12 +105,11 @@ class LaunchCell: UITableViewCell, ListItemCellType {
             labelsStack.widthAnchor.constraint(equalTo: valuesStack.widthAnchor),
             badgeImageView.widthAnchor.constraint(equalToConstant: Self.badgeSize),
             badgeImageView.heightAnchor.constraint(equalToConstant: Self.badgeSize),
-            
+            badgeImageView.topAnchor.constraint(equalTo: missionLabel.topAnchor),
             missionLabel.heightAnchor.constraint(equalTo: missionValueLabel.heightAnchor),
             dateLabel.heightAnchor.constraint(equalTo: dateValueLabel.heightAnchor),
             rocketLabel.heightAnchor.constraint(equalTo: rocketValueLabel.heightAnchor),
             daysLabel.heightAnchor.constraint(equalTo: daysValueLabel.heightAnchor),
-            badgeImageView.topAnchor.constraint(equalTo: missionLabel.topAnchor),
             imagesStack.widthAnchor.constraint(equalToConstant: Self.imageSize),
             imagesStack.heightAnchor.constraint(equalTo: labelsStack.heightAnchor),
             successImageView.widthAnchor.constraint(equalToConstant: Self.imageSize),

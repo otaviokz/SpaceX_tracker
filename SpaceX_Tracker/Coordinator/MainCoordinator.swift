@@ -13,15 +13,7 @@ class MainCoordinator: Coordinating {
     
     init(apiClient: SpaceXAPIClient) {
         viewModel = .init(apiClient: apiClient)
-        let viewController = MainViewController(viewModel: viewModel)
-        navigationController = .init(rootViewController: viewController)
-        viewController.showFilterAction = { [viewModel] in
-            let filterMenu = FilterViewController(.init(filterOptions: viewModel.filterOptions), delegate: viewController)
-            let filterNavigationController = UINavigationController(rootViewController: filterMenu)
-            filterNavigationController.modalPresentationStyle = .overFullScreen
-            filterNavigationController.modalTransitionStyle = .coverVertical
-            viewController.present(filterNavigationController, animated: true, completion: nil)
-        } 
+        navigationController = .init(rootViewController: MainViewController(viewModel: viewModel))
     }
     
     func start() {

@@ -9,14 +9,13 @@ import UIKit
 import Combine
 
 class MainViewController: UITableViewController {
-    var showFilterAction: (() -> Void)?
+    private let buttonSize: CGFloat = 28
     private let viewModel: ViewModel
     private var subscriptions: [AnyCancellable] = []
-    
     private lazy var filterBarButton = UIBarButtonItem(
         customView: UIButton().image(Images.filter).onTap(self, #selector(showFilter))
     ).identifier("FilterButton")
-        
+
     private lazy var sortBarButton = UIBarButtonItem(
         customView: UIButton().image(Images.sort).onTap(self, #selector(toggleSort))
     ).identifier("SortButton")
@@ -33,27 +32,27 @@ class MainViewController: UITableViewController {
 
 private extension MainViewController {
     func setUI() {
-        viewModel.$canFilter.assign(to: \.isEnabled, on: filterBarButton).store(in: &subscriptions)
-        viewModel.$navigationTitle.assign(to: \.title, on: navigationItem).store(in: &subscriptions)
-        
         tableView.register(CompanyCell.self, forCellReuseIdentifier: CompanyCell.reuseIdentifier)
         tableView.register(LaunchCell.self, forCellReuseIdentifier: LaunchCell.reuseIdentifier)
         tableView.setViewModel(viewModel)
- 
-        viewModel.$links.sink { [weak self] links in
-            guard let links = links, let self = self else { return }
+        
+        filterBarButton.customView?.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        filterBarButton.customView?.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        sortBarButton.customView?.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        sortBarButton.customView?.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        navigationItem.setRightBarButtonItems([filterBarButton, sortBarButton], animated: false)
+        
+        viewModel.$canFilter.assign(to: \.isEnabled, on: filterBarButton).store(in: &subscriptions)
+        viewModel.$canFilter.assign(to: \.isEnabled, on: sortBarButton).store(in: &subscriptions)
+        viewModel.$navigationTitle.assign(to: \.title, on: navigationItem).store(in: &subscriptions)
+        
+        viewModel.$links.sink { [unowned self] links in
+            guard let links = links else { return }
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             alert.add(links)
-            alert.addAction(.init(title: localize(.main_cancel), style: .cancel) {_ in self.dismiss(animated: true) })
-            self.present(alert, animated: true)
+            alert.addAction(.init(title: localize(.main_cancel), style: .cancel) {_ in dismiss(animated: true) })
+            present(alert, animated: true)
         }.store(in: &subscriptions)
-        
-        filterBarButton.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
-        filterBarButton.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
-        sortBarButton.customView?.heightAnchor.constraint(equalToConstant: 28).isActive = true
-        sortBarButton.customView?.widthAnchor.constraint(equalToConstant: 28).isActive = true
-        
-        navigationItem.setRightBarButtonItems([filterBarButton, sortBarButton], animated: false)
     }
     
     @objc func toggleSort() {
@@ -61,7 +60,10 @@ private extension MainViewController {
     }
     
     @objc func showFilter() {
-        showFilterAction?()
+        let controller = UINavigationController(rootViewController: FilterViewController(.init(viewModel.filterOptions), delegate: self))
+        controller.modalPresentationStyle = .overFullScreen
+        controller.modalTransitionStyle = .coverVertical
+        present(controller, animated: true)
     }
 }
 
@@ -73,11 +75,9 @@ extension MainViewController: FilterDelegate {
 }
 
 private extension UIAlertController {
-    func add(_ urlActions: [(LocalizationKey, URL?)]) {
+    func add(_ urlActions: [(LocalizationKey, URL)]) {
         urlActions.forEach { key, url in
-            if let url = url {
-                addAction(.init(title: localize(key), style: .default) {_ in UIApplication.shared.open(url) })
-            }
+            addAction(.init(title: localize(key), style: .default) {_ in UIApplication.shared.open(url) })
         }
     }
 }

@@ -47,7 +47,7 @@ extension UIView {
     }
     
     func constrainTrail(to: UIView, constant: CGFloat = 0) {
-        NSLayoutConstraint.activate([trailingAnchor.constraint(equalTo: to.trailingAnchor, constant: -constant.abs)])
+        NSLayoutConstraint.activate([trailingAnchor.constraint(equalTo: to.trailingAnchor, constant: -constant)])
     }
     
     func constrainTop(to: UIView, constant: CGFloat = 0) {
@@ -55,7 +55,7 @@ extension UIView {
     }
     
     func constraintBottom(to: UIView, constant: CGFloat = 0) {
-        NSLayoutConstraint.activate([bottomAnchor.constraint(equalTo: to.bottomAnchor, constant: -constant.abs)])
+        NSLayoutConstraint.activate([bottomAnchor.constraint(equalTo: to.bottomAnchor, constant: -constant)])
     }
 }
 
@@ -63,8 +63,21 @@ extension Array where Element == UIView {
     var constrainable: [UIView] { map { $0.constrainable } }
 }
 
-private extension CGFloat {
-    var abs: CGFloat {
-        self < 0 ? -self : self
+@propertyWrapper
+struct CGCFloat {
+    private var value: CGFloat
+    init(_ value: CGFloat = 0) { self.value = max(value, -value) }
+    
+    var wrappedValue: CGFloat {
+        get { value }
+        set { value = max(newValue, -newValue) }
+    }
+    
+    var positive: CGFloat {
+        wrappedValue
+    }
+    
+    var negative: CGFloat {
+        -wrappedValue
     }
 }

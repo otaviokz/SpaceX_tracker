@@ -11,7 +11,7 @@ import Combine
 extension MainViewController {
     class ViewModel: NSObject, ListViewModelType {
         @Published private(set) var navigationTitle: String?
-        @Published var canFilter: Bool = false
+        @Published private(set) var canFilter: Bool = false
         @Published private(set) var links: [(LocalizationKey, URL)]?
         var tableView: UITableView?
         private let apiClient: SpaceXAPIClient
